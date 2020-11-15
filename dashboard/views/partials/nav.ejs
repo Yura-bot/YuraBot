@@ -1,0 +1,57 @@
+<header class="main-nav">
+  <div class="logo-wrapper"><a href="/"><img class="img-fluid for-light" src="images/logo/logo.png" alt=""><img class="img-fluid for-dark" src="images/logo/logo_dark.png" alt=""></a>
+    <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+    <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="grid" id="sidebar-toggle"> </i></div>
+  </div>
+  <div class="logo-icon-wrapper"><a href="/"><img class="img-fluid" src="images/logo/logo-icon.png" alt=""></a></div>
+  <nav>
+    <div class="main-navbar">
+      <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+
+      <div class="main-navbar">
+              <div id="mainnav">
+                <ul class="nav-menu custom-scrollbar">
+                  <li class="back-btn">
+                    <div class="mobile-back text-right"><span>Back</span><i class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
+                  </li>
+
+                  <li class="sidebar-title">
+                    <div>
+                      <h6>Profile</h6>
+                    </div>
+                  </li>
+
+                  <li class="dropdown"><a class="nav-link menu-title link-nav"  href="<%= status != 'Se connecter' ? '/profile': '/login' %>"><i data-feather="user"></i><span><%=status%></span></a></li>
+  
+                  <%if(status !== "Se connecter") {%>
+                    <li class="dropdown"><a class="nav-link menu-title link-nav" href="/logout" target="_blank"><i data-feather="log-out"></i><span>Logout</span></a></li>
+                  <%}%>
+
+                  <li class="sidebar-title">
+                    <div>
+                      <h6>Paramètres</h6>
+                    </div>
+                  </li>
+
+                  <li class="dropdown"><a class="nav-link menu-title link-nav" href="#" target="_blank"><i data-feather="sliders"></i><span>Configuration</span></a></li>
+                  <li class="dropdown"><a class="nav-link menu-title link-nav" href="#" target="_blank"><i data-feather="layers"></i><span>Bienvenue</span></a></li>
+                  <li class="dropdown"><a class="nav-link menu-title link-nav" href="#" target="_blank"><i data-feather="book-open"></i><span>Départ</span></a></li>
+                  <li class="dropdown"><a class="nav-link menu-title link-nav" href="#" target="_blank"><i data-feather="cloud-drizzle"></i><span>Autorole</span></a></li>
+                  <li class="dropdown"><a class="nav-link menu-title link-nav" href="#" target="_blank"><i data-feather="shield"></i><span>Auto-modération</span></a></li>
+
+                  <li class="sidebar-title">
+                    <div>
+                      <h6>Extensions</h6>
+                    </div>
+                  </li>
+
+                  <li class="dropdown"><a class="nav-link menu-title link-nav" href="#" target="_blank"><i data-feather="gift"></i><span>Giveaway</span></a></li>
+                  <li class="dropdown"><a class="nav-link menu-title link-nav" href="#" target="_blank"><i data-feather="compass"></i><span>Backup</span></a></li>
+                  <li class="dropdown"><a class="nav-link menu-title link-nav" href="#" target="_blank"><i data-feather="music"></i><span>Musique</span></a></li>
+
+              </div>
+            </div>
+      <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
+    </div>
+  </nav>
+</header>

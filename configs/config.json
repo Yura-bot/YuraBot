@@ -1,0 +1,37 @@
+{
+    "BOTNAME": "Yura",
+    "token": "NTk1NTg4MzQyMzE4MzY2NzM0.XRtK3g.ibLziFAD8LwTNL-2EYZKcmOsbDU",
+    "secret": "7riZtuPB3RD8I8GzsfuV4KhtsOJXAUfF",
+    "owner": "477582590329749504",
+    
+    "ameToken": "65af5d54e943b52df5558f14b288e3338bf40f64dc5207c878c99c56b855ae62bb1598ebbd314f1bd5cf57c04259bad221ae875aa8105bee4882c63417b1699f",
+    "jokeToken": "9G_ZEj.NbTPQZDtcy9oDbWkiw0kb5PKBnUA_lRa_WLM1JVHydepb7Y2Yz8zuV0HI",
+
+    "panel_url": "http://45.140.165.51:80",
+    "password": "7riZtuPB3RD8I8GzsfuV4KhtsOJXAUfF",
+    "port": "80",
+
+    "prefix": "//",
+    "url": "https://yurabot.xyz",
+    "color": "RANDOM",
+    "footer": "By Yura | yurabot.xyz",
+
+    "webhook": "https://discordapp.com/api/webhooks/695611800686821427/2B3xnQbg6z7I0_MzDB4Y25Uw4ZMpBHsYVQ8f4IxsmnHd3vAuGg_A3jFHFo8VwxFUXWHu",
+
+    "emojis": {
+        "yes": "673212026226737153",
+        "no": "673212163837526064",
+        "online": "721002621649027193",
+        "idle": "721002596541661224",
+        "dnd": "721002560625967185",
+        "offline": "721002631924809728",
+        "blue": "721002646239969290",
+        "yes-animated": "712662632200667266",
+        "nop-animated": "712662704526983230",
+        "loading": "675233191870595082",
+        "check": "710804044372770869"
+    },
+
+    "yes": "673212026226737153",
+    "no": "673212163837526064"
+}

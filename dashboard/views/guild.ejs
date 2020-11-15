@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/Ccss/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="/Ccss/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/messenger/1.5.0/css/messenger.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/messenger/1.5.0/css/messenger-theme-flat.min.css" rel="stylesheet">
+
+        <title>
+            <%= guild.name %>
+        </title>
+
+
+</head>
+
+<body>
+
+    <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="/" class="brand-logo">
+            <%= botclient.username %>
+        </a>
+        <ul class="right hide-on-med-and-down">
+            <li>
+                <a href="<%= login === 'oui' ? '/profile': '/login' %>">
+                    <%=status%>
+                </a>
+            </li>
+            <%if(login === 'oui') {%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Se déconnecter</a>
+                </li>
+                <%}%>
+                    <li>
+                        <a href="/status">
+                    Status
+                </a>
+                    </li>
+        </ul>
+
+        <ul id="nav-mobile" class="sidenav">
+            <li>
+                <a href="<%= login === 'oui' ? '/profile': '/login' %>">
+                    <%=status%>
+                </a>
+            </li>
+            <%if(login === 'oui') {%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Se déconnecter</a>
+                </li>
+                <%}%>
+                    <li>
+                        <a href="/status"><i class="material-icons">show_chart</i>
+                        Status
+                    </a>
+                    </li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+
+        <br><br>
+        <div class="row">
+
+            <center>
+                <div class="col s6">
+                    <div class="server-block-guild" title="<%= guild.name %>">
+                        <%if (guild.icon) {%>
+                            <img src="https://cdn.discordapp.com/icons/<%=guild.id%>/<%=guild.icon%>.png?size=128" class="bot-avatar rounded-circle" width="150px" height="150px">
+                            <%}else{%>
+                                <canvas class="bot-avatar rounded-circle" id="<%= guild.name.replace(/\w+/g, name => name[0]).replace(/\s/g, '') %>" width="150px" height="150px"></canvas>
+
+                                <script>
+                                    function createIcone() {
+                                        const nameAcronym = document.getElementById("<%= guild.name.replace(/\w+/g, name => name[0]).replace(/\s/g, '')  %>").getContext('2d');
+                                        nameAcronym.font = '20px Arial';
+                                        nameAcronym.textAlign = "center";
+                                        nameAcronym.fillStyle = "white";
+                                        nameAcronym.fillText("<%= guild.name.replace(/\w+/g, name => name[0]).replace(/\s/g, '')  %>", 75, 105);
+                                    };
+                                    createIcone();
+                                </script>
+                                <%}%>
+                    </div>
+                </div>
+            </center>
+            <div class="col s6">
+
+                <h5>
+                    <%= guild.name %>
+                </h5>
+                <p>
+                    <strong>Propriétaire:</strong>
+                    <%=guild.owner.user.tag%><br/>
+
+
+                        <strong>ID:</strong>
+                        <%=guild.id %><br/>
+
+
+                            <strong>Nombre de membres:</strong>
+                            <%=guild.memberCount%><br/>
+
+                                <strong>Date de création:</strong>
+                                <%=guild.createdAt.toUTCString()%><br />
+
+                </p>
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <center>
+
+            <h3>Que voulez-vous faire?</h3>
+            <br>
+            <a class="waves-effect waves-light btn-large" href="./<%=guild.id %>/tools"><i class="material-icons right">build</i>Utilitaire</a>
+
+
+
+
+            <i>More soon...</i>
+
+            <br>
+            <br>
+            <br>
+        </center>
+
+
+        <footer class="page-footer black">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">chaunBot by chaun14</h5>
+                        <p class="grey-text text-lighten-4">Je ne suis toujours un développeur débutant, le code n'est pas parfait je le conçois mais j'essaie de m'améliorer pour rendre chaunBot encore meilleur.</p>
+        
+                    </div>
+                    <div class="col l3 s12">
+                        <h5 class="white-text">chaun14</h5>
+                        <ul>
+                            <li><a class="white-text" href="https://chaun14.fr">Mon site</a></li>
+                            <li><a class="white-text" href="https://ftnl.fr">FTNL</a></li>
+        
+                        </ul>
+                    </div>
+                    <div class="col l3 s12">
+                        <h5 class="white-text">Contact</h5>
+                        <ul>
+                            <li><a class="white-text" href="https://discord.gg/gqFCbCN">Discord de support</a></li>
+        
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    Made by <a class="orange-text text-lighten-3" href="https://chaun14.fr">chaun14</a>
+                </div>
+            </div>
+        </footer>
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="/js/materialize.js"></script>
+<script src="/js/init.js"></script>
+
+<!-- Messenger-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/messenger/1.5.0/js/messenger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/messenger/1.5.0/js/messenger-theme-flat.min.js"></script>
+
+</body>
+
+</html>
