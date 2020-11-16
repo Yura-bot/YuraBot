@@ -207,32 +207,51 @@ const languageData = {
     NSFW_LOADING: "Veuillez patienter... <a:loading:675233191870595082>",
     NSFW_IMG_NO_CHARGING: ":underage:\n**[L'image ne se charge pas ? cliquez ici]",
     /* Musique : */
+    SONGS: "musiques",
     MUSIC_CHANNEL_VOCAL: "<:X_:673212163837526064> | Vous devez être dans un canal vocal !",
     MUSIC_NOTHING_PLAYING: "<:X_:673212163837526064> | Il n'y a rien à jouer !",
+    MUSIC_DISCONECTED: "<:X_:673212163837526064> | La musique s'est arrêtée car j'ai été déconnecté du salon vocal !",
+    MUSIC_CHANNEL_EMPTY: "<:X_:673212163837526064> | La musique s'est arrêtée car il n'y a plus de membre dans le salon vocal !",
+    MUSIC_NO_RESULTS: (query) => `<:X_:673212163837526064> | Aucun résultat trouvé sur YouTube pour ${query} !`,
+    MUSIC_SEARCH_CANCEL: "<:X_:673212163837526064> | Vous n'avez pas fourni de réponse valable ... Veuillez envoyer la commande à nouveau !",
+    MUSIC_SEARCH_INVALIDE_RESPONSE: (track) => `<:X_:673212163837526064> | Vous devez envoyer un numéro valide entre **1** et **${track}** !`,
+    MUSIC_TRACK_ADD: (title) => `<:check:673212026226737153> | ${title} ajouté à la file d'attente !`,
     /* Play : */
     PLAY_NO_REQUEST: "<:X_:673212163837526064> | Veuillez entrer une requête pour jouer la musique !",
+    PLAY_ALREADYPLAYMUSIC: "<:X_:673212163837526064> | Je suis en train de jouer de la musique sur ce serveur dans un autre salon vocal, alors rejoignez le canal vocal dans lequel je suis pour commander le bot.",
     PLAY_ADD_QUEUE_1: "<:check:673212026226737153> | ",
     PLAY_ADD_QUEUE_2: " Ajouté à la file d'attente !",
     PLAY_PLAY: "🎶 | Lecture en cours :\n",
     PLAY_QUEUE_END: "⚠️ | File d'attente terminée, ajoutez d'autres chansons à jouer !",
     PLAY_REPEAT: "🔁 | Répétition :\n ",
-    PLAY_PLAYNOW: "🎶 | Jouer maintenant :\n ",
+    PLAY_PLAYNOW: "🎶 | Joue maintenant :\n ",
+    PLAY_INTO: " dans ",
+    PLAY_SEARCH_RESULTS: (results) => `Voici les résultats de votre recherche pour ${results} :`,
+    /* Errors : */
+    MUSIC_ERROR_1: "<:X_:673212163837526064> | Aucune musique n'est diffusée sur ce serveur !",
+    MUSIC_ERROR_2: "<:X_:673212163837526064> | Vous n'êtes connecté à aucun canal vocal !",
+    MUSIC_ERROR_3: "<:X_:673212163837526064> | Je ne peux pas me joindre à votre canal vocal, veuillez vérifier mes autorisations !",
+    MUSIC_ERROR_4: (error) => `<:X_:673212163837526064> | Quelque chose a mal tourné ... Erreur : ${error}`,
     /* Clear Queue : */
     CLEAR_QUEUE_CLEAR: "<:check:673212026226737153> | La file d'attente est dégagée !",
     /* Loop : */
-    LOOP_LOOP: "🔁 | Répéter ",
+    LOOP_ACTIVATE: "<:check:673212026226737153> | Mode de répétition désactivé !",
+    LOOP_DESACTIVATE: "🔁 | Mode de répétition activé !",
     /* Now Playing : */
     NOW_PLAYING_NOW_PLAYING: "🎶 | Jouer maintenant :\n",
     /* Pause : */
     PAUSE_PAUSE: "⏸ | En pause !",
     /* Resume : */
-    RESUME_RESUME: "⏯️| Reprise !",
+    RESUME_RESUME: "⏯️ | Reprise !",
     /* Skip : */
-    SKIP_SKIP: "<:check:673212026226737153> | Sauter :\n",
+    SKIP_SKIP: "<:check:673212026226737153> | La musique actuelle vient d'être **sautée**.",
     /* Stop : */
     STOP_STOP: "⏹ | Déconnecté !",
     /* Queue : */
     QUEUE_QUEUE_IN_PROGRESS: "En cours",
+    QUEUE_SHUFFLE: (shu) => `<:check:673212026226737153> | Queue mélangée **${shu}** musique(s)`,
+    QUEUE_REQUESTBY: "demandé par",
+    QUEUE_NOQUEUE: "<:X_:673212163837526064> | Aucune musique dans la queue.",
     /* Set Volume : */
     SET_VOLUME_NUMBER: "<:X_:673212163837526064> | Veuillez entrer un numéro !",
     SET_VOLUME_NUMBER_VALIDE: "<:X_:673212163837526064> | Veuillez entrer un numéro valide !",

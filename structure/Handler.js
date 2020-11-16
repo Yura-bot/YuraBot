@@ -42,4 +42,21 @@ module.exports = class {
         });
         console.log(`${'[Events]'} Chargé(s): ${count}/${files.length} évenement(s).`)
     }
+
+    musicEvents() {
+        let count = 0;
+        const files = readdirSync(join(__dirname, "../events-music"));
+        files.forEach((e) => {
+            try {
+                count++;
+                const eventName = e.split('.')[0];
+                const file = require(join(__dirname, "../events-music", e));
+                this.client.player.on(eventName, file.bind(null, this.client));
+                delete require.cache[require.resolve(join(__dirname, "../events-music", e))];
+            } catch (error) {
+                throw new Error(`${'[Events Music]'} Impossible de charger l'évenement de musique ${e}: ${error.stack || error}.`)
+            }
+        });
+        console.log(`${'[Events Music]'} Chargé(s): ${count}/${files.length} évenement(s).`)
+    }
 }

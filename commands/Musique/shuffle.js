@@ -1,13 +1,13 @@
 const Command = require("../../structure/Command.js");
 
-class Play extends Command {
+class Shuffle extends Command {
     constructor() {
         super({
-            name: 'play',
-            aliases: ['joue'],
+            name: 'shuffle',
+            aliases: [''],
             category: 'music',
-            description: 'Permet de jouer une musique dans votre salon.',
-            usage: 'play'
+            description: 'Permet de mélanger la queue.',
+            usage: 'shuffle'
         });
     }
 
@@ -30,18 +30,20 @@ class Play extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!args[1]) return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_NO_REQUEST") }})
-
         if (!message.member.voice.channel) {
          return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }})
         }
+
+        if (!client.player.getQueue(message)) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
       
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
          return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }})
         }
 
-        return client.player.play(message, args.slice(1).join(' '));
+        client.player.shuffle(message);
+
+        return message.channel.send({embed: {color: '0x00FF46', description: language("QUEUE_SHUFFLE", client.player.getQueue(message).tracks.length) }})
     }
 }
 
-module.exports = new Play;
+module.exports = new Shuffle;

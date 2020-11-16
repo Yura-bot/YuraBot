@@ -1,6 +1,5 @@
 const express = require("express");
 const session = require("express-session");
-const vhost = require('vhost')
 
 const app = express();
 
@@ -59,7 +58,6 @@ module.exports.load = async(client) => {
         .get("*", function(req, res) {
             res.status(404).render("404");
         })
-        .use(vhost('dash.yurabot.xyz', app))
 
     http.listen(app.get('port'), (err) => {
 

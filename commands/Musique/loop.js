@@ -1,13 +1,13 @@
 const Command = require("../../structure/Command.js");
 
-class Play extends Command {
+class Loop extends Command {
     constructor() {
         super({
-            name: 'play',
-            aliases: ['joue'],
+            name: 'loop',
+            aliases: [''],
             category: 'music',
-            description: 'Permet de jouer une musique dans votre salon.',
-            usage: 'play'
+            description: 'Permet de mettre ou désactiver la boucle .',
+            usage: 'loop'
         });
     }
 
@@ -30,18 +30,26 @@ class Play extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!args[1]) return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_NO_REQUEST") }})
-
         if (!message.member.voice.channel) {
          return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }})
         }
+
+        if (!client.player.getQueue(message)) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
       
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
          return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }})
         }
 
-        return client.player.play(message, args.slice(1).join(' '));
+        const repeatMode = client.player.getQueue(message).repeatMode;
+
+        if (repeatMode) {
+            client.player.setRepeatMode(message, false);
+            return message.channel.send({embed: {color: '0x00FF46', description: language("LOOP_ACTIVATE") }})
+        } else {
+            client.player.setRepeatMode(message, true);
+            return message.channel.send({embed: {color: '0x00FF46', description: language("LOOP_DESACTIVATE") }})
+        };
     }
 }
 
-module.exports = new Play;
+module.exports = new Loop;
