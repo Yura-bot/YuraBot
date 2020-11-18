@@ -42,7 +42,7 @@ class Volume extends Command {
 
         if (!args[1]) return message.channel.send({embed: {color: '0xFF0000', description: language("SET_VOLUME_NUMBER") }})
 
-        if (isNaN(args[0]) || 100 < args[0] || args[0] <= 0) return message.channel.send({embed: {color: '0xFF0000', description: language("SET_VOLUME_NUMBER_VALIDE") }})
+        if (isNaN(args[1]) || 100 < args[1] || args[1] <= 0) return message.channel.send({embed: {color: '0xFF0000', description: language("SET_VOLUME_NUMBER_VALIDE") }})
         if (message.content.includes('-') || message.content.includes('+') || message.content.includes(',') || message.content.includes('.')) return message.channel.send({embed: {color: '0xFF0000', description: language("SET_VOLUME_NUMBER_VALIDE") }})
 
         client.player.setVolume(message, parseInt(args.slice(1).join(' ')));
