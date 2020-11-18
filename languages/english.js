@@ -260,6 +260,12 @@ const languageData = {
     SET_VOLUME_NUMBER: "<:X_:673212163837526064> | Veuillez entrer un numéro !",
     SET_VOLUME_NUMBER_VALIDE: "<:X_:673212163837526064> | Veuillez entrer un numéro valide (entre 1 et 100) !",
     SET_VOLUME_SUCESS: (vol) => `<:check:673212026226737153> | Volume réglé sur **${vol}%** !`,
+    /* Filtre : */
+    FILTER_NO: "<:X_:673212163837526064> | Veuillez spécifier un filtre valide à activer ou désactiver !",
+    FILTER_NOT_EXIST: "<:X_:673212163837526064> | Ce filtre n'existe pas !",
+    FILTER_ADDED: "<:check:673212026226737153> | J'ajoute le filtre à la musique, attendez s'il vous plaît... \n Note : plus la musique est longue, plus cela prendra de temps !",
+    FILTER_REMOVE: "<:check:673212026226737153> | Je **désactive** le filtre sur la musique, veuillez patienter... \n Note : plus la musique est longue, plus cela prendra de temps !",
+    FILTER_LIST: (pre) => `Liste de tous les filtres activés ou désactivés.\nUtilisez \`${pre}filter\` pour ajouter un filtre à une chanson.`,
     /* Modération : */
     MOD_ACTION: "Action :",
     MOD_MEMBER: "Membre :",

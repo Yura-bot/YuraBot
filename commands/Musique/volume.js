@@ -6,7 +6,7 @@ class Volume extends Command {
             name: 'volume',
             aliases: ['vol', 'set-vol'],
             category: 'music',
-            description: 'Permet de mettre en pause la musique.',
+            description: 'Permet de modifier le volume de la musique.',
             usage: 'pause'
         });
     }
