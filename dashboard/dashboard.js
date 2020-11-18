@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const vhost = require('vhost')
 
 const app = express();
 
@@ -34,6 +35,7 @@ module.exports.load = async(client) => {
     }));
 
     app
+        .use(vhost('dash.yurabot.xyz', function handle (req, res, next) {}))
         .use(bodyparser.json())
         .use(bodyparser.urlencoded({ extended: true }))
         .engine("html", require("ejs").renderFile)

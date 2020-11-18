@@ -239,6 +239,10 @@ const languageData = {
     LOOP_DESACTIVATE: "🔁 | Mode de répétition activé !",
     /* Now Playing : */
     NOW_PLAYING_NOW_PLAYING: "🎶 | Jouer maintenant :\n",
+    NOW_PLAYING_CHANNEL: "Chaine :\n",
+    NOW_REQUESTBY: "Demandé par :",
+    NOW_FORMPLAYLIST: "Vient d'une playlist ? :\n",
+    NOW_PROGRESSBAR: "Barre de progression :",
     /* Pause : */
     PAUSE_PAUSE: "⏸ | En pause !",
     /* Resume : */
@@ -254,8 +258,8 @@ const languageData = {
     QUEUE_NOQUEUE: "<:X_:673212163837526064> | Aucune musique dans la queue.",
     /* Set Volume : */
     SET_VOLUME_NUMBER: "<:X_:673212163837526064> | Veuillez entrer un numéro !",
-    SET_VOLUME_NUMBER_VALIDE: "<:X_:673212163837526064> | Veuillez entrer un numéro valide !",
-    SET_VOLUME_SUCESS: "<:check:673212026226737153> | Volume réglé sur ",
+    SET_VOLUME_NUMBER_VALIDE: "<:X_:673212163837526064> | Veuillez entrer un numéro valide (entre 1 et 100) !",
+    SET_VOLUME_SUCESS: (vol) => `<:check:673212026226737153> | Volume réglé sur **${vol}%** !`,
     /* Modération : */
     MOD_ACTION: "Action :",
     MOD_MEMBER: "Membre :",

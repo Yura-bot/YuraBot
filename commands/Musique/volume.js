@@ -1,13 +1,13 @@
 const Command = require("../../structure/Command.js");
 
-class NowPlaying extends Command {
+class Volume extends Command {
     constructor() {
         super({
-            name: 'now-playing',
-            aliases: ['np'],
+            name: 'volume',
+            aliases: ['vol', 'set-vol'],
             category: 'music',
-            description: "Permet de voir la musique qui est en cour d'écoute.",
-            usage: 'resume'
+            description: 'Permet de mettre en pause la musique.',
+            usage: 'pause'
         });
     }
 
@@ -40,24 +40,15 @@ class NowPlaying extends Command {
          return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }})
         }
 
-        const track = await client.player.nowPlaying(message);
+        if (!args[1]) return message.channel.send({embed: {color: '0xFF0000', description: language("SET_VOLUME_NUMBER") }})
 
-        return message.channel.send({
-            embed: {
-                color: client.color,
-                author: { name: track.title },
-                footer: { text: client.footer },
-                fields: [
-                    { name: language("NOW_PLAYING_CHANNEL"), value: track.author, inline: true },
-                    { name: language("QUEUE_REQUESTBY"), value: track.requestedBy.username, inline: true },
-                    { name: language("NOW_FORMPLAYLIST"), value: track.fromPlaylist ? 'Yes' : 'No', inline: true },
-                    { name: language("NOW_PROGRESSBAR"), value: client.player.createProgressBar(message, { timecodes: true }), inline: true }
-                ],
-                thumbnail: { url: track.thumbnail },
-                timestamp: new Date(),
-            },
-        });
+        if (isNaN(args[0]) || 100 < args[0] || args[0] <= 0) return message.channel.send({embed: {color: '0xFF0000', description: language("SET_VOLUME_NUMBER_VALIDE") }})
+        if (message.content.includes('-') || message.content.includes('+') || message.content.includes(',') || message.content.includes('.')) return message.channel.send({embed: {color: '0xFF0000', description: language("SET_VOLUME_NUMBER_VALIDE") }})
+
+        client.player.setVolume(message, parseInt(args.slice(1).join(' ')));
+
+        return message.channel.send({embed: {color: '0x00FF46', description: language("SET_VOLUME_SUCESS", args.slice(1).join(' ')) }})
     }
 }
 
-module.exports = new NowPlaying;
+module.exports = new Volume;
