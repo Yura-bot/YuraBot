@@ -1,13 +1,13 @@
 const Command = require("../../structure/Command.js");
 
-class Reportbug extends Command {
+class ReportBug extends Command {
     constructor() {
         super({
             name: 'report-bug',
-            aliases: ['r-b'],
-            category: 'utils',
-            description: 'Permet de signaler un bug sur le bot.',
-            usage: 'report-bug [Description]'
+            aliases: [''],
+            category: 'bot',
+            description: "Permet de signaler un bug à l'équipe de développement.",
+            usage: 'report-bug [bug]'
         });
     }
 
@@ -30,20 +30,18 @@ class Reportbug extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        let arg = message.content.split(" ").slice(1);
-        let thingToEcho = arg.join(" ");
+        let contenu = args.slice(1).join(" ")
       
-        if(!args[0]) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_REPORT_BUG"));
-      
+        if(!args[1]) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_REPORT_BUG"));
+
         const embed = new Discord.MessageEmbed()
           .setDescription("Nouveau bug !")
           .addField("💼 __Auteur :__", "" + message.author.tag + "")
-          .addField("📝 __Description :__", thingToEcho, true)
+          .addField("📝 __Description :__", contenu, true)
           .setColor("#FFD97C")
       
-        client.channels.cache.get("665849951904989197").send(embed);
-      
+          client.channels.cache.get("665849951904989197").send(embed);
     }
 }
 
-module.exports = new Reportbug;
+module.exports = new ReportBug;

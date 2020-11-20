@@ -4,7 +4,7 @@ class Help extends Command {
     constructor() {
         super({
             name: 'help',
-            category: 'utils',
+            category: 'bot',
             description: "Permet d'obtenir les commandes disponibles.",
             usage: 'help'
         });
@@ -57,6 +57,10 @@ class Help extends Command {
                         {
                             name: ':underage: » Commandes NSFW : (**' + client.commands.filter((command) => command.category === 'NSFW').size + '**)',
                             value: client.commands.filter((command) => command.category === 'NSFW').map((command) => "`" + command.name + "`").join(', ')
+                        },
+                        {
+                            name: ':robot: » Commandes bot : (**' + client.commands.filter((command) => command.category === 'bot').size + '**)',
+                            value: client.commands.filter((command) => command.category === 'bot').map((command) => "`" + command.name + "`").join(', ')
                         }
                     ],
                     url: client.url,

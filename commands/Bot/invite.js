@@ -5,7 +5,7 @@ class Invite extends Command {
         super({
             name: 'invite',
             aliases: [''],
-            category: 'utils',
+            category: 'bot',
             description: 'Vous donne des liens pour inviter le bot.',
             usage: 'invite'
         });
@@ -32,10 +32,10 @@ class Invite extends Command {
 
         const invite = new Discord.MessageEmbed()
         .setDescription(`${language("INVITE_TITLE")}`)
-        .addField(language("INVITE_ADMIN"), `[${language("INVITE_CLICK_HERE")}](https://discordapp.com/oauth2/authorize?client_id=662775890194989066&scope=bot&permissions=2016570495)`) //language("INVITE_ADMIN") ("INVITE_CLICK_HERE")
-        .addField(language("INVITE_PERSO"), `[${language("INVITE_CLICK_HERE")}](https://discordapp.com/oauth2/authorize?client_id=%20662775890194989066&scope=bot&permissions=1342319703)`) //language("INVITE_PERSO") ("INVITE_CLICK_HERE")
+        .addField(language("INVITE_ADMIN"), `[${language("INVITE_CLICK_HERE")}](https://discordapp.com/oauth2/authorize?client_id=662775890194989066&scope=bot&permissions=2016570495)`)
+        .addField(language("INVITE_PERSO"), `[${language("INVITE_CLICK_HERE")}](https://discordapp.com/oauth2/authorize?client_id=%20662775890194989066&scope=bot&permissions=1342319703)`)
         .setColor(client.color)
-        message.channel.send(invite)
+        return message.channel.send(invite);
     }
 }
 
