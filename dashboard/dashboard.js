@@ -42,7 +42,7 @@ module.exports.load = async(client) => {
         .use(express.static(path.join(__dirname, "/public")))
         .set("view engine", "ejs")
         .set("views", path.join(__dirname, "views"))
-        .set('port', config.port)
+	.set('port', config.port)
         .use(session({
             secret: config.secret,
             resave: false,

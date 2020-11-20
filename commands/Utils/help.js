@@ -57,7 +57,7 @@ class Help extends Command {
                         {
                             name: ':underage: » Commandes NSFW : (**' + client.commands.filter((command) => command.category === 'NSFW').size + '**)',
                             value: client.commands.filter((command) => command.category === 'NSFW').map((command) => "`" + command.name + "`").join(', ')
-                        },
+                        }
                     ],
                     url: client.url,
                     color: client.color,
@@ -71,6 +71,17 @@ class Help extends Command {
         } else {
             if(client.commands.has(args[1]) && client.commands.get(args[1]).category !== 'secret') {
                 const command = client.commands.get(args[1]);
+
+                let Aliases;
+                let Desc;
+                if (!command.aliases) {
+                    Aliases = command.aliases
+                    Desc = command.description;
+                } else { 
+                    Aliases = "Aucune aliases pour cette commande."
+                    Desc = "Aucune description pour cette commande."
+                }
+
                 message.channel.send({
                     embed: {
                         title: ":question: Aide sur la commande '"+command.name+"'",
@@ -78,18 +89,23 @@ class Help extends Command {
                             "() : Optionnel | [] : Obligatoire",
                         fields: [
                             {
-                                name: '• Nom de la commande:',
+                                name: '• Nom de la commande :',
                                 value: "[»]("+client.url+") " + command.name,
                                 inline: true
                             },
                             {
-                                name: '• Utilisation:',
+                                name: '• Utilisation :',
                                 value: "[»]("+client.url+") " + command.usage,
                                 inline: true
                             },
                             {
-                                name: '• Description de la commande:',
-                                value: "[»]("+client.url+") " + command.description,
+                                name: '• Description de la commande :',
+                                value: "[»]("+client.url+") " + Desc,
+                                inline: false
+                            },
+                            {
+                                name: '• Aliase(s) de la commande :',
+                                value: "[»]("+client.url+") " + Aliases,
                                 inline: false
                             }
                         ],
