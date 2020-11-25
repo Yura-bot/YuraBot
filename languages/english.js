@@ -357,6 +357,10 @@ const languageData = {
     TEMPMUTE_UNMUTE_MP_1: "🔊 Vous êtes unmute sur **",
     TEMPMUTE_UNMUTE_MP_2: "** ! Vous pouvez parler !",
     /* Utilitaire : */
+    ONLINE: "",
+    OFFLINE: "",
+    DND: "<:dnd:675371548651159573> Ne pas déranger",
+    IDLE: "",
     /* Commande ascii : */
     SYNTAXE_ASCII: "ascii [Message]```",
     ASCII: "ascii",
