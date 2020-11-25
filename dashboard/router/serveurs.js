@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const CheckAuth = require('../auth/CheckAuth');
 
+let bot = require("../../main.js")
+
 router.get("/:guildID", CheckAuth, (req, res) => {
 
-    console.log(req.params)
+    console.log(req.params.guildID)
     console.log(req.user.id)
 
     let serv = req.bot.guilds.cache.get(req.params.guildID);
@@ -12,8 +14,11 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/dashboard");
 
     res.render("guild", {
+        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
+        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
         status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-        botclient: req.bot.user,
+        botclient: req.client.user,
+        bot: bot,
         user: req.user,
         login: "oui",
         guild: serv,
