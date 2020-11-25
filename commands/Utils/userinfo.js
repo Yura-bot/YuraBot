@@ -31,15 +31,37 @@ class UserInfo extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        let member = message.mentions.users.first();
-
-        if (!args[1]) {
-            member = message.member;
+		let displayPresence = true;
+		const isID = !isNaN(args[1]);
+        var user;
+        let avatar;
+        
+		if(!args[1]){
+            user = message.author;
+            avatar = message.mentions.users.size ? message.mentions.users.first().avatarURL({ format: 'png', dynamic: true, size: 2048 }) : message.author.avatarURL({ format: 'png', dynamic: true, size: 2048 });
         }
+        
+		if(message.mentions.users.first()){
+            user = message.mentions.users.first();
+            avatar = message.mentions.users.size ? message.mentions.users.first().avatarURL({ format: 'png', dynamic: true, size: 2048 }) : message.author.avatarURL({ format: 'png', dynamic: true, size: 2048 });
+        }
+        
+		if(isID && !user){
+            user = client.users.cache.get(args[1]);
+            avatar = user.avatarURL({ format: 'png', dynamic: true, size: 2048 })
+			if(!user){
+				user = await client.users.fetch(args[1], true).catch(() => {});
+				displayPresence = false;
+			}
+		}
+        
+		if(!user){
+            return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_USERINFO"));
+		}
 
-        if (!member && args[1]) {
-            member = message.guild.members.cache.get(args[1]);
-            if (!member) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_USERINFO"));
+		let member = null;
+		if(message.guild){
+			member = await message.guild.members.fetch(user).catch(() => {});
         }
 
         let pseudo = member.user.username;
@@ -48,7 +70,6 @@ class UserInfo extends Command {
         let lastmsg = member.lastMessage;
         let id = member.id;
         let nickname = member.nickname;
-        let avatar = member.user.avatarURL({ dynamic: true });
         let date_created = moment(member.user.createdAt).format("D/MM/YY à HH:mm")
     
     
@@ -80,10 +101,10 @@ class UserInfo extends Command {
             .setAuthor('Informations sur ' + pseudo)
             .setThumbnail(avatar)
             .setColor(client.color)
-            .addField(language("USERINFO_PSEUDO"), pseudo, true)
-            .addField(language("USERINFO_TAG"), tag, true)
-            .addField(language("USERINFO_SURNOM"), nickname, true)
-            .addField(language("USERINFO_ID"), id, true)
+            .addField(language("USERINFO_PSEUDO"), pseudo)
+            .addField(language("USERINFO_TAG"), tag)
+            .addField(language("USERINFO_SURNOM"), nickname)
+            .addField(language("USERINFO_ID"), id)
             .addField(language("USERINFO_ARIVATEDATE") + message.guild.name + " ➜**", date_join)
             .addField(language("USERINFO_CREATEDAT"), date_created)
             .addField(language("USERINFO_LASTMSG"), lastmsg + " ")
