@@ -1,19 +1,20 @@
 const Command = require("../../structure/Command.js");
 
-class Mute extends Command {
+class TempMute extends Command {
     constructor() {
         super({
-            name: 'mute',
+            name: 'tempmute',
             aliases: [],
             category: 'mod',
-            description: 'Permet de rendre muet une personne',
-            usage: 'mute [Membre] (Raison)'
+            description: 'Permet de rendre muet une personne dans un temps limité.',
+            usage: 'tempmute [Membre] [Temps] (Raison)'
         });
     }
 
     async run(client, message, args) {
 
         const Discord = require("discord.js");
+        const ms = require("ms");
 
         let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
 
@@ -45,7 +46,7 @@ class Mute extends Command {
 
         if (!usermute) {
             return message.channel.send(
-              language("SYNTAXE") + prefix + language("SYNTAXE_MUTE")
+              language("SYNTAXE") + prefix + language("SYNTAXE_TEMPMUTE")
             );
         }
 
@@ -53,7 +54,10 @@ class Mute extends Command {
             return message.channel.send(language("AUTOMUTE"));
         }
 
-        let reason = args.slice(2).join(' ');
+        let mutetime = args[2];
+        if(!mutetime) return message.reply(language("SYNTAXE") + prefix + language("SYNTAXE_TEMPMUTE"));
+
+        let reason = args.slice(3).join(' ');
         if (reason.length < 1) reason = language("BAN_NO_REASON");
 
         let muterole = message.guild.roles.cache.find(x => x.name === "Muted")
@@ -81,7 +85,7 @@ class Mute extends Command {
                 return client.emit('error',e, "mute");
             }
         }
-        if(usermute.roles.cache.has(muterole.id)) {
+        if(usermute.roles.cache.has(muterole)) {
             return message.channel.send(language("USERMUTE"))
         }
 
@@ -93,18 +97,35 @@ class Mute extends Command {
         const embed = new Discord.MessageEmbed()
         .setColor(0xFF0000)
         .setTimestamp()
-        .addField(language("MOD_ACTION"), 'Mute')
+        .addField(language("MOD_ACTION"), 'TempMute')
         .addField(language("MOD_MEMBER"), `${usermute} (${usermute.id})`)
         .addField(language("MOD_MODERATOR"), `${message.author.username}#${message.author.discriminator}`)
         .addField(language("MOD_REASON"), reason)
+        .addField(language("MOD_TIME"), ms(ms(mutetime)))
         .setFooter(client.footer);
 
         message.channel.send(embed);
             
-        usermute.send(`${language("MUTE_SUCESS_MP_1")}${message.guild.name}${language("MUTE_SUCESS_MP_2")}${message.author.username}__ `+" ! " + `${language("MUTE_SUCESS_MP_4")}\`${reason}\``).catch(e =>{
-            message.channel.send(language("MUTE_SUCESS_MPCLOSE"))
+        usermute.send(`${language("TEMPMUTE_SUCESS_MP_1")}${message.guild.name}${language("TEMPMUTE_SUCESS_MP_2")}${message.author.username}${language("TEMPMUTE_SUCESS_MP_3")}` + ms(ms(mutetime)) + " ! " + `${language("TEMPMUTE_SUCESS_MP_4")}\`${reason}\``).catch(e =>{
+            message.channel.send(language("TEMPMUTE_SUCESS_MPCLOSE"))
         });
+
+        setTimeout(function(){
+
+            if(usermute.roles.cache.has(muterole.id) === false) {
+                return; 
+            }
+            
+            message.guild.member(usermute).roles.remove(muterole).catch(e =>{
+                message.channel.send(language("UNMUTE_ERROR"))
+                return client.emit('error',e, "unmute");
+            });
+            
+            message.channel.send(`${language("TEMPMUTE_UNMUTE_CHANNEL_1")}${usermute.id}${language("TEMPMUTE_UNMUTE_CHANNEL_2")}`).catch(e => {});
+            message.mentions.users.first().send(`${language("TEMPMUTE_UNMUTE_MP_1")}${message.guild.name}${language("TEMPMUTE_UNMUTE_MP_2")}`).catch(e => {});
+        
+        }, ms(mutetime));
     }
 }
 
-module.exports = new Mute;
+module.exports = new TempMute;

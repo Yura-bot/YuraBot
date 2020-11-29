@@ -51,11 +51,14 @@ class UnMute extends Command {
 
         let muterole = message.guild.roles.cache.find(x => x.name === "Muted")
 
-        if(usermute.roles.cache.has(muterole)) {
-            return message.channel.send(language("MUTE_NOMUTE"))
+        if(usermute.roles.cache.has(muterole.id) === false) {
+            return message.channel.send(language("UNMUTE_NOMUTE"))
         }
 
-        usermute.roles.remove(muterole)
+        usermute.roles.remove(muterole).catch(e =>{
+            message.channel.send(language("UNMUTE_ERROR"))
+            return client.emit('error',e, "unmute");
+        });
           
         await message.channel.send(language("UNMUTE_SUCESS", usermute))
         
