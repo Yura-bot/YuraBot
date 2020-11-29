@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pronicio",
-  "license": "ISC",
+  "license": "PRIVATE",
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
     "amethyste-api": "^1.1.4",
