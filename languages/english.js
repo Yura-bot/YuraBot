@@ -362,6 +362,12 @@ const languageData = {
     TEMPMUTE_UNMUTE_CHANNEL_2: "> a été unmute !",
     TEMPMUTE_UNMUTE_MP_1: "🔊 Vous êtes unmute sur **",
     TEMPMUTE_UNMUTE_MP_2: "** ! Vous pouvez parler !",
+    /* Commande Everyrole : */
+    SYNTAXE_EVERYROLE: "everyrole [Role]```",
+    EVERYROLE: "everyrole",
+    EVERYROLE_MENTION: "<:X_:673212163837526064> **Erreur :** Veuillez mentionner un role !",
+    EVERYROLE_NO_ROLEFOUND: (role) => `<:X_:673212163837526064> | Aucun rôle trouvé pour **${role}**.`,
+    EVERYROLE_SUCESS: (role) => `<:check:673212026226737153> | J'ai ajouté le rôle **${role}** à **tout le monde**.`,
     /* Utilitaire : */
     ONLINE: "",
     OFFLINE: "",
