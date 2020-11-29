@@ -360,6 +360,13 @@ const languageData = {
     MUTE_SUCESS_MP_3: "__ pendant ",
     MUTE_SUCESS_MP_4: "Pour la raison ",
     MUTE_SUCESS_MPCLOSE: "<:check:673212026226737153> Je l'ai bien muter mais je n'ai pas pu le prévenir.",
+    /* Commande UnMute : */
+    SYNTAXE_UNMUTE: "unmute [Membre]```",
+    UNMUTE: "unmute",
+    UNMUTE_NOMUTE: "<:X_:673212163837526064> **Erreur:** Ce membre n'est pas mute !",
+    UNMUTE_SUCESS: (usermute) => `<:check:673212026226737153> | **${usermute}** est unmute !`,
+    UNMUTE_SUCESS_MPCLOSE: "<:check:673212026226737153> Je l'ai bien unmuter mais je n'ai pas pu le prévenir.",
+    UNMUTE_SENDUSER: (guild) => `<:check:673212026226737153> | Vous êtes unmute sur **${guild}**`,
     /* Commande TempMute : */
     SYNTAXE_TEMPMUTE: "tempmute [Membre] [Temps] [Raison]```",
     TEMPMUTE: "tempmute",
