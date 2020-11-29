@@ -310,6 +310,7 @@ const languageData = {
     BAN_SUCESS_3: "__ pour la raison **",
     /* Commande Clear : */
     CLEAR_LIMIT: "<:X_:673212163837526064> **Merci de donner un chiffre entre 1 et 100 pour effectuer cette commande.**",
+    CLEAR_14DAYS: "<:X_:673212163837526064> **Erreur :** Le bot ne peux pas supprimer les messages vieux de 14 jours !",
     DELETE_MESSAGE: "messages supprimés.**",
     CLEAR: "clear",
     /* Commande Kick : */
