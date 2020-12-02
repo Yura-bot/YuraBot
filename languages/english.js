@@ -46,15 +46,15 @@ const languageData = {
     /* Commande Backup : */
     BACKUP_CREATE: "create-backup",
     BACKUP_LOAD: "load-backup",
-    LOADING: "Chargement <a:loading:675233191870595082>",
-    BACKUP_COMMAND: "La sauvegarde a été créée ! Pour la charger, tapez cette commande sur le serveur de votre choix :",
+    LOADING: "**<a:loading:675233191870595082> Chargement...**",
+    BACKUP_COMMAND: "<:check:673212026226737153> | La sauvegarde a été créée ! Pour la charger, tapez cette commande sur le serveur de votre choix : `",
     BACKUP_SAVE: "<:check:673212026226737153>  Création d'une sauvegarde réussie. L'ID de sauvegarde a été envoyé en dm !",
     BACKUP_IDVALIDE: "<:X_:673212163837526064>  | Vous devez spécifier une ID de sauvegarde valide !",
     BACKUP_LOAD_CONFIRM: ":warning: | Lorsque la sauvegarde est chargée, tous les canaux, rôles, etc. seront remplacés ! Tapez `-confirm` pour confirmer !",
     BACKUP_LOAD_CONFIRM_CANCEL: "<:X_:673212163837526064>  | Le temps est écoulé ! Chargement de sauvegarde annulé !",
     BACKUP_LOAD_SUCESS: "<:check:673212026226737153>  | Commencez à charger la sauvegarde !",
     BACKUP_ERROR: "<:X_:673212163837526064>  | Désolé, une erreur s'est produite... Veuillez vérifier que j'ai les autorisations d'administrateur !",
-    BACKUP_NO_FOUND: "<:X_:673212163837526064> | Aucune sauvegarde trouvée pour ",
+    BACKUP_NO_FOUND: "<:X_:673212163837526064> | Aucune sauvegarde trouvée pour `",
     /* Commande Annonce : */
     SYNTAXE_ANNONCE: "annonce [Description]```",
     ANNONCE: "annonce",
