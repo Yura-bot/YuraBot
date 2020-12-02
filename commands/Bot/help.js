@@ -28,7 +28,7 @@ class Help extends Command {
                         },
                         {
                             name: ':rotating_light: » Commandes Modération : (**' + client.commands.filter((command) => command.category === 'mod').size + '**)',
-                            value: "Aucune cmd"+client.commands.filter((command) => command.category === 'mod').map((command) => "`" + command.name + "`").join(', ')
+                            value: client.commands.filter((command) => command.category === 'mod').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
                             name: ':gear: » Commandes Utilitaires : (**' + client.commands.filter((command) => command.category === 'utils').size + '**)',

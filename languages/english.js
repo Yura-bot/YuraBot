@@ -340,15 +340,14 @@ const languageData = {
     LOCK: "lock",
     LOCK_MESSAGE_1: "<:check:673212026226737153> **",
     LOCK_MESSAGE_2: "** vient de verrouiller le canal. Ne vous inquiétez pas, l'administrateur va bientôt rouvrir la discussion, alors soyez patients.",
+    LOCK_ALREADYLOCKED: "<:X_:673212163837526064> **Erreur :** Ce salon est déja locker !",
     /* Commande UnLock : */
     UNLOCK: "unlock",
-    UNLOCK_MESSAGE: "Verrouillage levé <:check:673212026226737153> amusez-vous à parler tant que vous le pouvez !",
-    /* Commande Lock : */
+    UNLOCK_MESSAGE: "<:check:673212026226737153> Verrouillage levé, amusez-vous à parler tant que vous le pouvez !",
+    UNLOCK_NOLOCKED: "<:X_:673212163837526064> **Erreur :** Ce salon n'est pas locker !",
+    /* Commande TimeLock : */
     TIMELOCK: "timelock",
-    TIMELOCK_ERROR_TIME: "Vous devez fixer une durée pour le verrouillage en heures, minutes ou secondes !",
-    TIMELOCK_END: "Verrouillage levé <:check:673212026226737153> Profitez de la conversation tant que vous le pouvez encore !",
-    TIMELOCK_SUCESS_1: "<:check:673212026226737153> **",
-    TIMELOCK_SUCESS_2: "** vient de verrouiller le canal pour ",
+    TIMELOCK_ERROR_TIME: "<:X_:673212163837526064> **Erreur :** Vous devez fixer une durée pour le verrouillage en heures, minutes ou secondes !",
     /* Commande Warn : */
     SYNTAXE_WARN: "warn [Membre] [Raison]```",
     WARN: "warn",

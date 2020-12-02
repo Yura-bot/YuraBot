@@ -30,6 +30,7 @@ class Class extends Client {
         this.guildSettings = new Enmap({ name: 'guildSettings' });
         this.userData = new Enmap({ name: 'userData' });
         this.warn = new Enmap({ name: 'warn' });
+        this.mod = new Enmap({ name: 'mod' });
 
         this.giveawaysManager = new GiveawaysManager(this, {
             storage: "./giveaways.json",
