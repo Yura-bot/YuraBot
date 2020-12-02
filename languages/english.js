@@ -438,6 +438,11 @@ const languageData = {
     /* Commande Report-bug : */
     SYNTAXE_REPORT_BUG: "report-bug [Description]```",
     REPORT_BUG: "report-bug",
+    /* Commande web-ping : */
+    SYNTAXE_WEB_PING: "web-ping [site]```",
+    WEB_PING: "web-ping",
+    WEB_PING_NOSITEFOUND: "<:X_:673212163837526064> **Erreur : Site introuvable !**",
+    WEB_PING_SUCESS: "<:check:673212026226737153> | Ping du site",
     /* Commande Finduser : */
     SYNTAXE_FINDUSER: "finduser [id]```",
     FINDUSER: "finduser",
