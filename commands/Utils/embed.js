@@ -7,7 +7,7 @@ class Embed extends Command {
             aliases: ['create-embed'],
             category: 'utils',
             description: 'Permets de créer un embed personnaliser.',
-            usage: 'embed | [couleur] | [Titre] | [Déscription] | [Footer]'
+            usage: 'embed [couleur] | [Titre] | [Déscription] | [Footer]'
         });
     }
 
@@ -30,11 +30,11 @@ class Embed extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        var params_array = args.join(' ').split(' | ');
-        var color = params_array[1];
-        var title = params_array[2];
-        var msg = params_array[3];
-        var footer = params_array[4];
+        var params_array = args.splice(1).join(" ").split("|");
+        var color = params_array[0];
+        var title = params_array[1];
+        var msg = params_array[2];
+        var footer = params_array[3];
 
         if(!color || !title || !msg || !footer) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_EMBED"));
     

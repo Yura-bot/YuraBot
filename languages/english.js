@@ -429,7 +429,7 @@ const languageData = {
     COOLDOWN_END: "** !",
     COOLDOWN_STOP: ":alarm_clock: | Temps écoulé ! Il s'est passé **",
     /* Commande Embed : */
-    SYNTAXE_EMBED: "embed | [couleur] | [Titre] | [Déscription] | [Footer]```",
+    SYNTAXE_EMBED: "embed [couleur] | [Titre] | [Déscription] | [Footer]```",
     EMBED: "embed",
     EMBED_SUCESS: "```Résultat :\n\n",
     /* Commande Emojis : */

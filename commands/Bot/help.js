@@ -24,7 +24,7 @@ class Help extends Command {
                     fields: [
                         {
                             name: '<:adminsettingsmale:675368904637546506> » Commandes Administration : (**' + client.commands.filter((command) => command.category === 'admin').size + '**)',
-                            value: "Aucune cmd"+client.commands.filter((command) => command.category === 'admin').map((command) => "`" + command.name + "`").join(', ')
+                            value: client.commands.filter((command) => command.category === 'admin').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
                             name: ':rotating_light: » Commandes Modération : (**' + client.commands.filter((command) => command.category === 'mod').size + '**)',
