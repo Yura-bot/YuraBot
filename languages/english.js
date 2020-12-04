@@ -465,6 +465,10 @@ const languageData = {
     SYNTAXE_SHORTEN: "shorten [lien]```",
     SHORTEN: "shorten",
     SHORTEN_SUCESS: "`Lien raccourcis à cette URL: `  ",
+    /* Commande Morse : */
+    SYNTAXE_MORSE: "morse [Texte]```",
+    MORSE: "morse",
+    MORSE_SUCESS: "<:check:673212026226737153> **__Résultat :\n\n__**",
     /* Commande BotInfo : */
     BOTINFO: "botinfo",
     BOTINFO_TITLE: "**• Informations du bot •**",

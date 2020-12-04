@@ -67,7 +67,6 @@ class Class extends Client {
     getEmoji(emojiId) {
         return this.emojis.cache.get(emojiId).toString();
     }
-
 }
 
 module.exports = new Class();
