@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/header'); %>
+    <title>Yura | Serveur</title>
+</head>
+
+<body>
+
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <%- include('../partials/headbar'); %>
+      <div class="page-body-wrapper sidebar-icon">
+        <%- include('../partials/nav'); %>
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-6">
+                  <h3>
+                    <%= guild.name %></h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Dashboard Yura</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+
+                <div class="card">
+                    <div class="card-header">
+                      <h5>👋 Configuration du message de bienvenue :</h5>
+                    </div>
+                    <form class="form theme-form" method="POST">
+                      <div class="card-body">
+
+                        <div class="row">
+                            <div class="col">
+                              <div class="form-group mb-0">
+                                <label for="welcome-settings">Configurez votre message de bienvenue :</label>
+                                <textarea class="form-control" id="welcome-settings" type="text" name="welcomeMessage" placeholder="Votre message de bienvenue !" rows="6"><%= welcomeMessage %></textarea>
+                              </div>
+                            </div>
+                        </div>          
+
+                        <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="channel-welcome-system">Channel :</label>
+                                <select class="form-control digits" id="channel-welcome-system" name="channelID">
+
+                                <% if(welcomeEnabled){ %>
+                                    <option selected="selected">#<%= bot.channels.cache.get(welcomeChannel).name %></option>
+                                    <% guild.channels.cache.filter((ch) => ch.id !== welcomeChannel && ch.type === "text").forEach((ch) => { %>
+                                        <option>#<%= ch.name %></option>
+                                    <% }); } else { %>
+                                    <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
+                                    <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+                                        <option>#<%= ch.name %></option>
+                                    <% }); %>
+                                <% } %>
+
+                                </select>
+                              </div>
+                            </div>
+                        </div>
+
+                        <div class="checkbox checkbox-success">
+                            <% if(welcomeImage) { %>
+                                <input id="checkbox-primary" type="checkbox" name="withImage" checked>
+                            <% } else { %>
+                                <input id="checkbox-primary" type="checkbox" name="withImage">
+                            <% } %>
+                            <label for="checkbox-primary">Image de bienvenue ?</label>
+                          </div>
+
+                      </div>
+
+                      <div class="card-footer">
+                        <button class="btn btn-primary" type="submit">Sauvegarder</button>
+                      </div>
+
+                    </form>
+                  </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <%- include('../partials/footer'); %>
+      </div>
+    </div>
+    
+    <script src="/js/jquery-3.5.1.min.js"></script>
+
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.js"></script>
+
+    <script src="/js/icons/feather-icon/feather.min.js"></script>
+    <script src="/js/icons/feather-icon/feather-icon.js"></script>
+
+    <script src="/js/sidebar-menu.js"></script>
+    <script src="/js/config.js"></script>
+
+    <script src="/js/theme-customizer/customizer.js"></script>
+
+  </body>
+
+</html>
