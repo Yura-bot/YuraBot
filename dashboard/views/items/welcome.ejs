@@ -34,12 +34,46 @@
             <div class="row">
               <div class="col-sm-12">
 
+                <% if(alert) { %>
+                  <div class="alert alert-success outline alert-dismissible fade show" role="alert">
+                    <p><i data-feather="thumbs-up"></i><b>&ensp; Bien joué ! </b>Les données ont été sauvegardées !</p>
+                    <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  </div>
+
+                <% } %>
+
                 <div class="card">
                     <div class="card-header">
                       <h5>👋 Configuration du message de bienvenue :</h5>
                     </div>
                     <form class="form theme-form" method="POST">
                       <div class="card-body">
+
+                        <% if(welcomeEnabled === false) { %>
+
+                          <div class="media">
+                            <label class="col-form-label m-r-10">Désactivé !</label>
+                            <div class="media-body icon-state switch-outline">
+                              <label class="switch">
+                                <input type="checkbox" name="statusWelcome"><span class="switch-state bg-success"></span>
+                              </label>
+                            </div>
+                          </div>
+
+                        <% } else { %>
+
+                          <div class="media">
+                            <label class="col-form-label m-r-10">Activé !</label>
+                            <div class="media-body icon-state switch-outline">
+                              <label class="switch">
+                                <input type="checkbox" checked="" name="statusWelcome"><span class="switch-state bg-success"></span>
+                              </label>
+                            </div>
+                          </div>
+
+                        <% } %>
+
+                        <br>
 
                         <div class="row">
                             <div class="col">
@@ -48,7 +82,9 @@
                                 <textarea class="form-control" id="welcome-settings" type="text" name="welcomeMessage" placeholder="Votre message de bienvenue !" rows="6"><%= welcomeMessage %></textarea>
                               </div>
                             </div>
-                        </div>          
+                        </div>      
+                        
+                        <br>
 
                         <div class="row">
                             <div class="col">
@@ -79,7 +115,7 @@
                                 <input id="checkbox-primary" type="checkbox" name="withImage">
                             <% } %>
                             <label for="checkbox-primary">Image de bienvenue ?</label>
-                          </div>
+                        </div>
 
                       </div>
 

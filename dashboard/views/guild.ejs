@@ -34,6 +34,14 @@
             <div class="row">
               <div class="col-sm-12">
 
+                <% if(alert) { %>
+                  <div class="alert alert-success outline alert-dismissible fade show" role="alert">
+                    <p><i data-feather="thumbs-up"></i><b>&ensp; Bien joué ! </b>Les données ont été sauvegardées !</p>
+                    <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  </div>
+
+                <% } %>
+
                 <div class="card">
                   <div class="card-header">
                     <h5>📝 Configuration Basique :</h5>
@@ -85,6 +93,9 @@
 
     <script src="/js/sidebar-menu.js"></script>
     <script src="/js/config.js"></script>
+
+    <script src="/js/height-equal.js"></script>
+    <script src="/js/tooltip-init.js"></script>
 
     <script src="/js/theme-customizer/customizer.js"></script>
 
