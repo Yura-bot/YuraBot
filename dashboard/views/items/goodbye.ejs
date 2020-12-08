@@ -44,18 +44,18 @@
 
                 <div class="card">
                     <div class="card-header">
-                      <h5>👋 Configuration du message de bienvenue :</h5>
+                      <h5>😢 Configuration du message de départ :</h5>
                     </div>
                     <form class="form theme-form" method="POST">
                       <div class="card-body">
 
-                        <% if(welcomeEnabled === false) { %>
+                        <% if(goodbyeEnabled === false) { %>
 
                           <div class="media">
                             <label class="col-form-label m-r-10">Désactivé !</label>
                             <div class="media-body icon-state switch-outline">
                               <label class="switch">
-                                <input type="checkbox" name="statusWelcome"><span class="switch-state bg-success"></span>
+                                <input type="checkbox" name="statusGoodbye"><span class="switch-state bg-success"></span>
                               </label>
                             </div>
                           </div>
@@ -66,7 +66,7 @@
                             <label class="col-form-label m-r-10">Activé !</label>
                             <div class="media-body icon-state switch-outline">
                               <label class="switch">
-                                <input type="checkbox" checked="" name="statusWelcome"><span class="switch-state bg-success"></span>
+                                <input type="checkbox" checked="" name="statusGoodbye"><span class="switch-state bg-success"></span>
                               </label>
                             </div>
                           </div>
@@ -78,8 +78,8 @@
                         <div class="row">
                             <div class="col">
                               <div class="form-group mb-0">
-                                <label for="welcome-settings">Configurez votre message de bienvenue :</label>
-                                <textarea class="form-control" id="welcome-settings" type="text" name="welcomeMessage" placeholder="Votre message de bienvenue !" rows="6"><%= welcomeMessage %></textarea>
+                                <label for="goodbye-settings">Configurez votre message de départ :</label>
+                                <textarea class="form-control" id="goodbye-settings" type="text" name="goodbyeMessage" placeholder="Votre message de départ !" rows="6"><%= goodbyeMessage %></textarea>
                               </div>
                             </div>
                         </div>      
@@ -89,12 +89,12 @@
                         <div class="row">
                             <div class="col">
                               <div class="form-group">
-                                <label for="channel-welcome-system">Channel :</label>
-                                <select class="form-control digits" id="channel-welcome-system" name="channelID">
+                                <label for="channel-goodbye-system">Channel :</label>
+                                <select class="form-control digits" id="channel-goodbye-system" name="channelID">
 
-                                <% if(welcomeEnabled){ %>
-                                    <option selected="selected">#<%= bot.channels.cache.get(welcomeChannel).name %></option>
-                                    <% guild.channels.cache.filter((ch) => ch.id !== welcomeChannel && ch.type === "text").forEach((ch) => { %>
+                                <% if(goodbyeEnabled){ %>
+                                    <option selected="selected">#<%= bot.channels.cache.get(goodbyeChannel).name %></option>
+                                    <% guild.channels.cache.filter((ch) => ch.id !== goodbyeChannel && ch.type === "text").forEach((ch) => { %>
                                         <option>#<%= ch.name %></option>
                                     <% }); } else { %>
                                     <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
@@ -111,12 +111,12 @@
                         <label class="badge badge-danger">Bientôt :</label></a></li>
 
                         <div class="checkbox checkbox-success">
-                            <% if(welcomeImage) { %>
+                            <% if(goodbyeImage) { %>
                                 <input id="checkbox-primary" type="checkbox" name="withImage" checked disabled>
                             <% } else { %>
                                 <input id="checkbox-primary" type="checkbox" name="withImage" disabled>
                             <% } %>
-                            <label for="checkbox-primary"disabled>Image de bienvenue ?</label> 
+                            <label for="checkbox-primary"disabled>Image de départ ?</label> 
                         </div>
                       </div>
 

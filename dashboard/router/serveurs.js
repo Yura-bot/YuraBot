@@ -175,9 +175,6 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         welcomeImage: welcomeImage,
         alert: false
     });
-
-    
-
 }).post("/:guildID/tools/welcome", CheckAuth, async function(req, res) {
 
     let guild = req.bot.guilds.cache.get(req.params.guildID);
@@ -227,6 +224,11 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     }
     await bot.guildSettings.update(`${req.params.guildID}`, obj)
 
+    welcomeChannel = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeChannel")
+    welcomeMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeMessage")
+    welcomeImage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage")
+    welcomeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug")
+
     res.render("items/welcome", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
         avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
@@ -244,6 +246,123 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         welcomeMessage: welcomeMessage,
         welcomeEnabled: welcomeEnabled,
         welcomeImage: welcomeImage,
+        alert: true
+    });
+
+}).get("/:guildID/tools/goodbye", CheckAuth, async(req, res) => {
+
+    let serv = req.bot.guilds.cache.get(req.params.guildID);
+    if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+
+    let guildSettingsExist = bot.guildSettings.has(`${req.params.guildID}`)
+
+    if (guildSettingsExist === false ) {
+        return res.redirect("/serveurs/"+req.params.guildID);
+    }
+
+    let goodbyeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "goodbyePlug")
+
+    let goodbyeChannel; 
+    let goodbyeMessage;
+    let goodbyeImage;
+
+    if (goodbyeEnabled) {
+        goodbyeChannel = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeChannel")
+        goodbyeMessage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeMessage")
+        goodbyeImage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeImage")
+    }
+
+    res.render("items/goodbye", {
+        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
+        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
+        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
+        botclient: req.client.user,
+        bot: bot,
+        user: req.user,
+        login: "oui",
+        guild: serv,
+        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
+        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
+        message: "",
+        messageType: "success",
+        goodbyeChannel: goodbyeChannel,
+        goodbyeMessage: goodbyeMessage,
+        goodbyeEnabled: goodbyeEnabled,
+        goodbyeImage: goodbyeImage,
+        alert: false
+    });   
+}).post("/:guildID/tools/goodbye", CheckAuth, async function(req, res) {
+
+    let guild = req.bot.guilds.cache.get(req.params.guildID);
+    if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+
+    const member = guild.members.cache.get(req.user.id);
+    if (!member) return res.redirect("/");
+    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
+
+    let goodbyeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "goodbyePlug")
+
+    let goodbyeChannel; 
+    let goodbyeMessage;
+    let goodbyeImage;
+
+    if (goodbyeEnabled) {
+        goodbyeChannel = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeChannel")
+        goodbyeMessage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeMessage")
+        goodbyeImage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeImage")
+    }
+
+    let data  = req.body;
+
+    //Status :
+    let statusGoodbye = data.statusGoodbye;
+
+    if (statusGoodbye != "on") {
+        bot.guildSettings.delete(`${req.params.guildID}`, "goodbyePlug")
+        return res.redirect("/serveurs/"+req.params.guildID+"/tools/goodbye");
+    }
+
+    // Channel : 
+    let goodbyeChannelConfig = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
+    //Message
+    let goodbyeMessageConfig = data.goodbyeMessage;
+    //Image ?
+    let goodbyeImageConfig = data.withImage === "on"
+
+    const obj = {
+        goodbyePlug: {
+            goodbyeChannel: goodbyeChannelConfig,
+            goodbyeMessage: goodbyeMessageConfig,
+            goodbyeImage: goodbyeImageConfig,
+            goodbyeImageURL: "URL",
+        }
+    }
+    await bot.guildSettings.update(`${req.params.guildID}`, obj)
+
+    goodbyeChannel = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeChannel")
+    goodbyeMessage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeMessage")
+    goodbyeImage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeImage")
+    goodbyeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "goodbyePlug")
+
+    res.render("items/goodbye", {
+        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
+        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
+        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
+        botclient: req.client.user,
+        bot: bot,
+        user: req.user,
+        login: "oui",
+        guild: guild,
+        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
+        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
+        message: "",
+        messageType: "success",
+        goodbyeChannel: goodbyeChannel,
+        goodbyeMessage: goodbyeMessage,
+        goodbyeEnabled: goodbyeEnabled,
+        goodbyeImage: goodbyeImage,
         alert: true
     });
 
