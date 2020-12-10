@@ -51,13 +51,11 @@ class McServer extends Command {
                 color = "RED"
             }
 
-            message.reply(`https://api.serveurs-minecraft.com/api.php?Favicon_Ping&ip=${response.data.hostname}&port=${response.data.port}`)
-
             message.channel.send({
                 embed: {
                     title: "<a:grassblock:775037113536217099> Serveur Minecraft : "+response.data.hostname,
                     thumbnail: {
-                        url: `https://api.serveurs-minecraft.com/api.php?Favicon_Ping&ip=${response.data.hostname}&port=${response.data.port}`
+                        url: `https://eu.mc-api.net/v3/server/favicon/${response.data.hostname}`
                     },
                     fields: [
                         {
@@ -100,6 +98,9 @@ class McServer extends Command {
           } else {
               message.channel.send(language("MC_SERVER_NO_FOUND"))
           }
+        })
+        .catch(e => {
+            return message.channel.send(language("MC_SERVER_NO_FOUND"))
         });
 
         return;
