@@ -366,6 +366,94 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         alert: true
     });
 
+}).get("/:guildID/tools/autorole", CheckAuth, async(req, res) => {
+
+    let serv = req.bot.guilds.cache.get(req.params.guildID);
+    if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+
+    let guildSettingsExist = bot.guildSettings.has(`${req.params.guildID}`)
+
+    if (guildSettingsExist === false ) {
+        return res.redirect("/serveurs/"+req.params.guildID);
+    }
+
+    let autoroleEnabled = bot.guildSettings.has(`${req.params.guildID}`, "autorolePlug")
+
+    let autoroleRole; 
+
+    if (autoroleEnabled) {
+        autoroleRole = bot.guildSettings.get(`${req.params.guildID}`, "autorolePlug.role")
+    }
+
+    res.render("items/autorole", {
+        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
+        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
+        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
+        botclient: req.client.user,
+        bot: bot,
+        user: req.user,
+        login: "oui",
+        guild: serv,
+        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
+        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
+        message: "",
+        messageType: "success",
+        autoroleEnabled: autoroleEnabled,
+        autoroleRole: autoroleRole,
+        alert: false
+    });   
+}).post("/:guildID/tools/autorole", CheckAuth, async function(req, res) {
+
+    let guild = req.bot.guilds.cache.get(req.params.guildID);
+    if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+
+    const member = guild.members.cache.get(req.user.id);
+    if (!member) return res.redirect("/");
+    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
+
+    let data  = req.body;
+
+    //Status :
+    let statusAutorole = data.statusAutorole;
+
+    if (statusAutorole != "on") {
+        bot.guildSettings.delete(`${req.params.guildID}`, "autorolePlug")
+        return res.redirect("/serveurs/"+req.params.guildID+"/tools/autorole");
+    }
+
+    // Role : 
+    let autoroleRole = guild.roles.cache.find((r) => "@"+r.name === data.roleID).id
+
+    const obj = {
+        autorolePlug: {
+            role: autoroleRole
+        }
+    }
+    await bot.guildSettings.update(`${req.params.guildID}`, obj)
+
+    autoroleEnabled = bot.guildSettings.get(`${req.params.guildID}`, "autorolePlug")
+    autoroleRole = bot.guildSettings.get(`${req.params.guildID}`, "autorolePlug.role")
+
+    res.render("items/autorole", {
+        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
+        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
+        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
+        botclient: req.client.user,
+        bot: bot,
+        user: req.user,
+        login: "oui",
+        guild: guild,
+        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
+        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
+        message: "",
+        messageType: "success",
+        autoroleEnabled: autoroleEnabled,
+        autoroleRole: autoroleRole,
+        alert: true
+    });
+
 })
 
 
