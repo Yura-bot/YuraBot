@@ -471,6 +471,116 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         alert: true
     });
 
+}).get("/:guildID/tools/auto-mod", CheckAuth, async(req, res) => {
+
+    let serv = req.bot.guilds.cache.get(req.params.guildID);
+    if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+
+    let guildSettingsExist = bot.guildSettings.has(`${req.params.guildID}`)
+
+    if (guildSettingsExist === false ) {
+        return res.redirect("/serveurs/"+req.params.guildID);
+    }
+
+    let automodEnabled = bot.guildSettings.has(`${req.params.guildID}`, "automodPlug")
+
+    let antiraid = false;
+    let antipub = false;
+    let antilink = false;
+    let antibadworlds = false;
+
+    if (automodEnabled) {
+        antiraid = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antiraid")
+        antipub = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antipub")
+        antilink = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antilink")
+        antibadworlds = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antibadworlds")
+    }
+
+    res.render("items/auto-mod", {
+        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
+        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
+        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
+        botclient: req.client.user,
+        bot: bot,
+        user: req.user,
+        login: "oui",
+        guild: serv,
+        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
+        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
+        message: "",
+        messageType: "success",
+        antiraid: antiraid,
+        antipub: antipub,
+        antilink: antilink,
+        antibadworlds: antibadworlds,
+        alert: false
+    });   
+}).post("/:guildID/tools/auto-mod", CheckAuth, async function(req, res) {
+
+    let guild = req.bot.guilds.cache.get(req.params.guildID);
+    if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+
+    const member = guild.members.cache.get(req.user.id);
+    if (!member) return res.redirect("/");
+    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
+
+    let data  = req.body;
+
+    let statusAntiraid = data.statusAntiRaid;
+    let statusAntipub = data.statusAntiPub;
+    let statusAntilink = data.statusAntiLink;
+    let statusAntibadworlds = data.statusAntiBadWorlds;
+
+    if (statusAntiraid != "on") statusAntiraid = false
+    else statusAntiraid = true
+
+    if (statusAntipub != "on") statusAntipub = false
+    else statusAntipub = true
+
+    if (statusAntilink != "on") statusAntilink = false
+    else statusAntilink = true
+
+    if (statusAntibadworlds != "on") statusAntibadworlds = false
+    else statusAntibadworlds = true
+
+    const obj = {
+        automodPlug: {
+            antiraid: statusAntiraid,
+            antipub: statusAntipub,
+            antilink: statusAntilink,
+            antibadworlds: statusAntibadworlds
+        }
+    }
+    await bot.guildSettings.update(`${req.params.guildID}`, obj)
+
+    let antiraid = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antiraid");
+    let antipub = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antipub");
+    let antilink = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antilink");
+    let antibadworlds = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antibadworlds");
+
+
+    res.render("items/auto-mod", {
+        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
+        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
+        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
+        botclient: req.client.user,
+        bot: bot,
+        user: req.user,
+        login: "oui",
+        guild: guild,
+        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
+        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
+        message: "",
+        messageType: "success",
+        antiraid: antiraid,
+        antipub: antipub,
+        antilink: antilink,
+        antibadworlds: antibadworlds,
+        alert: true
+    });
+
 })
 
 
