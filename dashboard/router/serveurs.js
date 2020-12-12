@@ -18,14 +18,25 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     let obj = {
         prefix: "?",
         lang: "french",
-    }
+    };
+
     let prefix;
     let guildLanguage;
     let language2;
 
+    let suggestionEnabled;
+    let suggestionChannel;
+
     if (guildSettingsExist) {
         prefix = bot.guildSettings.get(`${req.params.guildID}`, "prefix")
         guildLanguage = bot.guildSettings.get(`${req.params.guildID}`, "lang")
+
+        suggestionEnabled = bot.guildSettings.has(`${req.params.guildID}`, "suggestionPlug")
+
+        if (suggestionEnabled) {
+            suggestionChannel = bot.guildSettings.get(`${req.params.guildID}`, "suggestionPlug.channel")
+        }
+        
     } else {
         bot.guildSettings.set(`${req.params.guildID}`, obj)
         return res.redirect("/serveurs/"+req.params.guildID);
@@ -55,6 +66,8 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         prefix: prefix,
         guildLanguage: guildLanguage,
         language2: language2,
+        suggestionEnabled: suggestionEnabled,
+        suggestionChannel: suggestionChannel,
         alert: false
     });
 }).post("/:guildID", CheckAuth, async function(req, res) {
@@ -62,32 +75,6 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     let guild = req.bot.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
     if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
-
-    let guildSettingsExist = bot.guildSettings.has(`${req.params.guildID}`)
-
-    let obj = {
-        prefix: "?",
-        lang: "french",
-    }
-    let prefix;
-    let guildLanguage;
-    let language2;
-
-    if (guildSettingsExist) {
-        prefix = bot.guildSettings.get(`${req.params.guildID}`, "prefix")
-        guildLanguage = bot.guildSettings.get(`${req.params.guildID}`, "lang")
-    } else {
-        bot.guildSettings.set(`${req.params.guildID}`, obj)
-        return res.redirect("/serveurs/"+req.params.guildID);
-    }
-
-    if (guildLanguage === "english") { 
-        guildLanguage = "Anglais"
-        language2 = "Français" 
-    } else  { 
-        guildLanguage = "Français"
-        language2 = "Anglais" 
-    }
 
     const member = guild.members.cache.get(req.user.id);
     if (!member) return res.redirect("/");
@@ -113,6 +100,34 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     }
     await bot.guildSettings.set(`${req.params.guildID}`, language, "lang")
 
+    //Suggestion System :
+    let suggestionEnabled = data.suggestionStatus === "on";
+    let suggestionChannel = guild.channels.cache.find((ch) => "#"+ch.name === data.suggestionChannelID).id;
+
+    
+    if (suggestionEnabled) {
+        await bot.guildSettings.set(`${req.params.guildID}`, suggestionChannel, "suggestionPlug.channel")
+    } else {
+        bot.guildSettings.delete(`${req.params.guildID}`, "suggestionPlug")
+    }
+
+    //re-save :
+
+    let prefix = bot.guildSettings.get(`${req.params.guildID}`, "prefix");
+    let guildLanguage = bot.guildSettings.get(`${req.params.guildID}`, "lang");
+    let language2;
+
+    if (guildLanguage === "english") { 
+        guildLanguage = "Anglais"
+        language2 = "Français" 
+    } else  { 
+        guildLanguage = "Français"
+        language2 = "Anglais" 
+    }
+
+    suggestionEnabled = bot.guildSettings.has(`${req.params.guildID}`, "suggestionPlug")
+    suggestionChannel = bot.guildSettings.get(`${req.params.guildID}`, "suggestionPlug.channel");
+
     res.render("guild", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
         avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
@@ -129,6 +144,8 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         prefix: prefix,
         guildLanguage: guildLanguage,
         language2: language2,
+        suggestionEnabled: suggestionEnabled,
+        suggestionChannel: suggestionChannel,
         alert: true
     });
 

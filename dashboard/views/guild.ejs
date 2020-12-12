@@ -48,6 +48,7 @@
                   </div>
                   <form class="form theme-form" method="POST">
                     <div class="card-body">
+
                       <div class="row">
                         <div class="col">
                           <div class="form-group">
@@ -56,6 +57,7 @@
                           </div>
                         </div>
                       </div>
+
                       <div class="row">
                         <div class="col">
                           <div class="form-group">
@@ -67,7 +69,42 @@
                           </div>
                         </div>
                       </div>
+
+                      <div class="checkbox checkbox-success">
+                        <% if(suggestionEnabled) { %>
+                            <input id="checkbox-primary" type="checkbox" name="suggestionStatus" checked >
+                        <% } else { %>
+                            <input id="checkbox-primary" type="checkbox" name="suggestionStatus" >
+                        <% } %>
+                        <label for="checkbox-primary">Activer les suggestions ?</label>
+                      </div>
+
+                      <br>
+
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group">
+                            <label for="suggestionSystem">Suggestion Channel :</label>
+                            <select class="form-control digits" id="suggestionSystem" name="suggestionChannelID">
+
+                            <% if(suggestionEnabled){ %>
+                                <option selected="selected">#<%= bot.channels.cache.get(suggestionChannel).name %></option>
+                                <% guild.channels.cache.filter((ch) => ch.id !== suggestionChannel && ch.type === "text").forEach((ch) => { %>
+                                    <option>#<%= ch.name %></option>
+                                <% }); } else { %>
+                                <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
+                                <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+                                    <option>#<%= ch.name %></option>
+                                <% }); %>
+                            <% } %>
+
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
+
                     <div class="card-footer">
                       <button class="btn btn-primary" type="submit">Sauvegarder</button>
                     </div>
