@@ -92,7 +92,7 @@
                                 <label for="channel-goodbye-system">Channel :</label>
                                 <select class="form-control digits" id="channel-goodbye-system" name="channelID">
 
-                                <% if(goodbyeEnabled){ %>
+                                <% if(goodbyeEnabled && bot.channels.cache.has(goodbyeChannel)){ %>
                                     <option selected="selected">#<%= bot.channels.cache.get(goodbyeChannel).name %></option>
                                     <% guild.channels.cache.filter((ch) => ch.id !== goodbyeChannel && ch.type === "text").forEach((ch) => { %>
                                         <option>#<%= ch.name %></option>

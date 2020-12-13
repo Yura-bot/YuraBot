@@ -92,8 +92,8 @@
                                 <label for="channel-welcome-system">Channel :</label>
                                 <select class="form-control digits" id="channel-welcome-system" name="channelID">
 
-                                <% if(welcomeEnabled){ %>
-                                    <option selected="selected">#<%= bot.channels.cache.get(welcomeChannel).name %></option>
+                                <% if(welcomeEnabled && bot.channels.cache.has(welcomeChannel)){ %>
+                                    <option selected="selected">#<%= bot.channels.cache.get(welcomeChannel).name.catch(e => { return res.redirect("/") }); %></option>
                                     <% guild.channels.cache.filter((ch) => ch.id !== welcomeChannel && ch.type === "text").forEach((ch) => { %>
                                         <option>#<%= ch.name %></option>
                                     <% }); } else { %>

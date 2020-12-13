@@ -78,7 +78,7 @@
                         <div class="form-group">
                             <label>Choissisez votre role :</label>
                             <select class="form-control" name="roleID">
-                                <% if(autoroleEnabled){ %>
+                                <% if(autoroleEnabled && guild.roles.cache.has(autoroleRole)){ %>
                                     <option selected="selected">@<%= guild.roles.cache.get(autoroleRole).name %></option>
                                     <% guild.roles.cache.filter((r) => r.id !== autoroleRole && r.name !== "@everyone").forEach((r) => { %>
                                         <option>@<%= r.name %></option>

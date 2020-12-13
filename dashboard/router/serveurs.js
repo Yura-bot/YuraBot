@@ -396,7 +396,6 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     }
 
     let autoroleEnabled = bot.guildSettings.has(`${req.params.guildID}`, "autorolePlug")
-
     let autoroleRole; 
 
     if (autoroleEnabled) {
