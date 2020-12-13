@@ -3,7 +3,7 @@
 
 <head>
     <%- include('../partials/header'); %>
-    <title>Yura | <%= guild.name %></title>
+    <title>Yura | Serveur</title>
 </head>
 
 <body>
@@ -42,114 +42,122 @@
 
                 <% } %>
 
-                <div class="card">
+                <div class="xl-100 col-lg-12 box-col-12">
+                  <div class="card">
                     <div class="card-header">
                       <h5>⚙ Configuration de l'auto modération :</h5>
                     </div>
                     <form class="form theme-form" method="POST">
-                        <div class="card-body">
-                            <div class="tabbed-card">
-                              <ul class="pull-right nav nav-pills nav-primary" id="pills-clrtab" role="tablist">
-                                <li class="nav-item"><a class="nav-link active" id="pills-antiraid-tab" data-toggle="pill" href="#pills-antiraid" role="tab" aria-controls="pills-antiraid" aria-selected="true"><i class="icofont icofont-shield"></i>Anti Raid</a></li>
-                                <li class="nav-item"><a class="nav-link" id="pills-antipub-tab" data-toggle="pill" href="#pills-antipub" role="tab" aria-controls="pills-antipub" aria-selected="false"><i class="icofont icofont-safety"></i>Anti Pub</a></li>
-                                <li class="nav-item"><a class="nav-link" id="pills-antilink-tab" data-toggle="pill" href="#pills-antilink" role="tab" aria-controls="pills-antilink" aria-selected="false"><i class="icofont icofont-link"></i>Anti Link</a></li>
-                                <li class="nav-item"><a class="nav-link" id="pills-antibadworlds-tab" data-toggle="pill" href="#pills-antibadworlds" role="tab" aria-controls="pills-antibadworlds" aria-selected="false"><i class="icofont icofont-speech-comments"></i>Anti Bad Worlds</a></li>
-                              </ul>
-
-                              <div class="tab-content" id="pills-clrtabContent">
-                                <div class="tab-pane fade show active" id="pills-antiraid" role="tabpanel" aria-labelledby="pills-antiraid-tab">
-                                    <% if(antiraid === false) { %>
-                                        <div class="media">
-                                          <label class="col-form-label m-r-10">Désactivé !</label>
-                                          <div class="media-body icon-state switch-outline">
-                                            <label class="switch">
-                                              <input type="checkbox" name="statusAntiRaid"><span class="switch-state bg-success"></span>
-                                            </label>
-                                          </div>
-                                        </div>
-                                      <% } else { %>
-                                        <div class="media">
-                                          <label class="col-form-label m-r-10">Activé !</label>
-                                          <div class="media-body icon-state switch-outline">
-                                            <label class="switch">
-                                              <input type="checkbox" checked="" name="statusAntiRaid"><span class="switch-state bg-success"></span>
-                                            </label>
-                                          </div>
-                                        </div>
-                                      <% } %>
-                                </div>
-                                <div class="tab-pane fade" id="pills-antipub" role="tabpanel" aria-labelledby="pills-antipub-tab">
-                                    <% if(antipub === false) { %>
-                                        <div class="media">
-                                          <label class="col-form-label m-r-10">Désactivé !</label>
-                                          <div class="media-body icon-state switch-outline">
-                                            <label class="switch">
-                                              <input type="checkbox" name="statusAntiPub"><span class="switch-state bg-success"></span>
-                                            </label>
-                                          </div>
-                                        </div>
-                                      <% } else { %>
-                                        <div class="media">
-                                          <label class="col-form-label m-r-10">Activé !</label>
-                                          <div class="media-body icon-state switch-outline">
-                                            <label class="switch">
-                                              <input type="checkbox" checked="" name="statusAntiPub"><span class="switch-state bg-success"></span>
-                                            </label>
-                                          </div>
-                                        </div>
-                                      <% } %>
-                                </div>
-                                <div class="tab-pane fade" id="pills-antilink" role="tabpanel" aria-labelledby="pills-antilink-tab">
-                                    <% if(antilink === false) { %>
-                                        <div class="media">
-                                          <label class="col-form-label m-r-10">Désactivé !</label>
-                                          <div class="media-body icon-state switch-outline">
-                                            <label class="switch">
-                                              <input type="checkbox" name="statusAntiLink"><span class="switch-state bg-success"></span>
-                                            </label>
-                                          </div>
-                                        </div>
-                                      <% } else { %>
-                                        <div class="media">
-                                          <label class="col-form-label m-r-10">Activé !</label>
-                                          <div class="media-body icon-state switch-outline">
-                                            <label class="switch">
-                                              <input type="checkbox" checked="" name="statusAntiLink"><span class="switch-state bg-success"></span>
-                                            </label>
-                                          </div>
-                                        </div>
-                                      <% } %>
-                                </div>
-                                <div class="tab-pane fade" id="pills-antibadworlds" role="tabpanel" aria-labelledby="pills-antibadworlds-tab">
-                                    <% if(antibadworlds === false) { %>
-                                        <div class="media">
-                                          <label class="col-form-label m-r-10">Désactivé !</label>
-                                          <div class="media-body icon-state switch-outline">
-                                            <label class="switch">
-                                              <input type="checkbox" name="statusAntiBadWorlds"><span class="switch-state bg-success"></span>
-                                            </label>
-                                          </div>
-                                        </div>
-                                      <% } else { %>
-                                        <div class="media">
-                                          <label class="col-form-label m-r-10">Activé !</label>
-                                          <div class="media-body icon-state switch-outline">
-                                            <label class="switch">
-                                              <input type="checkbox" checked="" name="statusAntiBadWorlds"><span class="switch-state bg-success"></span>
-                                            </label>
-                                          </div>
-                                        </div>
-                                      <% } %>
-                                </div>
-                              </div>
-
+                      <div class="card-body">
+  
+                        <div class="tabbed-card">
+                          <ul class="pull-right nav nav-pills nav-primary" id="pills-clrtab" role="tablist">
+                            <li class="nav-item"><a class="nav-link active" id="pills-antiraid-tab" data-toggle="pill" href="#pills-antiraid" role="tab" aria-controls="pills-antiraid" aria-selected="true"><i class="icofont icofont-shield"></i>Anti Raid</a></li>
+                            <li class="nav-item"><a class="nav-link" id="pills-antipub-tab" data-toggle="pill" href="#pills-antipub" role="tab" aria-controls="pills-antipub" aria-selected="false"><i class="icofont icofont-safety"></i>Anti Pub</a></li>
+                            <li class="nav-item"><a class="nav-link" id="pills-antilink-tab" data-toggle="pill" href="#pills-antilink" role="tab" aria-controls="pills-antilink" aria-selected="false"><i class="icofont icofont-link"></i>Anti Link</a></li>
+                            <li class="nav-item"><a class="nav-link" id="pills-antibadworlds-tab" data-toggle="pill" href="#pills-antibadworlds" role="tab" aria-controls="pills-antibadworlds" aria-selected="false"><i class="icofont icofont-speech-comments"></i>Anti Bad Worlds</a></li>
+                          </ul>
+                          <div class="tab-content" id="pills-clrtabContent">
+                            <div class="tab-pane fade show active" id="pills-antiraid" role="tabpanel" aria-labelledby="pills-antiraid-tab">
+                              <h3><u>Anti raid :</u></h3>
+                              <br>
+                                <% if(antiraid === false) { %>
+                                    <div class="media">
+                                      <label class="col-form-label m-r-10">Désactivé !</label>
+                                      <div class="media-body icon-state switch-outline">
+                                        <label class="switch">
+                                          <input type="checkbox" name="statusAntiRaid"><span class="switch-state bg-success"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  <% } else { %>
+                                    <div class="media">
+                                      <label class="col-form-label m-r-10">Activé !</label>
+                                      <div class="media-body icon-state switch-outline">
+                                        <label class="switch">
+                                          <input type="checkbox" checked="" name="statusAntiRaid"><span class="switch-state bg-success"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  <% } %>
                             </div>
+                            <div class="tab-pane fade" id="pills-antipub" role="tabpanel" aria-labelledby="pills-antipub-tab">
+                              <h3><u>Anti Pub :</u></h3>
+                              <br>
+                                <% if(antipub === false) { %>
+                                    <div class="media">
+                                      <label class="col-form-label m-r-10">Désactivé !</label>
+                                      <div class="media-body icon-state switch-outline">
+                                        <label class="switch">
+                                          <input type="checkbox" name="statusAntiPub"><span class="switch-state bg-success"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  <% } else { %>
+                                    <div class="media">
+                                      <label class="col-form-label m-r-10">Activé !</label>
+                                      <div class="media-body icon-state switch-outline">
+                                        <label class="switch">
+                                          <input type="checkbox" checked="" name="statusAntiPub"><span class="switch-state bg-success"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  <% } %>
+                            </div>
+                            <div class="tab-pane fade" id="pills-antilink" role="tabpanel" aria-labelledby="pills-antilink-tab">
+                              <h3><u>Anti Link :</u></h3>
+                              <br>
+                                <% if(antilink === false) { %>
+                                    <div class="media">
+                                      <label class="col-form-label m-r-10">Désactivé !</label>
+                                      <div class="media-body icon-state switch-outline">
+                                        <label class="switch">
+                                          <input type="checkbox" name="statusAntiLink"><span class="switch-state bg-success"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  <% } else { %>
+                                    <div class="media">
+                                      <label class="col-form-label m-r-10">Activé !</label>
+                                      <div class="media-body icon-state switch-outline">
+                                        <label class="switch">
+                                          <input type="checkbox" checked="" name="statusAntiLink"><span class="switch-state bg-success"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  <% } %>
+                            </div>
+                            <div class="tab-pane fade" id="pills-antibadworlds" role="tabpanel" aria-labelledby="pills-antibadworlds-tab">
+                              <h3><u>Anti Bad Worlds :</u></h3>
+                              <br>
+                                <% if(antibadworlds === false) { %>
+                                    <div class="media">
+                                      <label class="col-form-label m-r-10">Désactivé !</label>
+                                      <div class="media-body icon-state switch-outline">
+                                        <label class="switch">
+                                          <input type="checkbox" name="statusAntiBadWorlds"><span class="switch-state bg-success"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  <% } else { %>
+                                    <div class="media">
+                                      <label class="col-form-label m-r-10">Activé !</label>
+                                      <div class="media-body icon-state switch-outline">
+                                        <label class="switch">
+                                          <input type="checkbox" checked="" name="statusAntiBadWorlds"><span class="switch-state bg-success"></span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  <% } %>
+                            </div>
+                          </div>
                         </div>
-
+  
+                      </div>
+  
                       <div class="card-footer">
                         <button class="btn btn-primary" type="submit">Sauvegarder</button>
                       </div>
-
                     </form>
                   </div>
                 </div>
@@ -158,6 +166,7 @@
             </div>
           </div>
           <!-- Container-fluid Ends-->
+        </div>
         <%- include('../partials/footer'); %>
       </div>
     </div>
@@ -172,6 +181,9 @@
 
     <script src="/js/sidebar-menu.js"></script>
     <script src="/js/config.js"></script>
+
+    <script src="/js/height-equal.js"></script>
+    <script src="/js/tooltip-init.js"></script>
 
     <script src="/js/theme-customizer/customizer.js"></script>
 
