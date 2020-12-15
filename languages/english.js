@@ -24,6 +24,23 @@ const languageData = {
     /* Permissions Yura : */
     BOT_PERMISSION_MANAGE_ROLES: "<:X_:673212163837526064> **Erreur :** Je n'ai pas la permission `MANAGE_ROLES` !",
     BOT_PERMISSION_ADMINISTRATOR: "<:X_:673212163837526064> **Erreur :** Je n'ai pas la permission `ADMINISTRATOR` !",
+    /* EVENTS : */
+    /* Message : */
+    EVENTS_MESSAGE_ANTIRAID_WARN: "**<:X_:673212163837526064> {@user}, Arrête de spammer !**",
+    EVENTS_MESSAGE_ANTIRAID_KICK: "**<:X_:673212163837526064> {user_tag}, A été expulsé pour spam !**",
+    EVENTS_MESSAGE_ANTIRAID_BAN: "**<:X_:673212163837526064> {user_tag}, A été bannis pour spam !**",
+    ANTILINK_TITLE: "⚠️ Il est interdit de poster des liens ici !",
+    ANTILINK_USER: "⚡__Utilisateur__ :",
+    ANTILINK_ACTION: "🔒 __Action__ :",
+    ANTILINK_DELETED: "Automatiquement supprimé.",
+    ANTILINK_SUCESS: "**<:X_:673212163837526064> Les liens sont interdits sur ce serveur, votre message a donc été supprimé !**",
+    ANTIPUB_SUCESS: "**<:X_:673212163837526064> Les invitations sont interdites sur ce serveur, votre message a donc été supprimé !**",
+    ANTIBADWORLDS_SUCESS: "**<:X_:673212163837526064> Ce mot est filtré sur ce serveur, votre message a donc été supprimé !**",
+    /* GuildMemberAdd : */
+    EVENTS_GUILDMEMBERADD_WELCOME_ERROR: "<:X_:673212163837526064> | Une erreur est survenue : le message de bienvenue n\'a pas pu être envoyé car le salon est introuvable. Veuillez re-setup le système.",
+    EVENTS_GUILDMEMBERADD_AUTOROLE_ERROR: "<:X_:673212163837526064> | Une erreur est survenue : l\'autôrole n\'a pas pu être activé car le role est introuvable.",
+    /* GuildMemberRemove : */
+    EVENTS_GUILDMEMBERREMOVE_GOODBYE_ERROR: "<:X_:673212163837526064> | Une erreur est survenue : l\'autôrole n\'a pas pu être activé car le role est introuvable.",
     /* Commande Help : */
     HELP_TITLE: "__**Voici la liste des commandes :**__",
     HELP_ADMIN: "► Administration :computer:",

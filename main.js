@@ -10,6 +10,7 @@ const { GiveawaysManager } = require('discord-giveaways');
 const ameClient = require("amethyste-api")
 const { Client: Joke } = require("blague.xyz");
 const { Player } = require("discord-player");
+const AntiSpam = require('discord-anti-spam');
 
 class Class extends Client {
     constructor() {
@@ -47,6 +48,23 @@ class Class extends Client {
         this.joke = new Joke(Config.jokeToken, { defaultLang: "fr" });
 
         this.dash = require("./dashboard/dashboard.js");
+
+        this.antiSpam = new AntiSpam({
+            warnThreshold: 2,
+            kickThreshold: 4,
+            banThreshold: 6,
+            maxInterval: 2000,
+            warnMessage: true,
+            kickMessage: true,
+            banMessage: true,
+            maxDuplicatesWarning: 7,
+            maxDuplicatesKick: 10,
+            maxDuplicatesBan: 12,
+            exemptPermissions: [ 'ADMINISTRATOR', "MANAGE_GUILD"],
+            ignoreBots: false,
+            verbose: false,
+            ignoredUsers: [],
+        });
 
         try { this.launch().then(() => { console.log("• Lancement du robot réussi, connexion à Discord.."); }); }
         catch (e) { throw new Error(e); }
