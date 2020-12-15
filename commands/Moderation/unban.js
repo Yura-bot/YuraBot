@@ -41,6 +41,8 @@ class UnBan extends Command {
         if (!user) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_UNBAN"))
 
         let bannedMember = client.users.cache.get(user)
+        let memberId = client.users.cache.get(user).id
+
         if (!bannedMember) {
             return message.reply(language("UNBAN_INVALIDE_ID"));
         }
@@ -52,27 +54,27 @@ class UnBan extends Command {
         .setColor(0xFF0000)
         .setTimestamp()
         .addField(language("MOD_ACTION"), 'Unban')
-        .addField(language("MOD_MEMBER"), `${bannedMember} (${bannedMember.id})`)
+        .addField(language("MOD_MEMBER"), `${bannedMember} (${memberId})`)
         .addField(language("MOD_MODERATOR"), `${message.author.username}#${message.author.discriminator}`)
         .addField(language("MOD_REASON"), reason)
         .setFooter(client.footer);
 
-        const banned = await message.guild.fetchBans();
-		if(!banned.some((e) => e.bannedMember.id === bannedMember.id)){
-			return message.channel.send(language("UNBAN_NOBAN", bannedMember.username));
-        }
-        
-        message.guild.members.unban(bannedMember, reason)
-        .catch(e =>{
-          message.channel.send(language("UNBAN_NOBAN", bannedMember.username))
-        });
+      message.guild.fetchBans().then(bans=> {
+          
+      let banneduser = bans.find(b => b.user.id == user)
+      //if(banneduser.size == 0) return 
+      if(!banneduser) return message.channel.send(language("UNBAN_NOBAN", bannedMember.username));
 
-        message.channel.send(embed);
-    
-        if(bannedMember.bot) return;
-        bannedMember.send(`${language("UNBAN_SUCESS_1")}${message.guild.name}${language("UNBAN_SUCESS_2")}${message.author.username}${language("UNBAN_SUCESS_3")}` + reason + "** !").catch(e =>{
-         message.channel.send(language("UNBAN_SUCESS_MPCLOSE"))
-        });
+      message.guild.members.unban(bannedMember, reason).catch(e =>{});
+
+      message.channel.send(embed).catch(e =>{});
+  
+      if(bannedMember.bot) return;
+      bannedMember.send(`${language("UNBAN_SUCESS_1")}${message.guild.name}${language("UNBAN_SUCESS_2")}${message.author.username}${language("UNBAN_SUCESS_3")}` + reason + "** !").catch(e =>{
+       message.channel.send(language("UNBAN_SUCESS_MPCLOSE"))
+      })
+      
+      });
         
     }
 }
