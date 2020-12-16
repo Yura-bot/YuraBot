@@ -87,7 +87,7 @@
                             <label for="suggestionSystem">Suggestion Channel :</label>
                             <select class="form-control digits" id="suggestionSystem" name="suggestionChannelID">
 
-                            <% if(suggestionEnabled){ %>
+                            <% if(suggestionEnabled && bot.channels.cache.has(suggestionChannel)){ %>
                                 <option selected="selected">#<%= bot.channels.cache.get(suggestionChannel).name %></option>
                                 <% guild.channels.cache.filter((ch) => ch.id !== suggestionChannel && ch.type === "text").forEach((ch) => { %>
                                     <option>#<%= ch.name %></option>
