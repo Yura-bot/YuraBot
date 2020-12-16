@@ -704,6 +704,10 @@ const languageData = {
     MC_USER_GET_HEAD: "<:smiling:675373017005686836> » Commande pour obtenir la tête : ",
     MC_USER: "mc-user",
     MC_USER_NO_FOUND: "**<:X_:673212163837526064> Erreur :** Aucun utilisateur trouvé, veuillez réessayer.",
+    /* Commande Rockstar Status : */
+    RGS_TITLE: "<:rockstar:777553264882352188> Status des jeux rockstar : ",
+    RGS_ONLINE: " En ligne !",
+    RGS_OFFLINE: " Hors Ligne !",
 };
 
 const translate = (key, ...args) => {

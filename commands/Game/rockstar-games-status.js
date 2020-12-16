@@ -33,28 +33,43 @@ class RockstarGameStatus extends Command {
         
         axios.get(`https://support.rockstargames.com/fr/services/status.json`)
         .then((response) => {
-            console.log(response.data.statuses)
           if (response.status === 200) {
+
+            let res = response.data.statuses
+
+            let statusDedReadOnline = res[0].status_tag;
+            let statusGrandTheftAuto = res[1].status_tag;
+            let statusSocialClub = res[2].status_tag;
+            let statusRockStarLauncher = res[3].status_tag;
+
+            if (statusDedReadOnline === "Actif") statusDedReadOnline = client.getEmoji(client.config.emojis.online)+language("RGS_ONLINE")
+            else statusDedReadOnline =  client.getEmoji(client.config.emojis.dnd)+language("RGS_OFFLINE")
+            if (statusGrandTheftAuto === "Actif") statusGrandTheftAuto = client.getEmoji(client.config.emojis.online)+language("RGS_ONLINE")
+            else statusGrandTheftAuto =  client.getEmoji(client.config.emojis.dnd)+language("RGS_OFFLINE")
+            if (statusSocialClub === "Actif") statusSocialClub = client.getEmoji(client.config.emojis.online)+language("RGS_ONLINE")
+            else statusSocialClub =  client.getEmoji(client.config.emojis.dnd)+language("RGS_OFFLINE")
+            if (statusRockStarLauncher === "Actif") statusRockStarLauncher = client.getEmoji(client.config.emojis.online)+language("RGS_ONLINE")
+            else statusRockStarLauncher =  client.getEmoji(client.config.emojis.dnd)+language("RGS_OFFLINE")
 
             message.channel.send({
                 embed: {
-                    title: "<:rockstar:777553264882352188> Status des jeux rockstar : ",
+                    title: language("RGS_TITLE"),
                     fields: [
                         {
                             name: "1 » Red Dead Online : ",
-                            value: response.data.statuses
+                            value: statusDedReadOnline
                         },
                         {
                             name: "1 » Grand Theft Auto Online: ",
-                            value: response.data.statuses
+                            value: statusGrandTheftAuto
                         },
                         {
                             name: "1 » Social Club : ",
-                            value: response.data.statuses
+                            value: statusSocialClub
                         },
                         {
-                            name: "1 » Rockstar Games Launcher' : ",
-                            value: response.data.statuses
+                            name: "1 » Rockstar Games Launcher : ",
+                            value: statusRockStarLauncher
                         },
                     ],
                     url: client.url,
@@ -66,11 +81,11 @@ class RockstarGameStatus extends Command {
                     }
                 }
             }).catch(e => {
-                return client.emit('error',e, "mc-achivement");
+                return client.emit('error',e, "rockstar-gamestatus");
             });
             
           } else {
-              message.channel.send("Unvalable")
+              message.channel.send("Error")
           }
         });
 
