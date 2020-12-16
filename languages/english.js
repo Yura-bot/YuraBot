@@ -546,9 +546,15 @@ const languageData = {
     USERINFO_STATUS: "**🔆 Statut ➜**",
     USERINFO_INFOS: "Informations de l'utilisateur ",
     /* Commande SUGGEST : */
-    SYNTAXE_SUGGEST: "suggestion : [Description]```",
-    SUGGEST: "suggestions",
-    SUGGEST_DESC: "<:check:673212026226737153> Votre suggestion viens d'être envoyé sur le serveur principal.",
+    SYNTAXE_SUGGEST: "suggest : [Description]```",
+    SUGGEST: "suggest",
+    SUGGEST_ERROR_NO_SYSTEM: "<:X_:673212163837526064> | Vous n'avez pas activé le système de suggestion votre serveur !",
+    SUGGEST_ERROR_NO_CHANNEL: "<:X_:673212163837526064> | Le channel n'a pas été trouvé !",
+    SUGGEST_ERROR: "<:X_:673212163837526064> **Erreur :** Une erreur est survenue la suggestion n'a pas été envoyé !",
+    SUGGEST_TITLE: "Nouvelle suggestion !",
+    SUGGEST_AUTHOR: "💼 __Auteur :__",
+    SUGGEST_DESC: "📝 __Description :__",
+    SUGGEST_SUCESS: "<:check:673212026226737153> Votre suggestion viens d'être envoyé !",
     /* Commande SUPPORT : */
     SUPPORT: "support",
     SUPPORT_DESC: "🔧 Rejoignez le serveur support du Yura Bot",
