@@ -29,10 +29,16 @@ class FortniteShop extends Command {
         }
 
         const language = require(`../../languages/${guildLanguage}`);
+
+        const exampleEmbed = new Discord.MessageEmbed()
+        .setColor(client.color)
+        .setTitle('<:calendar2:675368550571048971> Fortnite shop :')
+        .setURL(client.url)
+        .setImage('https://ctk-api.herokuapp.com/fortnite-shop')
+        .setTimestamp()
+        .setFooter(client.footer, client.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }));
     
-        return message.channel.send("https://ctk-api.herokuapp.com/fortnite-shop").catch(e => {
-            return client.emit('error',e, "fortnite-shop");
-        });
+        message.channel.send(exampleEmbed);
 
     }
 }
