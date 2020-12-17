@@ -5,7 +5,7 @@ class Dog extends Command {
         super({
             name: 'dog',
             aliases: ['chien'],
-            category: 'utils',
+            category: 'fun',
             description: "Montre une image d'un chien aléatoirement.",
             usage: 'dog'
         });

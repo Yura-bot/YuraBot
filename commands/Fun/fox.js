@@ -5,7 +5,7 @@ class Fox extends Command {
         super({
             name: 'fox',
             aliases: ['renard'],
-            category: 'utils',
+            category: 'fun',
             description: "Montre une image d'un renard aléatoirement.",
             usage: 'fox'
         });

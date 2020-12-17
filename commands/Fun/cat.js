@@ -5,7 +5,7 @@ class Cat extends Command {
         super({
             name: 'cat',
             aliases: ['chat'],
-            category: 'utils',
+            category: 'fun',
             description: "Montre une image d'un chat aléatoirement.",
             usage: 'cat'
         });
