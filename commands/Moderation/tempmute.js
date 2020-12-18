@@ -60,7 +60,22 @@ class TempMute extends Command {
         let reason = args.slice(3).join(' ');
         if (reason.length < 1) reason = language("BAN_NO_REASON");
 
-        let muterole = message.guild.roles.cache.find(x => x.name === "Muted")
+        let muterole;
+
+        let hasDB = client.guildSettings.has(`${message.guild.id}`, "muteRole")
+        if (hasDB) {
+
+            let roleID = client.guildSettings.get(`${message.guild.id}`, "muteRole")
+            if (message.guild.roles.cache.has(roleID)) {
+                muterole = message.guild.roles.cache.get(roleID);
+            }
+            else {
+                muterole = message.guild.roles.cache.find(x => x.name === "Muted")
+            }
+
+        } else {
+            muterole = message.guild.roles.cache.find(x => x.name === "Muted")
+        }
 
         if(!muterole) {
             try {
@@ -105,6 +120,7 @@ class TempMute extends Command {
         .setFooter(client.footer);
 
         message.channel.send(embed);
+        client.guildSettings.set(`${message.guild.id}`, muterole.id, "muteRole")
             
         usermute.send(`${language("TEMPMUTE_SUCESS_MP_1")}${message.guild.name}${language("TEMPMUTE_SUCESS_MP_2")}${message.author.username}${language("TEMPMUTE_SUCESS_MP_3")}` + ms(ms(mutetime)) + " ! " + `${language("TEMPMUTE_SUCESS_MP_4")}\`${reason}\``).catch(e =>{
             message.channel.send(language("TEMPMUTE_SUCESS_MPCLOSE"))

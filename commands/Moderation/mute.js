@@ -56,7 +56,22 @@ class Mute extends Command {
         let reason = args.slice(2).join(' ');
         if (reason.length < 1) reason = language("BAN_NO_REASON");
 
-        let muterole = message.guild.roles.cache.find(x => x.name === "Muted")
+        let muterole;
+
+        let hasDB = client.guildSettings.has(`${message.guild.id}`, "muteRole")
+        if (hasDB) {
+
+            let roleID = client.guildSettings.get(`${message.guild.id}`, "muteRole")
+            if (message.guild.roles.cache.has(roleID)) {
+                muterole = message.guild.roles.cache.get(roleID);
+            }
+            else {
+                muterole = message.guild.roles.cache.find(x => x.name === "Muted")
+            }
+
+        } else {
+            muterole = message.guild.roles.cache.find(x => x.name === "Muted")
+        }
 
         if(!muterole) {
             try {
@@ -100,6 +115,7 @@ class Mute extends Command {
         .setFooter(client.footer);
 
         message.channel.send(embed);
+        client.guildSettings.set(`${message.guild.id}`, muterole.id, "muteRole")
             
         usermute.send(`${language("MUTE_SUCESS_MP_1")}${message.guild.name}${language("MUTE_SUCESS_MP_2")}${message.author.username}__ `+" ! " + `${language("MUTE_SUCESS_MP_4")}\`${reason}\``).catch(e =>{
             message.channel.send(language("MUTE_SUCESS_MPCLOSE"))

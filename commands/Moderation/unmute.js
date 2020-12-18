@@ -49,7 +49,22 @@ class UnMute extends Command {
             );
         }
 
-        let muterole = message.guild.roles.cache.find(x => x.name === "Muted")
+        let muterole;
+
+        let hasDB = client.guildSettings.has(`${message.guild.id}`, "muteRole")
+        if (hasDB) {
+
+            let roleID = client.guildSettings.get(`${message.guild.id}`, "muteRole")
+            if (message.guild.roles.cache.has(roleID)) {
+                muterole = message.guild.roles.cache.get(roleID);
+            }
+            else {
+                muterole = message.guild.roles.cache.find(x => x.name === "Muted")
+            }
+
+        } else {
+            muterole = message.guild.roles.cache.find(x => x.name === "Muted")
+        }
 
         if(usermute.roles.cache.has(muterole.id) === false) {
             return message.channel.send(language("UNMUTE_NOMUTE"))
