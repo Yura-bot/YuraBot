@@ -11,7 +11,24 @@ class Help extends Command {
     }
 
     run(client, message, args) {
-        let prefix = '?'
+
+        const Discord = require("discord.js");
+
+        let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
+
+        let prefix;
+        let guildLanguage;
+
+        if (guildSettingsExist) {
+            prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
+            guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
+        } else {
+            prefix = client.default_prefix;
+            guildLanguage = "english"
+        }
+
+        const language = require(`../../languages/${guildLanguage}`);
+
         if(!args[1]) {
             message.channel.send({
                 embed: {
@@ -20,7 +37,10 @@ class Help extends Command {
                         url: client.user.displayAvatarURL({format: 'png'})
                     },
                     description: "Pour **plus d'informations** sur une commande:\n" + 
-                      "[»](" + client.url + ") `" + prefix + "help [command]`\n\n",
+                      "[»](" + client.url + ") `" + prefix + "help [command]`\n\n" +
+                      `Nombre de commandes : **${client.commands.size}** \n` +
+                      `Prefix sur ce serveur : **${prefix}** \n\n` +
+                      "__**Voici la liste des commandes :**__  \n\n",
                     fields: [
                         {
                             name: '<:adminsettingsmale:675368904637546506> » Commandes Administration : (**' + client.commands.filter((command) => command.category === 'admin').size + '**)',
@@ -61,6 +81,10 @@ class Help extends Command {
                         {
                             name: ':robot: » Commandes bot : (**' + client.commands.filter((command) => command.category === 'bot').size + '**)',
                             value: client.commands.filter((command) => command.category === 'bot').map((command) => "`" + command.name + "`").join(', ')
+                        },
+                        {
+                            name: '🔗 • __Liens__ :',
+                            value: "[Site](https://yurabot.xyz) | [Inviter le bot](https://discordapp.com/oauth2/authorize?client_id=662775890194989066&scope=bot&permissions=2146958847) | [Serveur Support](https://discord.gg/etQ3uJN) | [Dashboard](https://dash.yurabot.xyz) | [Status](https://yurabot.xyz/status)"
                         }
                     ],
                     url: client.url,
