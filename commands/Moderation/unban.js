@@ -41,7 +41,6 @@ class UnBan extends Command {
         if (!user) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_UNBAN"))
 
         let bannedMember = client.users.cache.get(user)
-        let memberId = client.users.cache.get(user).id
 
         if (!bannedMember) {
             return message.reply(language("UNBAN_INVALIDE_ID"));
@@ -54,7 +53,7 @@ class UnBan extends Command {
         .setColor(0xFF0000)
         .setTimestamp()
         .addField(language("MOD_ACTION"), 'Unban')
-        .addField(language("MOD_MEMBER"), `${bannedMember} (${memberId})`)
+        .addField(language("MOD_MEMBER"), `${bannedMember} (${bannedMember.id})`)
         .addField(language("MOD_MODERATOR"), `${message.author.username}#${message.author.discriminator}`)
         .addField(language("MOD_REASON"), reason)
         .setFooter(client.footer);
