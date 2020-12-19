@@ -227,7 +227,7 @@ const languageData = {
     GIVEAWAY_END_ID_NO_TERMINER_1: "Giveaway avec message ID ",
     GIVEAWAY_END_ID_NO_TERMINER_2: " n'est pas terminée.",
     GIVEAWAY_END_NO_TERMINER: "Ce giveaway n'est pas terminé !",
-    GIVEAWAY_END_ERROR_OCCURED: "An error occured...",
+    GIVEAWAY_END_ERROR_OCCURED: "<:X_:673212163837526064> **Erreur :** Une erreur interne est survenue !",
     /* Giveaway Reroll : */
     GIVEAWAY_REROLL: "reroll-giveaway",
     SYNTAXE_GIVEAWAY_REROLL: "reroll-giveaway [Message ID du Giveaway]```",
@@ -236,7 +236,13 @@ const languageData = {
     GIVEAWAY_REROLL_NO_END_1: "Le Giveaway avec le message ID ",
     GIVEAWAY_REROLL_NO_END_2: " n'est pas terminer.",
     GIVEAWAY_REROLL_NO_END: "Ce giveaway n’est pas fini !",
-    GIVEAWAY_REROLL_ERROR_OCCURED: "An error occured...",
+    GIVEAWAY_REROLL_ERROR_OCCURED: "<:X_:673212163837526064> **Erreur :** Une erreur interne est survenue !",
+    /* Giveaway Edit : */
+    GIVEAWAY_EDIT: "edit-giveaway",
+    SYNTAXE_GIVEAWAY_EDIT: "edit-giveaway [ID] [Nombre de gagnants] [Nouveau Prix]```",
+    GIVEAWAY_EDIT_NO_FOUND: "Impossible de trouver un Giveaway pour ",
+    GIVEAWAY_EDIT_SUCESS: "Je suis en train de modifier le concours avec les nouveaux paramètres. Les modifications seront prises en compte dans 5 secondes.",
+    GIVEAWAY_EDIT_ERROR_OCCURED: "<:X_:673212163837526064> **Erreur :** Une erreur interne est survenue !",
     /* NSFW : */
     NSFW_NO_CHANNEL_NSFW: "**:warning: | Ce n’est pas un salon NSFW ! | :warning:**",
     NSFW_LOADING: "Veuillez patienter... <a:loading:675233191870595082>",
