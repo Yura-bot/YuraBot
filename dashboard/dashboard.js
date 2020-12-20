@@ -60,6 +60,9 @@ module.exports.load = async(client) => {
         .get("*", function(req, res) {
             res.status(404).render("404");
         })
+        .use(function(err, req, res, next) {
+            return res.status(500).send('Please refresh the page.');
+        });
 
     http.listen(app.get('port'), (err) => {
 
