@@ -30,7 +30,17 @@ class Play extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        client.player.play(message, args[1]);
+        if (!args[1]) return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_NO_REQUEST") }})
+
+        if (!message.member.voice.channel) {
+         return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }})
+        }
+      
+        if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
+         return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }})
+        }
+
+        return client.player.play(message, args.slice(1).join(' '));
     }
 }
 

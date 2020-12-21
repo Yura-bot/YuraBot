@@ -40,16 +40,16 @@ class Finduser extends Command {
 
         let status = user.presence.status;
         if (status === "dnd") {
-            status = '<:dnd:675371548651159573> Ne pas déranger'
+            status = language("DND")
         }
         if (status === "idle") {
-            status = '<:idle:675371429264359424> Inactif - AFK '
+            status = language("IDLE")
         }
         if (status === "online") {
-            status = '<:online:675371850905157653> En ligne'
+            status = language("UONLINE")
         }
         if (status === "offline") {
-            status = '<:offline:675371685792186409> Déconnecté'
+            status = language("UOFFLINE")
         }
 
         message.channel.send({

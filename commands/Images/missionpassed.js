@@ -30,8 +30,7 @@ class Missionpassed extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        let user = message.guild.member(message.mentions.users.first()) || message.author;
-        let avatar = user.displayAvatarURL({ size: 512 }).replace(".webp", ".png")
+        let avatar = message.mentions.users.size ? message.mentions.users.first().avatarURL({ format: 'png', size: 512 }).replace(".webp", ".png") : message.author.avatarURL({ format: 'png', size: 512 }).replace(".webp", ".png")
 
         const msg = await message.channel.send(client.getEmoji(client.config.emojis.loading)+language("GENERATION")).catch(e => {
             return client.emit('error',e);

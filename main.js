@@ -10,6 +10,7 @@ const { GiveawaysManager } = require('discord-giveaways');
 const ameClient = require("amethyste-api")
 const { Client: Joke } = require("blague.xyz");
 const { Player } = require("discord-player");
+const AntiSpam = require('discord-anti-spam');
 
 class Class extends Client {
     constructor() {
@@ -27,35 +28,10 @@ class Class extends Client {
             leaveOnEnd: true
         });
 
-        this.player
-        .on('trackStart', (message, track) => message.channel.send(`Now playing ${track.title}...`))
-        .on('trackAdd', (message, track) => message.channel.send(`${track.title} has been added to the queue!`))
-        .on('playlistAdd', (message, playlist) => message.channel.send(`${playlist.title} has been added to the queue (${playlist.items.length} songs)!`))
-        .on('searchInvalidResponse', (message, query, tracks, content, collector) => message.channel.send(`You must send a valid number between 1 and ${tracks.length}!`))
-        .on('searchCancel', (message, query, tracks) => message.channel.send('You did not provide a valid response... Please send the command again!'))
-        .on('noResults', (message, query) => message.channel.send(`No results found on YouTube for ${query}!`))
-        .on('queueEnd', (message, queue) => message.channel.send('Music stopped as there is no more music in the queue!'))
-        .on('channelEmpty', (message, queue) => message.channel.send('Music stopped as there is no more member in the voice channel!'))
-        .on('botDisconnect', (message, queue) => message.channel.send('Music stopped as I have been disconnected from the channel!'))
-        .on('error', (error, message) => {
-            switch(error){
-                case 'NotPlaying':
-                    message.channel.send('There is no music being played on this server!')
-                    break;
-                case 'NotConnected':
-                    message.channel.send('You are not connected in any voice channel!')
-                    break;
-                case 'UnableToJoin':
-                    message.channel.send('I am not able to join your voice channel, please check my permissions!')
-                    break;
-                default:
-                    message.channel.send(`Something went wrong... Error: ${error}`)
-            }
-        })
-
         this.guildSettings = new Enmap({ name: 'guildSettings' });
         this.userData = new Enmap({ name: 'userData' });
         this.warn = new Enmap({ name: 'warn' });
+        this.mod = new Enmap({ name: 'mod' });
 
         this.giveawaysManager = new GiveawaysManager(this, {
             storage: "./giveaways.json",
@@ -73,6 +49,23 @@ class Class extends Client {
 
         this.dash = require("./dashboard/dashboard.js");
 
+        this.antiSpam = new AntiSpam({
+            warnThreshold: 2,
+            kickThreshold: 4,
+            banThreshold: 6,
+            maxInterval: 2000,
+            warnMessage: true,
+            kickMessage: true,
+            banMessage: true,
+            maxDuplicatesWarning: 7,
+            maxDuplicatesKick: 10,
+            maxDuplicatesBan: 12,
+            exemptPermissions: [ 'ADMINISTRATOR', "MANAGE_GUILD"],
+            ignoreBots: false,
+            verbose: false,
+            ignoredUsers: [],
+        });
+
         try { this.launch().then(() => { console.log("• Lancement du robot réussi, connexion à Discord.."); }); }
         catch (e) { throw new Error(e); }
 
@@ -86,13 +79,12 @@ class Class extends Client {
         this.commands = new Collection();
 
         const handlers = new Handler(this);
-        handlers.commands(); handlers.events();
+        handlers.commands(); handlers.events(); handlers.musicEvents();
     }
 
     getEmoji(emojiId) {
         return this.emojis.cache.get(emojiId).toString();
     }
-
 }
 
 module.exports = new Class();

@@ -1,185 +1,141 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
-    <!-- CSS  -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/Ccss/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    <link href="/Ccss/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    
-    
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/messenger/1.5.0/css/messenger.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/messenger/1.5.0/css/messenger-theme-flat.min.css" rel="stylesheet">
-
-        <title>
-            <%= guild.name %>
-        </title>
-
-
+    <%- include('partials/header'); %>
+    <title>Yura | Serveur</title>
 </head>
 
 <body>
 
-    <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href="/" class="brand-logo">
-            <%= botclient.username %>
-        </a>
-        <ul class="right hide-on-med-and-down">
-            <li>
-                <a href="<%= login === 'oui' ? '/profile': '/login' %>">
-                    <%=status%>
-                </a>
-            </li>
-            <%if(login === 'oui') {%>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Se déconnecter</a>
-                </li>
-                <%}%>
-                    <li>
-                        <a href="/status">
-                    Status
-                </a>
-                    </li>
-        </ul>
-
-        <ul id="nav-mobile" class="sidenav">
-            <li>
-                <a href="<%= login === 'oui' ? '/profile': '/login' %>">
-                    <%=status%>
-                </a>
-            </li>
-            <%if(login === 'oui') {%>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Se déconnecter</a>
-                </li>
-                <%}%>
-                    <li>
-                        <a href="/status"><i class="material-icons">show_chart</i>
-                        Status
-                    </a>
-                    </li>
-        </ul>
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
-
-        <br><br>
-        <div class="row">
-
-            <center>
-                <div class="col s6">
-                    <div class="server-block-guild" title="<%= guild.name %>">
-                        <%if (guild.icon) {%>
-                            <img src="https://cdn.discordapp.com/icons/<%=guild.id%>/<%=guild.icon%>.png?size=128" class="bot-avatar rounded-circle" width="150px" height="150px">
-                            <%}else{%>
-                                <canvas class="bot-avatar rounded-circle" id="<%= guild.name.replace(/\w+/g, name => name[0]).replace(/\s/g, '') %>" width="150px" height="150px"></canvas>
-
-                                <script>
-                                    function createIcone() {
-                                        const nameAcronym = document.getElementById("<%= guild.name.replace(/\w+/g, name => name[0]).replace(/\s/g, '')  %>").getContext('2d');
-                                        nameAcronym.font = '20px Arial';
-                                        nameAcronym.textAlign = "center";
-                                        nameAcronym.fillStyle = "white";
-                                        nameAcronym.fillText("<%= guild.name.replace(/\w+/g, name => name[0]).replace(/\s/g, '')  %>", 75, 105);
-                                    };
-                                    createIcone();
-                                </script>
-                                <%}%>
-                    </div>
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <%- include('partials/headbar'); %>
+      <div class="page-body-wrapper sidebar-icon">
+        <%- include('partials/nav'); %>
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-6">
+                  <h3>
+                    <%= guild.name %></h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Dashboard Yura</li>
+                  </ol>
                 </div>
-            </center>
-            <div class="col s6">
-
-                <h5>
-                    <%= guild.name %>
-                </h5>
-                <p>
-                    <strong>Propriétaire:</strong>
-                    <%=guild.owner.user.tag%><br/>
-
-
-                        <strong>ID:</strong>
-                        <%=guild.id %><br/>
-
-
-                            <strong>Nombre de membres:</strong>
-                            <%=guild.memberCount%><br/>
-
-                                <strong>Date de création:</strong>
-                                <%=guild.createdAt.toUTCString()%><br />
-
-                </p>
-
-
-
+              </div>
             </div>
+          </div>
 
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+
+                <% if(alert) { %>
+                  <div class="alert alert-success outline alert-dismissible fade show" role="alert">
+                    <p><i data-feather="thumbs-up"></i><b>&ensp; Bien joué ! </b>Les données ont été sauvegardées !</p>
+                    <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  </div>
+
+                <% } %>
+
+                <div class="card">
+                  <div class="card-header">
+                    <h5>📝 Configuration Basique :</h5>
+                  </div>
+                  <form class="form theme-form" method="POST">
+                    <div class="card-body">
+
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group">
+                            <label for="prefix-custom">Prefix du bot sur ce serveur :</label>
+                            <input class="form-control" id="prefix-custom" value="<%= prefix %>" maxlength="3" minlength="1" type="text" name="prefix" placeholder="Votre prefix">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group">
+                            <label for="language">Langue du bot sur ce serveur :</label>
+                            <select class="form-control digits" id="language" name="language">
+                              <option selected="selected"><%= guildLanguage %></option>
+                              <option><%= language2 %></option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="checkbox checkbox-success">
+                        <% if(suggestionEnabled) { %>
+                            <input id="checkbox-primary" type="checkbox" name="suggestionStatus" checked >
+                        <% } else { %>
+                            <input id="checkbox-primary" type="checkbox" name="suggestionStatus" >
+                        <% } %>
+                        <label for="checkbox-primary">Activer les suggestions ?</label>
+                      </div>
+
+                      <br>
+
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group">
+                            <label for="suggestionSystem">Suggestion Channel :</label>
+                            <select class="form-control digits" id="suggestionSystem" name="suggestionChannelID">
+
+                            <% if(suggestionEnabled && bot.channels.cache.has(suggestionChannel)){ %>
+                                <option selected="selected">#<%= bot.channels.cache.get(suggestionChannel).name %></option>
+                                <% guild.channels.cache.filter((ch) => ch.id !== suggestionChannel && ch.type === "text").forEach((ch) => { %>
+                                    <option>#<%= ch.name %></option>
+                                <% }); } else { %>
+                                <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
+                                <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+                                    <option>#<%= ch.name %></option>
+                                <% }); %>
+                            <% } %>
+
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                      <button class="btn btn-primary" type="submit">Sauvegarder</button>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
         </div>
+        <%- include('partials/footer'); %>
+      </div>
+    </div>
+    
+    <script src="/js/jquery-3.5.1.min.js"></script>
 
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.js"></script>
 
+    <script src="/js/icons/feather-icon/feather.min.js"></script>
+    <script src="/js/icons/feather-icon/feather-icon.js"></script>
 
-        <center>
+    <script src="/js/sidebar-menu.js"></script>
+    <script src="/js/config.js"></script>
 
-            <h3>Que voulez-vous faire?</h3>
-            <br>
-            <a class="waves-effect waves-light btn-large" href="./<%=guild.id %>/tools"><i class="material-icons right">build</i>Utilitaire</a>
+    <script src="/js/height-equal.js"></script>
+    <script src="/js/tooltip-init.js"></script>
 
+    <script src="/js/theme-customizer/customizer.js"></script>
 
-
-
-            <i>More soon...</i>
-
-            <br>
-            <br>
-            <br>
-        </center>
-
-
-        <footer class="page-footer black">
-            <div class="container">
-                <div class="row">
-                    <div class="col l6 s12">
-                        <h5 class="white-text">chaunBot by chaun14</h5>
-                        <p class="grey-text text-lighten-4">Je ne suis toujours un développeur débutant, le code n'est pas parfait je le conçois mais j'essaie de m'améliorer pour rendre chaunBot encore meilleur.</p>
-        
-                    </div>
-                    <div class="col l3 s12">
-                        <h5 class="white-text">chaun14</h5>
-                        <ul>
-                            <li><a class="white-text" href="https://chaun14.fr">Mon site</a></li>
-                            <li><a class="white-text" href="https://ftnl.fr">FTNL</a></li>
-        
-                        </ul>
-                    </div>
-                    <div class="col l3 s12">
-                        <h5 class="white-text">Contact</h5>
-                        <ul>
-                            <li><a class="white-text" href="https://discord.gg/gqFCbCN">Discord de support</a></li>
-        
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-copyright">
-                <div class="container">
-                    Made by <a class="orange-text text-lighten-3" href="https://chaun14.fr">chaun14</a>
-                </div>
-            </div>
-        </footer>
-
-<!--  Scripts-->
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="/js/materialize.js"></script>
-<script src="/js/init.js"></script>
-
-<!-- Messenger-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/messenger/1.5.0/js/messenger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/messenger/1.5.0/js/messenger-theme-flat.min.js"></script>
-
-</body>
+  </body>
 
 </html>

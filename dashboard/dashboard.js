@@ -35,13 +35,14 @@ module.exports.load = async(client) => {
     }));
 
     app
+        .use(vhost('dash.yurabot.xyz', function handle (req, res, next) {}))
         .use(bodyparser.json())
         .use(bodyparser.urlencoded({ extended: true }))
         .engine("html", require("ejs").renderFile)
         .use(express.static(path.join(__dirname, "/public")))
         .set("view engine", "ejs")
         .set("views", path.join(__dirname, "views"))
-        .set('port', config.port)
+	    .set('port', config.port)
         .use(session({
             secret: config.secret,
             resave: false,
@@ -59,7 +60,9 @@ module.exports.load = async(client) => {
         .get("*", function(req, res) {
             res.status(404).render("404");
         })
-        .use(vhost('dash.yurabot.xyz', app))
+        .use(function(err, req, res, next) {
+            return res.status(500).send('Please refresh the page.');
+        });
 
     http.listen(app.get('port'), (err) => {
 

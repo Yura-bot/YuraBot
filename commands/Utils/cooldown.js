@@ -4,7 +4,7 @@ class Cooldown extends Command {
     constructor() {
         super({
             name: 'cooldown',
-            aliases: ['countdown', 'rapel'],
+            aliases: ['countdown', 'rapel', 'timer'],
             category: 'utils',
             description: 'Permet de crée un rapel.',
             usage: 'cooldown [temps]'

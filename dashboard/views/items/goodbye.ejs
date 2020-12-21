@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/header'); %>
+    <title>Yura | <%= guild.name %></title>
+</head>
+
+<body>
+
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <%- include('../partials/headbar'); %>
+      <div class="page-body-wrapper sidebar-icon">
+        <%- include('../partials/nav'); %>
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-6">
+                  <h3>
+                    <%= guild.name %></h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Dashboard Yura</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+
+                <% if(alert) { %>
+                  <div class="alert alert-success outline alert-dismissible fade show" role="alert">
+                    <p><i data-feather="thumbs-up"></i><b>&ensp; Bien joué ! </b>Les données ont été sauvegardées !</p>
+                    <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  </div>
+
+                <% } %>
+
+                <div class="card">
+                    <div class="card-header">
+                      <h5>😢 Configuration du message de départ :</h5>
+                    </div>
+                    <form class="form theme-form" method="POST">
+                      <div class="card-body">
+
+                        <% if(goodbyeEnabled === false) { %>
+
+                          <div class="media">
+                            <label class="col-form-label m-r-10">Désactivé !</label>
+                            <div class="media-body icon-state switch-outline">
+                              <label class="switch">
+                                <input type="checkbox" name="statusGoodbye"><span class="switch-state bg-success"></span>
+                              </label>
+                            </div>
+                          </div>
+
+                        <% } else { %>
+
+                          <div class="media">
+                            <label class="col-form-label m-r-10">Activé !</label>
+                            <div class="media-body icon-state switch-outline">
+                              <label class="switch">
+                                <input type="checkbox" checked="" name="statusGoodbye"><span class="switch-state bg-success"></span>
+                              </label>
+                            </div>
+                          </div>
+
+                        <% } %>
+
+                        <br>
+
+                        <h6 class="sub-title">Liste des variables :</h6>
+                        <ul>
+                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Mentionner le membre : <ins>{member}</ins></li>
+                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Afficher le pseudo du membre : <ins>{user}</ins></li>
+                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne le tag du membre : <ins>{tag}</ins></li>
+                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne l'id du membre : <ins>{memberid}</ins></li>
+                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Affiche le nom du serveur : <ins>{server}</ins></li>
+                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne le nombre de membre du serveur : <ins>{membercount}</ins></li>
+                        </ul>
+
+                        <br>
+
+                        <div class="row">
+                            <div class="col">
+                              <div class="form-group mb-0">
+                                <label for="goodbye-settings">Configurez votre message de départ :</label>
+                                <textarea class="form-control" id="goodbye-settings" type="text" name="goodbyeMessage" placeholder="Votre message de départ !" rows="6"><%= goodbyeMessage %></textarea>
+                              </div>
+                            </div>
+                        </div>      
+                        
+                        <br>
+
+                        <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="channel-goodbye-system">Channel :</label>
+                                <select class="form-control digits" id="channel-goodbye-system" name="channelID">
+
+                                <% if(goodbyeEnabled && bot.channels.cache.has(goodbyeChannel)){ %>
+                                    <option selected="selected">#<%= bot.channels.cache.get(goodbyeChannel).name %></option>
+                                    <% guild.channels.cache.filter((ch) => ch.id !== goodbyeChannel && ch.type === "text").forEach((ch) => { %>
+                                        <option>#<%= ch.name %></option>
+                                    <% }); } else { %>
+                                    <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
+                                    <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+                                        <option>#<%= ch.name %></option>
+                                    <% }); %>
+                                <% } %>
+
+                                </select>
+                              </div>
+                            </div>
+                        </div>
+
+                        <label class="badge badge-danger">Bientôt :</label></a></li>
+
+                        <div class="checkbox checkbox-success">
+                            <% if(goodbyeImage) { %>
+                                <input id="checkbox-primary" type="checkbox" name="withImage" checked disabled>
+                            <% } else { %>
+                                <input id="checkbox-primary" type="checkbox" name="withImage" disabled>
+                            <% } %>
+                            <label for="checkbox-primary"disabled>Image de départ ?</label> 
+                        </div>
+                      </div>
+
+                      <div class="card-footer">
+                        <button class="btn btn-primary" type="submit">Sauvegarder</button>
+                      </div>
+
+                    </form>
+                  </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <%- include('../partials/footer'); %>
+      </div>
+    </div>
+    
+    <script src="/js/jquery-3.5.1.min.js"></script>
+
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.js"></script>
+
+    <script src="/js/icons/feather-icon/feather.min.js"></script>
+    <script src="/js/icons/feather-icon/feather-icon.js"></script>
+
+    <script src="/js/sidebar-menu.js"></script>
+    <script src="/js/config.js"></script>
+
+    <script src="/js/theme-customizer/customizer.js"></script>
+
+  </body>
+
+</html>

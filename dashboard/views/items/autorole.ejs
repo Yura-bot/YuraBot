@@ -1,87 +1,126 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <%- include('../partials/header'); %>
-        <title>chaunBot | Auto-rôle
-        </title>
-
-
+    <title>Yura | <%= guild.name %></title>
 </head>
 
 <body>
-    <%- include('../partials/headbar'); %>
 
-        <div class="row">
-            <center>
-                <br>
-                <h3>
-                    Configuration: Auto-rôle
-                </h3>
-            </center>
-            <form action="./autorole" method="post">
-
-                <div class="col s12">
-                    <center>
-                        <div class="col s4">
-                            <b>Status: </b>
-                            <div class="switch">
-
-                                <label>
-                              Off
-                              <%   if(autoRoleSettings.activated) {%>
-                              <input name="status" type="checkbox" id='status' checked>
-                              <% } else {%>
-                                <input name="status" type="checkbox" id='status'>
-                                <% } %> 
-                              <span class="lever"></span>
-                              On
-                            </label>
-                            </div>
-                        </div>
-                    </center>
-
-
-                    <div class="col s4">
-
-                        <b>Sélectionner un rôle: </b>
-                        <select id="select-channel" name="roleid" class="browser-default">
-                      <option value="NOT_SET">None</option>
-                      <% guild.roles.cache.forEach(role => { %>
-                        <% if(role.managed || role.name == "@everyone") return %>
-                        <% if(role.hexColor == "#000000" ) {%>
-                            <option style='color: #fff' value="<%= role.id %>" <%= autoRoleSettings.role === role.id ? 'selected': '' %>>@<%= role.name %></option>
-                            
-                            <% } else {%>
-                                <option style='color: <%= role.hexColor %>' value="<%= role.id %>" <%= autoRoleSettings.role === role.id ? 'selected': '' %>>@<%= role.name %></option>
-                            <% } %> 
-
-                      <% }); %>
-                    </select>
-                    </div>
-                    <div class="col s4">
-                        <center>
-                            <input type="submit" value="Save" class="btn btn-primary green">
-
-                        </center>
-
-                    </div>
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <%- include('../partials/headbar'); %>
+      <div class="page-body-wrapper sidebar-icon">
+        <%- include('../partials/nav'); %>
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-6">
+                  <h3>
+                    <%= guild.name %></h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Dashboard Yura</li>
+                  </ol>
                 </div>
+              </div>
+            </div>
+          </div>
 
-            </form>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
 
+                <% if(alert) { %>
+                  <div class="alert alert-success outline alert-dismissible fade show" role="alert">
+                    <p><i data-feather="thumbs-up"></i><b>&ensp; Bien joué ! </b>Les données ont été sauvegardées !</p>
+                    <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  </div>
 
-        </div>
+                <% } %>
+
+                <div class="card">
+                    <div class="card-header">
+                      <h5>🎖️ Configuration de l'autorole :</h5>
+                    </div>
+                    <form class="form theme-form" method="POST">
+                      <div class="card-body">
+
+                        <% if(autoroleEnabled === false) { %>
+
+                          <div class="media">
+                            <label class="col-form-label m-r-10">Désactivé !</label>
+                            <div class="media-body icon-state switch-outline">
+                              <label class="switch">
+                                <input type="checkbox" name="statusAutorole"><span class="switch-state bg-success"></span>
+                              </label>
+                            </div>
+                          </div>
+
+                        <% } else { %>
+
+                          <div class="media">
+                            <label class="col-form-label m-r-10">Activé !</label>
+                            <div class="media-body icon-state switch-outline">
+                              <label class="switch">
+                                <input type="checkbox" checked="" name="statusAutorole"><span class="switch-state bg-success"></span>
+                              </label>
+                            </div>
+                          </div>
+
+                        <% } %>
+
+                        <br>
+
+                        <div class="form-group">
+                            <label>Choissisez votre role :</label>
+                            <select class="form-control" name="roleID">
+                                <% if(autoroleEnabled && guild.roles.cache.has(autoroleRole)){ %>
+                                    <option selected="selected">@<%= guild.roles.cache.get(autoroleRole).name %></option>
+                                    <% guild.roles.cache.filter((r) => r.id !== autoroleRole && r.name !== "@everyone").forEach((r) => { %>
+                                        <option>@<%= r.name %></option>
+                                    <% }); } else { %>
+                                    <option selected="selected">@<%= guild.roles.cache.filter((r) => r.name !== "@everyone").first().name %></option>
+                                    <% guild.roles.cache.filter((r) => r.id !== guild.roles.cache.filter((r) => r.name !== "@everyone").first().id && r.name !== "@everyone").forEach((r) => { %>
+                                        <option>@<%= r.name %></option>
+                                    <% }); %>
+                                <% } %>
+                            </select>
+                        </div>
+
+                      </div>
+
+                      <div class="card-footer">
+                        <button class="btn btn-primary" type="submit">Sauvegarder</button>
+                      </div>
+
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
         <%- include('../partials/footer'); %>
+      </div>
+    </div>
+    
+    <script src="/js/jquery-3.5.1.min.js"></script>
 
-            <%- include('../partials/scripts'); %>
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.js"></script>
 
-                <script>
-                    $(document).ready(function() {
-                        $('select').formSelect();
-                    });
-                </script>
+    <script src="/js/icons/feather-icon/feather.min.js"></script>
+    <script src="/js/icons/feather-icon/feather-icon.js"></script>
 
-</body>
+    <script src="/js/sidebar-menu.js"></script>
+    <script src="/js/config.js"></script>
+
+    <script src="/js/theme-customizer/customizer.js"></script>
+
+  </body>
 
 </html>
