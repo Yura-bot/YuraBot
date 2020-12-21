@@ -32,59 +32,59 @@ class Help extends Command {
         if(!args[1]) {
             message.channel.send({
                 embed: {
-                    title: ":pushpin: Aide Yura'Bot",
+                    title: language("HELP_YURA"),
                     thumbnail: {
                         url: client.user.displayAvatarURL({format: 'png'})
                     },
-                    description: "Pour **plus d'informations** sur une commande:\n" + 
+                    description: language("HELP_INFOS") + 
                       "[»](" + client.url + ") `" + prefix + "help [command]`\n\n" +
-                      `Nombre de commandes : **${client.commands.size}** \n` +
-                      `Prefix sur ce serveur : **${prefix}** \n\n` +
-                      "__**Voici la liste des commandes :**__  \n\n",
+                      language("HELP_TITLE", client.commands.size) + 
+                      language("HELP_PREFIX", prefix) +
+                      language("HELP_LISTCMDS"),
                     fields: [
                         {
-                            name: '<:adminsettingsmale:675368904637546506> » Commandes Administration : (**' + client.commands.filter((command) => command.category === 'admin').size + '**)',
+                            name: language("HELP_ADMIN") + client.commands.filter((command) => command.category === 'admin').size + '**)',
                             value: client.commands.filter((command) => command.category === 'admin').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
-                            name: ':rotating_light: » Commandes Modération : (**' + client.commands.filter((command) => command.category === 'mod').size + '**)',
+                            name: language("HELP_MOD") + client.commands.filter((command) => command.category === 'mod').size + '**)',
                             value: client.commands.filter((command) => command.category === 'mod').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
-                            name: ':gear: » Commandes Utilitaires : (**' + client.commands.filter((command) => command.category === 'utils').size + '**)',
+                            name: language("HELP_UTIL") + client.commands.filter((command) => command.category === 'utils').size + '**)',
                             value: client.commands.filter((command) => command.category === 'utils').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
-                            name: ':tada: » Commandes Fun : (**' + client.commands.filter((command) => command.category === 'fun').size + '**)',
+                            name: language("HELP_FUN") + client.commands.filter((command) => command.category === 'fun').size + '**)',
                             value: client.commands.filter((command) => command.category === 'fun').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
-                            name: ':notes: » Commandes Musique : (**' + client.commands.filter((command) => command.category === 'music').size + '**)',
+                            name: language("HELP_MUSIC") + client.commands.filter((command) => command.category === 'music').size + '**)',
                             value: client.commands.filter((command) => command.category === 'music').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
-                            name: ':gift: » Commandes de Giveaways : (**' + client.commands.filter((command) => command.category === 'giveaway').size + '**)',
+                            name: language("HELP_GIVEAWAY") + client.commands.filter((command) => command.category === 'giveaway').size + '**)',
                             value: client.commands.filter((command) => command.category === 'giveaway').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
-                            name: ':sunrise_over_mountains: » Commandes Images : (**' + client.commands.filter((command) => command.category === 'images').size + '**)',
+                            name: language("HELP_IMG") + client.commands.filter((command) => command.category === 'images').size + '**)',
                             value: client.commands.filter((command) => command.category === 'images').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
-                            name: ':video_game: » Commandes De Jeux : (**' + client.commands.filter((command) => command.category === 'game').size + '**)',
+                            name: language("HELP_GAME") + client.commands.filter((command) => command.category === 'game').size + '**)',
                             value: client.commands.filter((command) => command.category === 'game').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
-                            name: ':underage: » Commandes NSFW : (**' + client.commands.filter((command) => command.category === 'NSFW').size + '**)',
+                            name: language("HELP_NSFW") + client.commands.filter((command) => command.category === 'NSFW').size + '**)',
                             value: client.commands.filter((command) => command.category === 'NSFW').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
-                            name: ':robot: » Commandes bot : (**' + client.commands.filter((command) => command.category === 'bot').size + '**)',
+                            name: language("HELP_BOT") + client.commands.filter((command) => command.category === 'bot').size + '**)',
                             value: client.commands.filter((command) => command.category === 'bot').map((command) => "`" + command.name + "`").join(', ')
                         },
                         {
-                            name: '🔗 • __Liens__ :',
-                            value: "[Site](https://yurabot.xyz) | [Inviter le bot](https://discordapp.com/oauth2/authorize?client_id=662775890194989066&scope=bot&permissions=2146958847) | [Serveur Support](https://discord.gg/etQ3uJN) | [Dashboard](https://dash.yurabot.xyz) | [Status](https://yurabot.xyz/status)"
+                            name: language("HELP_LINKS"),
+                            value: `[${language("HELP_WEBSITE")}](https://yurabot.xyz) | [${language("HELP_INVITEBOT")}](https://discordapp.com/oauth2/authorize?client_id=662775890194989066&scope=bot&permissions=2146958847) | [${language("HELP_SERVSUPPORT")}](https://discord.gg/etQ3uJN) | [Dashboard](https://dash.yurabot.xyz) | [Status](https://yurabot.xyz/status)`
                         }
                     ],
                     url: client.url,
@@ -106,34 +106,34 @@ class Help extends Command {
                     Aliases = command.aliases
                     Desc = command.description;
                 } else { 
-                    Aliases = "Aucune aliases pour cette commande."
-                    Desc = "Aucune description pour cette commande."
+                    Aliases = language("HELPCMD_NOALIASES")
+                    Desc = language("HELPCMD_NODESC")
                 }
 
                 message.channel.send({
                     embed: {
-                        title: ":question: Aide sur la commande '"+command.name+"'",
-                        description: "⇝ Légende pour l'utilisation:\n" +
-                            "() : Optionnel | [] : Obligatoire",
+                        title: language("HELPCMD_TITLE")+command.name+"'",
+                        description: language("HELPCMD_LEGENDE") +
+                          language("HELPCMD_LEGENDE_2"),
                         fields: [
                             {
-                                name: '• Nom de la commande :',
-                                value: "[»]("+client.url+") " + command.name,
-                                inline: true
-                            },
-                            {
-                                name: '• Utilisation :',
-                                value: "[»]("+client.url+") " + command.usage,
-                                inline: true
-                            },
-                            {
-                                name: '• Description de la commande :',
-                                value: "[»]("+client.url+") " + Desc,
+                                name: language("HELPCMD_NAMECMD"),
+                                value: "↳ " + command.name,
                                 inline: false
                             },
                             {
-                                name: '• Aliase(s) de la commande :',
-                                value: "[»]("+client.url+") " + Aliases,
+                                name: language("HELPCMD_UTILISATIONCMD"),
+                                value: "↳ " + command.usage,
+                                inline: false
+                            },
+                            {
+                                name: language("HELPCMD_DESCCMD"),
+                                value: "↳ " + Desc,
+                                inline: false
+                            },
+                            {
+                                name: language("HELPCMD_ALIASESCMD"),
+                                value: "↳ " + Aliases,
                                 inline: false
                             }
                         ],

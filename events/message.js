@@ -8,12 +8,13 @@ module.exports = (client, message) => {
 
     let prefix;
     let guildLanguage;
+    let language;
 
     if (guildSettingsExist) {
         prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
         guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
 
-        const language = require(`../languages/${guildLanguage}`);
+        language = require(`../languages/${guildLanguage}`);
 
         let automodEnabled = client.guildSettings.has(`${message.guild.id}`, "automodPlug")
         
@@ -89,9 +90,12 @@ module.exports = (client, message) => {
         guildLanguage = "english"
     }
 
-    if(message.content.includes(`<@${client.user.id}>`)) {
-     message.channel.send("Hello!")
-     prefix = `<@${client.user.id}> `
+    language = require(`../languages/${guildLanguage}`);
+
+    if(message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))){
+        if(message.guild){
+            return message.channel.send(language("MSG_MENTION", prefix)).catch(e => {});
+        } else return;
     }
 
     if(!message.content.startsWith(prefix)) return;

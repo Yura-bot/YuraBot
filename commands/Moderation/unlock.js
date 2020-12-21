@@ -31,7 +31,7 @@ class UnLock extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         if (!client.lockit) client.lockit = [];
-        if (!message.member.hasPermission("MANAGE_CHANNELS")) return msg.reply(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
+        if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
 
         let ifChannelLock = client.mod.has(`${message.channel.id}-lock`)
 

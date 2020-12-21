@@ -34,20 +34,13 @@ class WebPing extends Command {
         let site = args[1]
         if (!site) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_WEB_PING"));
 
-        getPing(site)
-        .then((ping) => message.channel.send({embed: {color: '0x00FF46', description: `${language("WEB_PING_SUCESS")} ${site} ! **${ping}**ms !` }}))
+        axios.get(`https://isitup.org/${site}.json`)
+        .then((response) => {
+            message.channel.send({embed: {color: '0x00FF46', description: `${language("WEB_PING_SUCESS")} **${response.data.domain}** ! **${response.data.response_time}**sec !` }})
+        })
         .catch(e => {
-            return message.channel.send(language("WEB_PING_NOSITEFOUND"));
+            return message.channel.send(language("WEB_PING_NOSITEFOUND"))
         });
-
-        function getPing(domain) {
-            let startTime = Date.now();
-            return new Promise((resolve, reject) => {
-                axios.get(domain)
-                     .then(() => resolve(Date.now() - startTime))
-                     .catch(reject);
-           });
-       }
     }
 }
 

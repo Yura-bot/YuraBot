@@ -30,7 +30,7 @@ class Lock extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("MANAGE_CHANNELS")) return msg.reply(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
+        if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
 
         let ifChannelLock = client.mod.has(`${message.channel.id}-lock`)
 
