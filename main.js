@@ -7,8 +7,11 @@ const Handler = require('./structure/Handler');
 const Enmap = require("enmap");
 const webhook = require('discord-webhook-node');
 const { GiveawaysManager } = require('discord-giveaways');
+
 const ameClient = require("amethyste-api")
 const { Client: Joke } = require("blague.xyz");
+const DBL = require("dblapi.js");
+
 const { Player } = require("discord-player");
 const AntiSpam = require('discord-anti-spam');
 
@@ -47,6 +50,8 @@ class Class extends Client {
         this.ameApi = new ameClient(Config.ameToken)
         this.joke = new Joke(Config.jokeToken, { defaultLang: "fr" });
 
+        this.dbl = new DBL(Config.dblApi, this);
+
         this.dash = require("./dashboard/dashboard.js");
 
         this.antiSpam = new AntiSpam({
@@ -65,6 +70,10 @@ class Class extends Client {
             verbose: false,
             ignoredUsers: [],
         });
+
+        process.on('unhandledRejection', error => {
+            this.emit('error', error, "bot");
+        })
 
         try { this.launch().then(() => { console.log("• Lancement du robot réussi, connexion à Discord.."); }); }
         catch (e) { throw new Error(e); }
