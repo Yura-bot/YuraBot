@@ -162,15 +162,19 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     }
 
     let welcomeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug")
+    let welcomeMpEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomeMpPlug")
 
     let welcomeChannel; 
     let welcomeMessage;
     let welcomeImage;
 
+    let welcomeMpMessage;
+
     if (welcomeEnabled) {
         welcomeChannel = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeChannel")
         welcomeMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeMessage")
         welcomeImage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage")
+        if (welcomeMpEnabled) welcomeMpMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomeMpPlug.welcomeMessage")
     }
 
     res.render("items/welcome", {
@@ -190,6 +194,8 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         welcomeMessage: welcomeMessage,
         welcomeEnabled: welcomeEnabled,
         welcomeImage: welcomeImage,
+        welcomeMpEnabled: welcomeMpEnabled,
+        welcomeMpMessage: welcomeMpMessage,
         alert: false
     });
 }).post("/:guildID/tools/welcome", CheckAuth, async function(req, res) {
@@ -202,49 +208,62 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!member) return res.redirect("/");
     if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
 
-    let welcomeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug")
-
-    let welcomeChannel; 
-    let welcomeMessage;
-    let welcomeImage;
-
-    if (welcomeEnabled) {
-        welcomeChannel = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeChannel")
-        welcomeMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeMessage")
-        welcomeImage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage")
-    }
-
     let data  = req.body;
 
     //Status :
     let statusWelcome = data.statusWelcome;
+    let statusMpWelcome = data.statusMpWelcome;
 
     if (statusWelcome != "on") {
         bot.guildSettings.delete(`${req.params.guildID}`, "welcomePlug")
-        return res.redirect("/serveurs/"+req.params.guildID+"/tools/welcome");
+        statusWelcome = false 
     }
 
-    // Channel : 
-    let welcomeChannelConfig = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
-    //Message
-    let welcomeMessageConfig = data.welcomeMessage;
-    //Image ?
-    let welcomeImageConfig = data.withImage === "on"
+    if (statusMpWelcome != "on") {
+        bot.guildSettings.delete(`${req.params.guildID}`, "welcomeMpPlug")
+        statusMpWelcome = false 
+    }
 
-    const obj = {
-        welcomePlug: {
-            welcomeChannel: welcomeChannelConfig,
-            welcomeMessage: welcomeMessageConfig,
-            welcomeImage: welcomeImageConfig,
-            welcomeImageURL: "URL",
+    if (statusWelcome != false) {
+        // Channel : 
+        let welcomeChannelConfig = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
+        //Message
+        let welcomeMessageConfig = data.welcomeMessage;
+        //Image ?
+        let welcomeImageConfig = data.withImage === "on"
+
+        const obj = {
+            welcomePlug: {
+                welcomeChannel: welcomeChannelConfig,
+                welcomeMessage: welcomeMessageConfig,
+                welcomeImage: welcomeImageConfig,
+                welcomeImageURL: "URL",
+            }
         }
-    }
-    await bot.guildSettings.update(`${req.params.guildID}`, obj)
 
-    welcomeChannel = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeChannel")
-    welcomeMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeMessage")
-    welcomeImage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage")
-    welcomeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug")
+        await bot.guildSettings.update(`${req.params.guildID}`, obj)
+    }
+
+    if (statusMpWelcome != false) {
+        let welcomeMpMessageConfig = data.welcomeMpMessage;
+
+        const obj = {
+            welcomeMpPlug: {
+                welcomeMessage: welcomeMpMessageConfig,
+            }
+        }
+
+        await bot.guildSettings.update(`${req.params.guildID}`, obj)
+    }
+
+    let welcomeChannel = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeChannel")
+    let welcomeMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeMessage")
+    let welcomeImage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage")
+    let welcomeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug")
+    
+    let welcomeMpEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomeMpPlug")
+    let welcomeMpMessage;
+    if (welcomeMpEnabled) welcomeMpMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomeMpPlug.welcomeMessage")
 
     res.render("items/welcome", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
@@ -263,6 +282,8 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         welcomeMessage: welcomeMessage,
         welcomeEnabled: welcomeEnabled,
         welcomeImage: welcomeImage,
+        welcomeMpEnabled: welcomeMpEnabled,
+        welcomeMpMessage: welcomeMpMessage,
         alert: true
     });
 
