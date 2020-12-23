@@ -42,104 +42,159 @@
 
                 <% } %>
 
-                <div class="card">
+                <div class="xl-100 col-lg-12 box-col-12">
+                  <div class="card">
                     <div class="card-header">
                       <h5>👋 Configuration du message de bienvenue :</h5>
                     </div>
                     <form class="form theme-form" method="POST">
                       <div class="card-body">
+  
+                        <div class="tabbed-card">
+                          <ul class="pull-right nav nav-pills nav-primary" id="pills-clrtab" role="tablist">
+                            <li class="nav-item"><a class="nav-link active" id="pills-basic-tab" data-toggle="pill" href="#pills-basic" role="tab" aria-controls="pills-basic" aria-selected="true">Basique</a></li>
+                            <li class="nav-item"><a class="nav-link" id="pills-mp-tab" data-toggle="pill" href="#pills-mp" role="tab" aria-controls="pills-mp" aria-selected="false">Mp</a></li>
+                          </ul>
+                          <div class="tab-content" id="pills-clrtabContent">
+                            <div class="tab-pane fade show active" id="pills-basic" role="tabpanel" aria-labelledby="pills-basic-tab">
+                              <% if(welcomeEnabled === false) { %>
 
-                        <% if(welcomeEnabled === false) { %>
+                                <div class="media">
+                                  <label class="col-form-label m-r-10">Désactivé !</label>
+                                  <div class="media-body icon-state switch-outline">
+                                    <label class="switch">
+                                      <input type="checkbox" name="statusWelcome"><span class="switch-state bg-success"></span>
+                                    </label>
+                                  </div>
+                                </div>
+      
+                              <% } else { %>
+      
+                                <div class="media">
+                                  <label class="col-form-label m-r-10">Activé !</label>
+                                  <div class="media-body icon-state switch-outline">
+                                    <label class="switch">
+                                      <input type="checkbox" checked="" name="statusWelcome"><span class="switch-state bg-success"></span>
+                                    </label>
+                                  </div>
+                                </div>
+      
+                              <% } %>
+      
+                              <br>
+      
+                              <h6 class="sub-title">Liste des variables :</h6>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Mentionner le membre : <ins>{member}</ins></li>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Afficher le pseudo du membre : <ins>{user}</ins></li>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne le tag du membre : <ins>{tag}</ins></li>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne l'id du membre : <ins>{memberid}</ins></li>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Affiche le nom du serveur : <ins>{server}</ins></li>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne le nombre de membre du serveur : <ins>{membercount}</ins></li>
+      
+                              <br>
+      
+                              <div class="row">
+                                  <div class="col">
+                                    <div class="form-group mb-0">
+                                      <label for="welcome-settings">Configurez votre message de bienvenue :</label>
+                                      <textarea class="form-control" id="welcome-settings" type="text" name="welcomeMessage" placeholder="Votre message de bienvenue !" rows="6"><%= welcomeMessage %></textarea>
+                                    </div>
+                                  </div>
+                              </div>      
+                              
+                              <br>
+      
+                              <div class="row">
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label for="channel-welcome-system">Channel :</label>
+                                      <select class="form-control digits" id="channel-welcome-system" name="channelID">
+      
+                                      <% if(welcomeEnabled && bot.channels.cache.has(welcomeChannel)){ %>
+                                          <option selected="selected">#<%= bot.channels.cache.get(welcomeChannel).name %></option>
+                                          <% guild.channels.cache.filter((ch) => ch.id !== welcomeChannel && ch.type === "text").forEach((ch) => { %>
+                                              <option>#<%= ch.name %></option>
+                                          <% }); } else { %>
+                                          <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
+                                          <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+                                              <option>#<%= ch.name %></option>
+                                          <% }); %>
+                                      <% } %>
+      
+                                      </select>
+                                    </div>
+                                  </div>
+                              </div>
+      
+                              <label class="badge badge-danger">Bientôt :</label></a></li>
+      
+                              <div class="checkbox checkbox-success">
+                                  <% if(welcomeImage) { %>
+                                      <input id="checkbox-primary" type="checkbox" name="withImage" checked disabled>
+                                  <% } else { %>
+                                      <input id="checkbox-primary" type="checkbox" name="withImage" disabled>
+                                  <% } %>
+                                  <label for="checkbox-primary"disabled>Image de bienvenue ?</label> 
+                              </div>
+                              
+                            </div>
+                            <div class="tab-pane fade" id="pills-mp" role="tabpanel" aria-labelledby="pills-mp-tab">
+                              <% if(welcomeMpEnabled === false) { %>
 
-                          <div class="media">
-                            <label class="col-form-label m-r-10">Désactivé !</label>
-                            <div class="media-body icon-state switch-outline">
-                              <label class="switch">
-                                <input type="checkbox" name="statusWelcome"><span class="switch-state bg-success"></span>
-                              </label>
+                                <div class="media">
+                                  <label class="col-form-label m-r-10">Désactivé !</label>
+                                  <div class="media-body icon-state switch-outline">
+                                    <label class="switch">
+                                      <input type="checkbox" name="statusMpWelcome"><span class="switch-state bg-success"></span>
+                                    </label>
+                                  </div>
+                                </div>
+      
+                              <% } else { %>
+      
+                                <div class="media">
+                                  <label class="col-form-label m-r-10">Activé !</label>
+                                  <div class="media-body icon-state switch-outline">
+                                    <label class="switch">
+                                      <input type="checkbox" checked="" name="statusMpWelcome"><span class="switch-state bg-success"></span>
+                                    </label>
+                                  </div>
+                                </div>
+      
+                              <% } %>
+      
+                              <br>
+      
+                              <h6 class="sub-title">Liste des variables :</h6>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Mentionner le membre : <ins>{member}</ins></li>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Afficher le pseudo du membre : <ins>{user}</ins></li>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne le tag du membre : <ins>{tag}</ins></li>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne l'id du membre : <ins>{memberid}</ins></li>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Affiche le nom du serveur : <ins>{server}</ins></li>
+                              <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne le nombre de membre du serveur : <ins>{membercount}</ins></li>
+      
+                              <br>
+      
+                              <div class="row">
+                                  <div class="col">
+                                    <div class="form-group mb-0">
+                                      <label for="welcomemp-settings">Configurez votre message de bienvenue :</label>
+                                      <textarea class="form-control" id="welcomemp-settings" type="text" name="welcomeMpMessage" placeholder="Votre message de bienvenue !" rows="6"><%= welcomeMpMessage %></textarea>
+                                    </div>
+                                  </div>
+                              </div> 
                             </div>
                           </div>
-
-                        <% } else { %>
-
-                          <div class="media">
-                            <label class="col-form-label m-r-10">Activé !</label>
-                            <div class="media-body icon-state switch-outline">
-                              <label class="switch">
-                                <input type="checkbox" checked="" name="statusWelcome"><span class="switch-state bg-success"></span>
-                              </label>
-                            </div>
-                          </div>
-
-                        <% } %>
-
-                        <br>
-
-                        <h6 class="sub-title">Liste des variables :</h6>
-                        <ul>
-                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Mentionner le membre : <ins>{member}</ins></li>
-                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Afficher le pseudo du membre : <ins>{user}</ins></li>
-                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne le tag du membre : <ins>{tag}</ins></li>
-                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne l'id du membre : <ins>{memberid}</ins></li>
-                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Affiche le nom du serveur : <ins>{server}</ins></li>
-                          <li><i class="fa fa-angle-double-right txt-primary m-r-10"></i>Donne le nombre de membre du serveur : <ins>{membercount}</ins></li>
-                        </ul>
-
-                        <br>
-
-                        <div class="row">
-                            <div class="col">
-                              <div class="form-group mb-0">
-                                <label for="welcome-settings">Configurez votre message de bienvenue :</label>
-                                <textarea class="form-control" id="welcome-settings" type="text" name="welcomeMessage" placeholder="Votre message de bienvenue !" rows="6"><%= welcomeMessage %></textarea>
-                              </div>
-                            </div>
-                        </div>      
-                        
-                        <br>
-
-                        <div class="row">
-                            <div class="col">
-                              <div class="form-group">
-                                <label for="channel-welcome-system">Channel :</label>
-                                <select class="form-control digits" id="channel-welcome-system" name="channelID">
-
-                                <% if(welcomeEnabled && bot.channels.cache.has(welcomeChannel)){ %>
-                                    <option selected="selected">#<%= bot.channels.cache.get(welcomeChannel).name %></option>
-                                    <% guild.channels.cache.filter((ch) => ch.id !== welcomeChannel && ch.type === "text").forEach((ch) => { %>
-                                        <option>#<%= ch.name %></option>
-                                    <% }); } else { %>
-                                    <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
-                                    <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
-                                        <option>#<%= ch.name %></option>
-                                    <% }); %>
-                                <% } %>
-
-                                </select>
-                              </div>
-                            </div>
                         </div>
-
-                        <label class="badge badge-danger">Bientôt :</label></a></li>
-
-                        <div class="checkbox checkbox-success">
-                            <% if(welcomeImage) { %>
-                                <input id="checkbox-primary" type="checkbox" name="withImage" checked disabled>
-                            <% } else { %>
-                                <input id="checkbox-primary" type="checkbox" name="withImage" disabled>
-                            <% } %>
-                            <label for="checkbox-primary"disabled>Image de bienvenue ?</label> 
-                        </div>
-                        
+  
                       </div>
-
+  
                       <div class="card-footer">
                         <button class="btn btn-primary" type="submit">Sauvegarder</button>
                       </div>
-
                     </form>
                   </div>
-
+                </div>
               </div>
             </div>
           </div>

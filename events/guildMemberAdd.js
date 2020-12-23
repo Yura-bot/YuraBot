@@ -17,6 +17,7 @@ module.exports = (client, member) => {
     const language = require(`../languages/${guildLanguage}`);
 
     let welcomeEnabled = client.guildSettings.has(`${member.guild.id}`, "welcomePlug")
+    let welcomeMpEnabled = client.guildSettings.has(`${member.guild.id}`, "welcomeMpPlug")
     let autoroleEnabled = client.guildSettings.has(`${member.guild.id}`, "autorolePlug")
 
     if (welcomeEnabled) {
@@ -37,7 +38,21 @@ module.exports = (client, member) => {
         .replace('{server}', member.guild.name)
         .replace('{membercount}', member.guild.memberCount)
 
-        client.channels.cache.get(welcomeChannel).send(messageSend).catch(e => { return member.guild.owner.send(language("EVENTS_GUILDMEMBERADD_WELCOME_ERROR")) });
+        client.channels.cache.get(welcomeChannel).send(messageSend).catch(e => { member.guild.owner.send(language("EVENTS_GUILDMEMBERADD_WELCOME_ERROR")) });
+    }
+
+    if (welcomeMpEnabled) {
+        let welcomeMessage = client.guildSettings.get(`${member.guild.id}`, "welcomeMpPlug.welcomeMessage")
+
+        let messageSend = welcomeMessage
+        .replace('{member}', member)
+        .replace('{user}', member.user.username)
+        .replace('{tag}', member.user.tag)
+        .replace('{memberid}', member.user.id)
+        .replace('{server}', member.guild.name)
+        .replace('{membercount}', member.guild.memberCount)
+
+        member.send(messageSend).catch(e => {});
     }
 
     if (autoroleEnabled) {
