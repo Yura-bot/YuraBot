@@ -244,6 +244,14 @@ const languageData = {
     GIVEAWAY_EDIT_NO_FOUND: "Impossible de trouver un Giveaway pour ",
     GIVEAWAY_EDIT_SUCESS: "Je suis en train de modifier le concours avec les nouveaux paramètres. Les modifications seront prises en compte dans 5 secondes.",
     GIVEAWAY_EDIT_ERROR_OCCURED: "<:X_:673212163837526064> **Erreur :** Une erreur interne est survenue !",
+    /* Drop : */
+    DROP: "drop",
+    SYNTAXE_DROP: "drop [Lot]```",
+    DROP_NO_FOUND: "Impossible de trouver un Giveaway pour ",
+    DROP_DESC_1: (author) => `😃 \`Par\` ➔ ${author}`,
+    DROP_DESC_2: (dropPrize) => `🥇 \`Lot\` ➔ ${dropPrize} \n\n→ Le premier qui clique sur la réaction 🎊 remporte le lot mis en jeu !`,
+    DROP_WIN_DESC_1: (dropPrize) => `🥇 \`Lot\` ➔ ${dropPrize} \n\n`,
+    DROP_WIN_DESC_2: (winner) => `➡ **Nous avons un gagnant !** \n\n→ <@${winner}>`,
     /* NSFW : */
     NSFW_NO_CHANNEL_NSFW: "**:warning: | Ce n’est pas un salon NSFW ! | :warning:**",
     NSFW_LOADING: "Veuillez patienter... <a:loading:675233191870595082>",
