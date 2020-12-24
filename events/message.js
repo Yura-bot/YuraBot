@@ -5,6 +5,7 @@ module.exports = (client, message) => {
     if(message.author.bot || !message.channel.guild) return;
 
     if (message.guild.member(client.user).hasPermission("SEND_MESSAGES") === false)  { return; }
+    if (message.guild.id === "110373943822540800") return;
 
     let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
 

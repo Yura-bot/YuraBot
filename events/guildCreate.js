@@ -19,7 +19,7 @@ module.exports = (client, guild) => {
 
       client.channels.cache.get('739804051981467688').send(`:bar_chart: Nombre de serveurs exacts : **${client.guilds.cache.size}**`);
 
-      client.channels.cache.get("739804051981467688").messages.fetch("791362234827145216")
+      client.channels.cache.get("739804051981467688").messages.fetch("791478527890423828")
       .then(msg => {
         msg.edit(`:bar_chart: Nombre de serveurs exacts : **${client.guilds.cache.size}**`)
       });
