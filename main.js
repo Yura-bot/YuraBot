@@ -17,7 +17,11 @@ const AntiSpam = require('discord-anti-spam');
 
 class Class extends Client {
     constructor() {
-        super({ disableMentions: "everyone" , partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+        super({ 
+            disableMentions: "everyone" , 
+            ws : { intents: [ "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_VOICE_STATES" ] },
+            partials: ['MESSAGE', 'CHANNEL', 'REACTION'] 
+        });
 
         this.hook = new webhook.Webhook(Config.webhook);
         this.default_prefix = Config.prefix;
