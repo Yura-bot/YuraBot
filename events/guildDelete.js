@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = (client, guild) => {
+
     const leaveembed = new Discord.MessageEmbed()
         .setDescription(`📌 Le serveur **${guild.name}** vient de retirer ${client.user.username}`)
         .setThumbnail(guild.iconURL())

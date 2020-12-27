@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = (client, guild) => {
+
     const joinembed = new Discord.MessageEmbed()
         .setDescription(`📌 Merci à **${guild.name}** d'avoir ajouté ${client.user.username}`)
         .setThumbnail(guild.iconURL())
@@ -16,8 +17,6 @@ module.exports = (client, guild) => {
 
       let status = `yurabot.xyz | ?help | ${client.guilds.cache.size} guilds !`
       client.user.setActivity(status, {type: "PLAYING"})
-
-      client.channels.cache.get('739804051981467688').send(`:bar_chart: Nombre de serveurs exacts : **${client.guilds.cache.size}**`);
 
       client.channels.cache.get("739804051981467688").messages.fetch("791478527890423828")
       .then(msg => {
