@@ -19,7 +19,7 @@ class Class extends Client {
     constructor() {
         super({ 
             disableMentions: "everyone" , 
-            ws : { intents: [ "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_VOICE_STATES" ] },
+            ws : { intents: [ "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_VOICE_STATES", "GUILD_MESSAGE_REACTIONS" ] },
             partials: ['MESSAGE', 'CHANNEL', 'REACTION'] 
         });
 
@@ -41,6 +41,7 @@ class Class extends Client {
         this.mod = new Enmap({ name: 'mod' });
 
         this.giveawaysManager = new GiveawaysManager(this, {
+            hasGuildMembersIntent: true,
             storage: "./giveaways.json",
             updateCountdownEvery: 5000,
             default: {
@@ -78,6 +79,11 @@ class Class extends Client {
         process.on('unhandledRejection', error => {
             this.emit('error', error, "bot");
         })
+
+        this.on("disconnect", () => this.hook.info("Bot is disconnecting...", "warn"))
+        .on("reconnecting", () => this.logger.info("Bot reconnecting...", "log"))
+        .on("error", (e, cmd) => this.hook.error('**Bot error**', `Quelque chose s'est mal passé, commande : **${cmd}**`, `${e}`).catch(e => {}))
+        .on("warn", (info) => this.hook.warn('**Bot Warn**', `Quelque chose s'est mal passé.`, `${info}`).catch(e => {}));
 
         try { this.launch().then(() => { console.log("• Lancement du robot réussi, connexion à Discord.."); }); }
         catch (e) { throw new Error(e); }
