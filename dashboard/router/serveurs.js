@@ -11,7 +11,7 @@ router.get("/:guildID", CheckAuth, (req, res) => {
 
     let serv = req.bot.guilds.cache.get(req.params.guildID);
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+    if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
 
     let guildSettingsExist = bot.guildSettings.has(`${req.params.guildID}`)
 

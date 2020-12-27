@@ -61,8 +61,9 @@ module.exports.load = async(client) => {
             res.status(404).render("404");
         })
         .use(function(err, req, res, next) {
-            return res.status(500).send('Please refresh the page.');
+            res.status(500).send('Please refresh the page.');
         });
+        
 
     http.listen(app.get('port'), (err) => {
 
@@ -72,5 +73,6 @@ module.exports.load = async(client) => {
 
     process.on("unhandledRejection", (r) => {
         console.dir(r);
+        client.emit('error', error, "dash");
     });
 };

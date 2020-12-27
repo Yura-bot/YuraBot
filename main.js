@@ -19,7 +19,7 @@ class Class extends Client {
     constructor() {
         super({ 
             disableMentions: "everyone" , 
-            ws : { intents: [ "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_VOICE_STATES", "GUILD_MESSAGE_REACTIONS" ] },
+            ws : { intents: [ "GUILDS", "GUILD_MEMBERS", "GUILD_VOICE_STATES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_PRESENCES" ] },
             partials: ['MESSAGE', 'CHANNEL', 'REACTION'] 
         });
 
