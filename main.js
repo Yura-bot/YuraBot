@@ -7,14 +7,21 @@ const Handler = require('./structure/Handler');
 const Enmap = require("enmap");
 const webhook = require('discord-webhook-node');
 const { GiveawaysManager } = require('discord-giveaways');
+
 const ameClient = require("amethyste-api")
 const { Client: Joke } = require("blague.xyz");
+const DBL = require("dblapi.js");
+
 const { Player } = require("discord-player");
 const AntiSpam = require('discord-anti-spam');
 
 class Class extends Client {
     constructor() {
-        super({ disableMentions: "everyone" , partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+        super({ 
+            disableMentions: "everyone" , 
+            ws : { intents: [ "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES", "GUILD_VOICE_STATES", "GUILD_MESSAGE_REACTIONS" ] },
+            partials: ['MESSAGE', 'CHANNEL', 'REACTION'] 
+        });
 
         this.hook = new webhook.Webhook(Config.webhook);
         this.default_prefix = Config.prefix;
@@ -34,6 +41,7 @@ class Class extends Client {
         this.mod = new Enmap({ name: 'mod' });
 
         this.giveawaysManager = new GiveawaysManager(this, {
+            hasGuildMembersIntent: true,
             storage: "./giveaways.json",
             updateCountdownEvery: 5000,
             default: {
@@ -46,6 +54,8 @@ class Class extends Client {
 
         this.ameApi = new ameClient(Config.ameToken)
         this.joke = new Joke(Config.jokeToken, { defaultLang: "fr" });
+
+        this.dbl = new DBL(Config.dblApi, this);
 
         this.dash = require("./dashboard/dashboard.js");
 
@@ -65,6 +75,15 @@ class Class extends Client {
             verbose: false,
             ignoredUsers: [],
         });
+
+        process.on('unhandledRejection', error => {
+            this.emit('error', error, "bot");
+        })
+
+        this.on("disconnect", () => this.hook.info("Bot is disconnecting...", "warn"))
+        .on("reconnecting", () => this.logger.info("Bot reconnecting...", "log"))
+        .on("error", (e, cmd) => this.hook.error('**Bot error**', `Quelque chose s'est mal passé, commande : **${cmd}**`, `${e}`).catch(e => {}))
+        .on("warn", (info) => this.hook.warn('**Bot Warn**', `Quelque chose s'est mal passé.`, `${info}`).catch(e => {}));
 
         try { this.launch().then(() => { console.log("• Lancement du robot réussi, connexion à Discord.."); }); }
         catch (e) { throw new Error(e); }

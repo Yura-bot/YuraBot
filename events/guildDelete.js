@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = (client, guild) => {
+
     const leaveembed = new Discord.MessageEmbed()
         .setDescription(`📌 Le serveur **${guild.name}** vient de retirer ${client.user.username}`)
         .setThumbnail(guild.iconURL())
@@ -15,8 +16,14 @@ module.exports = (client, guild) => {
     let guildSettingsExist = client.guildSettings.has(`${guild.id}`)
 
     if (guildSettingsExist) {
-    client.guildSettings.delete(`${guild.id}`)
+       client.guildSettings.delete(`${guild.id}`)
     }
+
     let status = `yurabot.xyz | ?help | ${client.guilds.cache.size} guilds !`
     client.user.setActivity(status, {type: "PLAYING"})
+
+    client.channels.cache.get("739804051981467688").messages.fetch("791478527890423828")
+      .then(msg => {
+        msg.edit(`:bar_chart: Nombre de serveurs exacts : **${client.guilds.cache.size}**`)
+      });
 };

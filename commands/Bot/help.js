@@ -95,7 +95,7 @@ class Help extends Command {
                         icon_url: client.user.displayAvatarURL({format: 'png'})
                     }
                 }
-            })
+            }).catch(e => {});
         } else {
             if(client.commands.has(args[1]) && client.commands.get(args[1]).category !== 'secret') {
                 const command = client.commands.get(args[1]);

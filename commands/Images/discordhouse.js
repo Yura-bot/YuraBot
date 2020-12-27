@@ -31,12 +31,24 @@ class Discordhouse extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         let avatar = message.mentions.users.size ? message.mentions.users.first().avatarURL({ format: 'png', size: 512 }).replace(".webp", ".png") : message.author.avatarURL({ format: 'png', size: 512 }).replace(".webp", ".png")
+        let houseNumber = message.mentions.users.size ? message.mentions.users.flags : message.author.flags
+        let houseName;
 
+        if (houseNumber === 64) {
+            houseName = "bravery";
+        } 
+        if (houseNumber === 128)  {
+            houseName = "brilliance";
+        }
+        if (houseNumber === 256)  {
+            houseName = "balance";
+        }
+        
         const msg = await message.channel.send(client.getEmoji(client.config.emojis.loading)+language("GENERATION")).catch(e => {
             return client.emit('error',e);
         });
 
-        const buffer = await client.ameApi.generate("discordhouse", { url: avatar, house: args.slice(1).join(' ') });
+        const buffer = await client.ameApi.generate("discordhouse", { url: avatar, house: houseName });
 
         let attachment = new Discord.MessageAttachment(buffer, "discordhouse.png");
 
