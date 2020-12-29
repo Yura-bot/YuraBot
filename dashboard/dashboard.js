@@ -60,19 +60,16 @@ module.exports.load = async(client) => {
         .get("*", function(req, res) {
             res.status(404).render("404");
         })
+        /*
         .use(function(err, req, res, next) {
             res.status(500).send('Please refresh the page.');
         });
+        */
         
 
     http.listen(app.get('port'), (err) => {
 
         if (err) throw err;
         console.log(`Dashboard online on port ${app.get('port')}`);
-    });
-
-    process.on("unhandledRejection", (r) => {
-        console.dir(r);
-        client.emit('error', error, "dash");
     });
 };
