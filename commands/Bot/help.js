@@ -102,11 +102,16 @@ class Help extends Command {
 
                 let Aliases;
                 let Desc;
-                if (!command.aliases) {
-                    Aliases = command.aliases
-                    Desc = command.description;
-                } else { 
+
+                if (command.aliases.length === 0) {
                     Aliases = language("HELPCMD_NOALIASES")
+                } else { 
+                    Aliases = command.aliases
+                }
+
+                if (command.description) {
+                    Desc = command.description;
+                } else {
                     Desc = language("HELPCMD_NODESC")
                 }
 
