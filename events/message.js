@@ -33,6 +33,7 @@ module.exports = (client, message) => {
                 if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
 
                     const link = [
+                        "www.",
                         "://",
                         "http",
                         "https",
@@ -40,7 +41,8 @@ module.exports = (client, message) => {
                         "http://",
                         ".fr",
                         ".com",
-                        ".eu"
+                        ".eu",
+                        ".gg"
                  ];
             
                  if (link.some(word => message.content.includes(word))) {
