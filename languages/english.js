@@ -26,6 +26,11 @@ const languageData = {
     BOT_PERMISSION_MANAGE_ROLES: "<:X_:673212163837526064> **Erreur :** Je n'ai pas la permission `MANAGE_ROLES` !",
     BOT_PERMISSION_ADMINISTRATOR: "<:X_:673212163837526064> **Erreur :** Je n'ai pas la permission `ADMINISTRATOR` !",
     /* EVENTS : */
+    /* Emit : */
+    SYNTAXE_EMIT: "emit [Votre event]``` \n**📋 Les events :** \n- welcome \n- goodbye",
+    EMIT_WELCOME_SUCESS: "<:check:673212026226737153> | Event welcome enclanché !",
+    EMIT_GOODBYE_SUCESS: "<:check:673212026226737153> | Event goodbye enclanché !",
+    EMIT_ERROR: "<:X_:673212163837526064> | Aucun event trouvé.",
     /* Message : */
     EVENTS_MESSAGE_ANTIRAID_WARN: "**<:X_:673212163837526064> {@user}, Arrête de spammer !**",
     EVENTS_MESSAGE_ANTIRAID_KICK: "**<:X_:673212163837526064> {user_tag}, A été expulsé pour spam !**",
@@ -40,6 +45,10 @@ const languageData = {
     /* GuildMemberAdd : */
     EVENTS_GUILDMEMBERADD_WELCOME_ERROR: "<:X_:673212163837526064> | Une erreur est survenue : le message de bienvenue n\'a pas pu être envoyé car le salon est introuvable. Veuillez re-setup le système.",
     EVENTS_GUILDMEMBERADD_AUTOROLE_ERROR: "<:X_:673212163837526064> | Une erreur est survenue : l\'autôrole n\'a pas pu être activé car le role est introuvable.",
+    EVENTS_GUILDMEMBERADD_WELCOME_EMBED_FOOTER: (memberCount) => `Nous sommes désormais ${memberCount} !`,
+    WELCOME: "Bienvenue",
+    WELCOME_ON: "Bienvenue sur {server}",
+    MEMBER_COUNT: "- {count}ème membre !",
     /* GuildMemberRemove : */
     EVENTS_GUILDMEMBERREMOVE_GOODBYE_ERROR: "<:X_:673212163837526064> | Une erreur est survenue : l\'autôrole n\'a pas pu être activé car le role est introuvable.",
     /* Commande Help : */

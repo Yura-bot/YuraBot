@@ -111,43 +111,7 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         bot.guildSettings.delete(`${req.params.guildID}`, "suggestionPlug")
     }
 
-    //re-save :
-
-    let prefix = bot.guildSettings.get(`${req.params.guildID}`, "prefix");
-    let guildLanguage = bot.guildSettings.get(`${req.params.guildID}`, "lang");
-    let language2;
-
-    if (guildLanguage === "english") { 
-        guildLanguage = "Anglais"
-        language2 = "Français" 
-    } else  { 
-        guildLanguage = "Français"
-        language2 = "Anglais" 
-    }
-
-    suggestionEnabled = bot.guildSettings.has(`${req.params.guildID}`, "suggestionPlug")
-    suggestionChannel = bot.guildSettings.get(`${req.params.guildID}`, "suggestionPlug.channel");
-
-    res.render("guild", {
-        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
-        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-        botclient: req.client.user,
-        bot: bot,
-        user: req.user,
-        login: "oui",
-        guild: guild,
-        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
-        message: "",
-        messageType: "success",
-        prefix: prefix,
-        guildLanguage: guildLanguage,
-        language2: language2,
-        suggestionEnabled: suggestionEnabled,
-        suggestionChannel: suggestionChannel,
-        alert: true
-    });
+    res.redirect(`/serveurs/${req.params.guildID}`);
 
 }).get("/:guildID/tools/welcome", CheckAuth, async(req, res) => {
 
@@ -164,16 +128,25 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     let welcomeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug")
     let welcomeMpEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomeMpPlug")
 
+    let welcomeEmbedEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug.welcomeEmbed")
+    if (welcomeEmbedEnabled) welcomeEmbedEnabled = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeEmbed")
+
     let welcomeChannel; 
     let welcomeMessage;
-    let welcomeImage;
 
-    let welcomeMpMessage;
+    let welcomeImage = false
+    let colorImage = "#563d7c"
+    let colorImageTitle = "#563d7c"
+    let welcomeMpMessage = false
 
     if (welcomeEnabled) {
         welcomeChannel = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeChannel")
         welcomeMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeMessage")
-        welcomeImage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage")
+        if (welcomeEmbedEnabled) {
+            welcomeImage = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug.welcomeImage")
+            colorImage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage.color")
+            colorImageTitle = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage.colorTitle")
+        } 
         if (welcomeMpEnabled) welcomeMpMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomeMpPlug.welcomeMessage")
     }
 
@@ -193,7 +166,10 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         welcomeChannel: welcomeChannel,
         welcomeMessage: welcomeMessage,
         welcomeEnabled: welcomeEnabled,
+        welcomeEmbedEnabled: welcomeEmbedEnabled,
         welcomeImage: welcomeImage,
+        colorImage: colorImage,
+        colorImageTitle: colorImageTitle,
         welcomeMpEnabled: welcomeMpEnabled,
         welcomeMpMessage: welcomeMpMessage,
         alert: false
@@ -229,19 +205,37 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         let welcomeChannelConfig = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
         //Message
         let welcomeMessageConfig = data.welcomeMessage;
+        //Embed ?
+        let welcomeEmbedConfig = data.withEmbed === "on"
         //Image ?
         let welcomeImageConfig = data.withImage === "on"
-
-        const obj = {
-            welcomePlug: {
-                welcomeChannel: welcomeChannelConfig,
-                welcomeMessage: welcomeMessageConfig,
-                welcomeImage: welcomeImageConfig,
-                welcomeImageURL: "URL",
+        
+        if (welcomeImageConfig) {
+            const obj = {
+                welcomePlug: {
+                    welcomeChannel: welcomeChannelConfig,
+                    welcomeMessage: welcomeMessageConfig,
+                    welcomeEmbed: welcomeEmbedConfig,
+                    welcomeImage: {
+                        color: data.imgColor,
+                        colorTitle: data.imgColorTitle
+                    }
+                }
             }
+    
+            await bot.guildSettings.update(`${req.params.guildID}`, obj)
+        } else {
+            const obj = {
+                welcomePlug: {
+                    welcomeChannel: welcomeChannelConfig,
+                    welcomeMessage: welcomeMessageConfig,
+                    welcomeEmbed: welcomeEmbedConfig
+                }
+            }
+    
+            bot.guildSettings.update(`${req.params.guildID}`, obj)
+            bot.guildSettings.delete(`${req.params.guildID}`, "welcomePlug.welcomeImage")
         }
-
-        await bot.guildSettings.update(`${req.params.guildID}`, obj)
     }
 
     if (statusMpWelcome != false) {
@@ -256,36 +250,7 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         await bot.guildSettings.update(`${req.params.guildID}`, obj)
     }
 
-    let welcomeChannel = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeChannel")
-    let welcomeMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeMessage")
-    let welcomeImage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage")
-    let welcomeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug")
-    
-    let welcomeMpEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomeMpPlug")
-    let welcomeMpMessage;
-    if (welcomeMpEnabled) welcomeMpMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomeMpPlug.welcomeMessage")
-
-    res.render("items/welcome", {
-        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
-        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-        botclient: req.client.user,
-        bot: bot,
-        user: req.user,
-        login: "oui",
-        guild: guild,
-        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
-        message: "",
-        messageType: "success",
-        welcomeChannel: welcomeChannel,
-        welcomeMessage: welcomeMessage,
-        welcomeEnabled: welcomeEnabled,
-        welcomeImage: welcomeImage,
-        welcomeMpEnabled: welcomeMpEnabled,
-        welcomeMpMessage: welcomeMpMessage,
-        alert: true
-    });
+    res.redirect(`/serveurs/${req.params.guildID}/tools/welcome`);
 
 }).get("/:guildID/tools/goodbye", CheckAuth, async(req, res) => {
 
@@ -379,30 +344,7 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     }
     await bot.guildSettings.update(`${req.params.guildID}`, obj)
 
-    goodbyeChannel = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeChannel")
-    goodbyeMessage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeMessage")
-    goodbyeImage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeImage")
-    goodbyeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "goodbyePlug")
-
-    res.render("items/goodbye", {
-        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
-        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-        botclient: req.client.user,
-        bot: bot,
-        user: req.user,
-        login: "oui",
-        guild: guild,
-        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
-        message: "",
-        messageType: "success",
-        goodbyeChannel: goodbyeChannel,
-        goodbyeMessage: goodbyeMessage,
-        goodbyeEnabled: goodbyeEnabled,
-        goodbyeImage: goodbyeImage,
-        alert: true
-    });
+    res.redirect(`/serveurs/${req.params.guildID}/tools/goodbye`);
 
 }).get("/:guildID/tools/autorole", CheckAuth, async(req, res) => {
 
@@ -470,26 +412,7 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     }
     await bot.guildSettings.update(`${req.params.guildID}`, obj)
 
-    autoroleEnabled = bot.guildSettings.get(`${req.params.guildID}`, "autorolePlug")
-    autoroleRole = bot.guildSettings.get(`${req.params.guildID}`, "autorolePlug.role")
-
-    res.render("items/autorole", {
-        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
-        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-        botclient: req.client.user,
-        bot: bot,
-        user: req.user,
-        login: "oui",
-        guild: guild,
-        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
-        message: "",
-        messageType: "success",
-        autoroleEnabled: autoroleEnabled,
-        autoroleRole: autoroleRole,
-        alert: true
-    });
+    res.redirect(`/serveurs/${req.params.guildID}/tools/autorole`);
 
 }).get("/:guildID/tools/auto-mod", CheckAuth, async(req, res) => {
 
@@ -575,32 +498,7 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     }
     await bot.guildSettings.update(`${req.params.guildID}`, obj)
 
-    let antiraid = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antiraid");
-    let antipub = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antipub");
-    let antilink = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antilink");
-    let antibadworlds = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antibadworlds");
-
-
-    res.render("items/auto-mod", {
-        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
-        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-        botclient: req.client.user,
-        bot: bot,
-        user: req.user,
-        login: "oui",
-        guild: guild,
-        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
-        message: "",
-        messageType: "success",
-        antiraid: antiraid,
-        antipub: antipub,
-        antilink: antilink,
-        antibadworlds: antibadworlds,
-        alert: true
-    });
-
+    res.redirect(`/serveurs/${req.params.guildID}/tools/auto-mod`);
 })
 
 
