@@ -3,12 +3,6 @@ const languageData = {
     PING_BEFORE: " Calcul en cours...",
     PING_AFTER: " **»** Latence du bot : `",
     PING: (ms) => `Pong! Latence du bot: ${ms}ms`,
-    LANGUAGE_UPDATED: "Langue du bot mise à jour",
-    MISSING_LANGUAGE: "Vous devez préciser une langue valide! (english ou french)",
-    HELLO: "Bonjour!",
-    LANGUAGE_NO_EXIST: "Cette langue n'existe pas!",
-    TEST: "Ceci est un test! ",
-    XP: ", félicitations ! Vous avez atteint le niveau **.",
     LANGUAGE: "Anglais | EN | English",
     ERRROR_BOT: "<:X_:673212163837526064> **Erreur :**",
     SYNTAXE: "<:X_:673212163837526064> Votre syntaxe est incorrecte. \n```Syntaxe : ",
@@ -81,13 +75,6 @@ const languageData = {
     HELPCMD_NODESC: "Aucune description pour cette commande.",
     HELPCMD_NOALIASES: "Aucune aliases pour cette commande.",
     /* ADMIN : */
-    /* Commande Setprefix : */
-    SETPREFIX: "setprefix",
-    SETPREFIX_ERROR_1: "Veuillez indiquer le préfixe que vous souhaitez fixer !",
-    SETPREFIX_ERROR_2: "Vous ne pouvez pas fixer le préfixe d'un double argument ",
-    SETPREFIX_ERROR_3: "Vous ne pouvez pas envoyer de préfixe de plus de 3 caractères !",
-    SETPREFIX_RESET: "Le Préfixe a été correctement réinitialisé ✅",
-    SETPREFIX_SUCESS: "Le prefix est maintenant : ",
     /* Commande Backup : */
     BACKUP_CREATE: "create-backup",
     BACKUP_LOAD: "load-backup",
@@ -104,17 +91,6 @@ const languageData = {
     SYNTAXE_ANNONCE: "annonce [Description]```",
     ANNONCE: "annonce",
     ANNONCE_TITLE: "📌 __Annonce :__",
-    /* Commande MP : */
-    SYNTAXE_MP: "mp [Utilisateur] [Message]```",
-    MP: "mp",
-    MP_MENTION: "Merci de mentionner un utilisateur pour envoyer un message privé depuis le bot.",
-    MP_RECU: "Vous avez reçu un message de",
-    MP_SERVEUR: "depuis le serveur",
-    MP_CONTENT: "Il/Elle veut vous dire :",
-    MP_SEND: "Votre message privé a bien été envoyé à ",
-    /* Commande Say : */
-    SYNTAXE_SAY: "say [MESSAGE]```",
-    SAY: "say",
     /* Commande Sondage : */
     SYNTAXE_SONDAGE: "sondage [QUESTION]```",
     SONDAGE: "sondage",
@@ -137,26 +113,6 @@ const languageData = {
     /* Joke : */
     TITLE_JOKE: "**__🎭 Joke :__**",
     JOKE: "blague",
-    /* Calin : */
-    MENTION_USER_FALSE: "<:false:551460099600678944> Merci de mentionner un utilisateur pour effectuer cette action.",
-    CALIN: "calin",
-    CALIN_SUCESS: " viens de faire un calin à ",
-    CALIN_IMG: "https://zupimages.net/up/19/10/8vk8.gif", //English : https://gph.is/28RZ9dt (hug)
-    /* declareramitie : */
-    DECLARERAMITIE_MESSAGE: " viens de déclarer son amitié pour ",
-    DECLARERAMITIE: "declareramitie",
-    /* declareramour : */
-    DECLARERAMOUR_MESSAGE: " viens de déclarer son amour pour ",
-    DECLARERAMOUR: "declareramitie",
-    /* frapper : */
-    FRAPPER_MESSAGE: " viens de frapper ",
-    FRAPPER: "frapper",
-    /* kiss : */
-    KISS_MESSAGE: " viens de faire un bisous à ",
-    KISS: "kiss",
-    /* soigner : */
-    SOIGNER_MESSAGE: " viens de soigner ",
-    SOIGNER: "soigner",
     /* Lotterie : */
     LOTTERIE_WIN: " Toutes nos félicitations !",
     LOTTERIE_LOSE: " plus de chance la prochaine fois.",
@@ -165,52 +121,6 @@ const languageData = {
     CAT:"Chat",
     DOG:"Chien",
     FOX: "Renard",
-    /* True or false : */
-    SYNTAXE_TRUEORFALSE: "trueorfalse [Message]```",
-    TRUEORFALSE: "trueorfalse",
-    VRAIOUFAUX: "❓ VRAI OU FAUX :",
-    TRUEORFALSE_ANSWER: "Répondez avec les réactions :white_check_mark: ou :x:!",
-    /* Weather : */
-    SYNTAXE_WEATHER: "weather [Ville/Pays/Régions]```",
-    WEATHER: "weather",
-    WEATHER_VALID_PLACE: "**S'il vous plaît, fournissez moi un emplacement valide.**",
-    WEATHER_FOR: "Météo pour ",
-    //Temps
-    SUNNY: "Ensoleillé",
-    CLEAR: "Clair",
-    MOSTLY_CLEAR: "Globalement clair",
-    PARTLY_CLEAR: "Partiellement clair",
-    MOSTLY_SUNNY: "Globalement ensoleillé",
-    CLOUDY: "Nuageux",
-    MOSTLY_CLOUDY: "Globalement nuageux",
-    PARTLY_CLOUDY: "Partiellement nuageux",
-    PARTLY_SUNNY: "Partiellement ensoleillé",
-    BLOWING_DUST: "De la poussière dans l'air",
-    LIGHT_RAIN: "Pluie légère",
-    HAZE: "Brumeux",
-    SMOKE: "De la fumée dans l'air",
-    FAIR: "Brumeux",
-    SNOW: "Neige",
-    HAIL: "Grêle",
-    RAIN_SHOWERS: "Très pluvieux",
-    RAIN: "Pluvieux",
-    //Directions
-    NORTHEAST: "Nord-Est",
-    SOUTHEAST: "Sud-Est",
-    SOUTHWEST: "Sud-Ouest",
-    NORTHWEST: "Nord-Ouest",
-    NORTH: "Nord",
-    SOUTH: "Sud",
-    EAST: "Est",
-    WEST: "Ouest",
-    NO_WIND: "Aucun vent",
-    //Embed
-    FUSEAU_HORAIRE: "Fuseau horaire :",
-    TEMPERATURE: "Température :",
-    RESSENTI: "Ressenti :",
-    VITESSE_DU_VENT: "Vitesse du vent :",
-    DIRECTON_DU_VENT: "Direction du vent :",
-    HUMIDITE: "Humidité :",
     /* Giveaway : */
     /* Giveaway Start : */
     SYNTAXE_GIVEAWAY_START: "start-giveaway [Channel] [Temps] [Nombre de gagnants] [Prix] ```",
@@ -256,7 +166,6 @@ const languageData = {
     /* Drop : */
     DROP: "drop",
     SYNTAXE_DROP: "drop [Lot]```",
-    DROP_NO_FOUND: "Impossible de trouver un Giveaway pour ",
     DROP_DESC_1: (author) => `😃 \`Par\` ➔ ${author}`,
     DROP_DESC_2: (dropPrize) => `🥇 \`Lot\` ➔ ${dropPrize} \n\n→ Le premier qui clique sur la réaction 🎊 remporte le lot mis en jeu !`,
     DROP_WIN_DESC_1: (dropPrize) => `🥇 \`Lot\` ➔ ${dropPrize} \n\n`,
@@ -331,28 +240,6 @@ const languageData = {
     MOD_MODERATOR: "Modérateur :",
     MOD_REASON: "Raison :",
     MOD_TIME: "Temps :",
-    /* Addroles : */
-    SYNTAXE_ADDROLE: "<:X_:673212163837526064> Veuillez mentionner un utilisateur à qui donner le rôle. Exemple : `addrole [@user] [Members]`",
-    ADDROLE: "addrole",
-    UTILISATEUR_PAS_VALABLE: "<:X_:673212163837526064> **Erreur :** Cet utilisateur ne semble pas valable.",
-    ADDROLE_ROLE_INVALABLE_1: "<:X_:673212163837526064> **Erreur :** ",
-    ADDROLE_ROLE_INVALABLE_2: " n'est pas un rôle sur ce serveur ! \n `Veuillez verifier que vous ne l'avez pas mentioner !`",
-    ADDROLE_ERROR_1: "<:X_:673212163837526064>> **Erreur :** Je n'ai pas réussi à ajouter le rôle à l'utilisateur parce que votre rôle est inférieur au rôle spécifié.",
-    ADDROLE_ERROR_2: "<:X_:673212163837526064> **Erreur :** Je n'ai pas pu ajouter le rôle à l'utilisateur parce que mon rôle le plus élevé est inférieur au rôle spécifié.",
-    ADDROLE_ERREUR: "<:X_:673212163837526064> **Erreur :**\n",
-    ADDROLE_SUCESS_1: "<:check:673212026226737153> **",
-    ADDROLE_SUCESS_2: "**, J'ai ajouté le **",
-    ADDROLE_SUCESS_3: "** rôle à **",
-    /* DelRoles : */
-    SYNTAXE_DELROLES: "<:X_:673212163837526064> Veuillez mentionner un utilisateur à qui supprimer le rôle. Exemple : `delrole [@user] [Members]`",
-    DELROLES: "delroles",
-    DELROLES_ROLE_INVALABLE_1: "<:X_:673212163837526064> **Erreur :** ",
-    DELROLES_ROLE_INVALABLE_2: " n'est pas un rôle sur ce serveur ! \n `Veuillez verifier que vous ne l'avez pas mentioner !`",
-    DELROLES_ERROR_1: "<:X_:673212163837526064>> **Erreur :** Je n'ai pas réussi à supprimer le rôle à l'utilisateur parce que votre rôle est inférieur au rôle spécifié.",
-    DELROLES_ERROR_2: "<:X_:673212163837526064> **Erreur :** Je n'ai pas pu supprimer le rôle à l'utilisateur parce que mon rôle le plus élevé est inférieur au rôle spécifié.",
-    DELROLES_INTERNAL_ERROR: ":no_entry_sign: Il y a eu une erreur ! Il est fort probable que le rôle que vous essayez de supprimer soit plus élevé que le rôle que j'ai !",
-    DELROLES_SUCESS_1: "**, J'ai supprimé le **",
-    DELROLES_SUCESS_2: "** rôle de **",
     /* Ban : */
     SYNTAXE_BAN: "ban [Membre] (Raison)```",
     BAN: "ban",
@@ -384,7 +271,7 @@ const languageData = {
     /* Commande Kick : */
     SYNTAXE_KICK: "kick [Membre] (Raison)```",
     AUTOKICK: "<:X_:673212163837526064> **Erreur :** Tu ne peux pas te kick !",
-    KICKYURA: "<:X_:673212163837526064> **Erreur :** Tu ne peux pas me ban !",
+    KICKYURA: "<:X_:673212163837526064> **Erreur :** Tu ne peux pas me kick !",
     KICK_DEV: "Vous ne pouvez pas kicker mon Developer !",
     KICK: "kick",
     KICK_ERROR_1: "<:X_:673212163837526064> **Erreur:** Je ne peux pas expulser ce membre parce qu'il a un rôle supérieur ou égal au vôtre.",
@@ -463,19 +350,6 @@ const languageData = {
     ASCII: "ascii",
     ASCII_ERROR: "Erreur:",
     ASCII_LIMIT_MESSAGE: "Seulement 20 caractères sont admis.",
-    /* Commande addnote : */
-    SYNTAXE_ADDNOTE: "addnote [Vos Notes à modifier]```",
-    ADDNOTE: "addnote",
-    ADDNOTE_SUCESS: "**Vos notes ont bien été actualités avec succès.**",
-    /* Commande note : */
-    NO_NOTE: "Aucune note enregistré pour le moment.",
-    NOTE: "note",
-    NOTE_SUCESS: ":pushpin: __**Voici vos notes**__ : ",
-    NOTE_SUCESS_MP: "**Vos notes ont été envoyé en message privée.**",
-    /* Commande Bvn : */
-    SYNTAXE_BVN: "Merci de mentionner un utilisateur pour souhaiter la bienvenue.",
-    BVN: "bvn",
-    BVN_SUCESS: " vous souhaite bienvenue **",
     /* Commande Calc : */
     SYNTAXE_CALC: "calc [opération]```",
     CALC: "calc",
@@ -549,19 +423,6 @@ const languageData = {
     QRCODE: "qrcode",
     QRCODE_DESC: "Voici le qrcode pour : ",
     QRCODE_ERROR: "<:X_:673212163837526064> **Erreur :** Veuillez mettre un lien !",
-    /* Commande PASSWORD : */
-    PASSWORD: "password",
-    SYNTAXE_PASSWORD_1: "Combien de caractères souhaitez-vous ?",
-    SYNTAXE_PASSWORD_2: "Le mot de passe peut-il contenir des nombres ? oui/non",
-    SYNTAXE_PASSWORD_3: "Le mot de passe peut-il contenir des symboles ? oui/non",
-    PASSWORD_NUMBERS: "Veuillez entrer un nombre valide.",
-    PASSWORD_YES_NO: "Répondez par `oui` ou par `non` !",
-    PASSWORD_YES: "oui",
-    PASSWORD_NO: "non",
-    PASSWORD_SUCESS_HASTEBIN: "```Le mot de passe compte trop de caractères, il se trouve donc sur hastebin. Le lien : ",
-    PASSWORD_SEND: "Mot de passe envoyé en message privé !",
-    PASSWORD_GEN: "```Mot de passe généré : ",
-    PASSWORD_TIME: "Temps écoulé.",
     /* Commande SERVERINFO : */
     SERVERINFO: "serverinfo",
     SERVERINFO_NO_ROLES: "Aucun",
@@ -623,7 +484,7 @@ const languageData = {
     SYNTAXE_MC_SERVER: "mc-server [server]```",
     ONLINE: "En ligne",
     OFFLINE: "Hors ligne",
-    MC_SERVER_ONLINE_PLAYER: "<:minecraftsword:675369153833467930> » Online Players : ",
+    MC_SERVER_ONLINE_PLAYER: "<:minecraftsword:675369153833467930> » Joueurs en ligne : ",
     MC_SERVER: "mc-server",
     MC_SERVER_NO_FOUND: "**<:X_:673212163837526064> Erreur :** Aucun serveur trouvé, veuillez réessayer.",
     /* Commande mc-achivements : */
