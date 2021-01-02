@@ -30,6 +30,8 @@ class Invite extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
+        if (message.content != prefix+"invite") return;
+
         const invite = new Discord.MessageEmbed()
         .setDescription(`${language("INVITE_TITLE")}`)
         .addField(language("INVITE_ADMIN"), `[${language("INVITE_CLICK_HERE")}](https://discordapp.com/oauth2/authorize?client_id=662775890194989066&scope=bot&permissions=2016570495)`)
