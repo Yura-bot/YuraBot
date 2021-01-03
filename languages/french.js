@@ -386,6 +386,10 @@ const languageData = {
     WEB_PING_MOBILE: "**Mobile :**",
     WEB_PING_PROXY: "**Proxy :**",
     WEB_PING_HOSTING: "**Hébergeur :**",
+    /* Commande Weather : */
+    SYNTAXE_WEATHER: "weather [Ville/Région]```",
+    WEATHER: "weather",
+    WEATHER_SUCESS: (city) => `🌦️ Météo pour : ${city}`,
     /* Commande Finduser : */
     SYNTAXE_FINDUSER: "finduser [id]```",
     FINDUSER: "finduser",
