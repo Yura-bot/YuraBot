@@ -515,6 +515,19 @@ const languageData = {
     RGS_TITLE: "<:rockstar:777553264882352188> Status des jeux rockstar : ",
     RGS_ONLINE: " En ligne !",
     RGS_OFFLINE: " Hors Ligne !",
+    /* Ticket : */
+    TICKET_TITLE: "Système de Ticket",
+    TICKET_DESC: "Réagissez avec 🎟️ pour créer un ticket.",
+    TICKET_OPEN_TITLE: "📝 | Ticket Ouvert",
+    TICKET_OPEN_DESC: "Nous venons d'ouvrir votre ticket auprès de l'assistance.\n",
+    TICKET_CHANNEL_TITLE: (user) => `Ticket ouvert par : ${user}\n`,
+    TICKET_CHANNEL_DESC_1: (user) => `Bonjour **${user}**, \n`,
+    TICKET_CHANNEL_DESC_2: (ticketName) => `Sous le nom : **${ticketName}**.`,
+    TICKET_CHANNEL_FIELD_1: ":bar_chart: Informations sur l'utilisateur :",
+    TICKET_CHANNEL_FIELD_2: ":clipboard: Identifiant :",
+    TICKET_CLOSE_TITLE: "📥 | Ticket Fermé",
+    TICKET_CLOSE_DESC: `Vous venez de fermer la demande !`,
+    TICKET_ERROR: `**<:X_:673212163837526064> Erreur :** Une erreur est survenu avec le système de ticket veuillez ressayer !`,
 };
 
 const translate = (key, ...args) => {
