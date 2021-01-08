@@ -375,7 +375,21 @@ const languageData = {
     SYNTAXE_WEB_PING: "web-ping [Web Site]```",
     WEB_PING: "web-ping",
     WEB_PING_NOSITEFOUND: "<:X_:673212163837526064> **Error : Site not found!**",
-    WEB_PING_SUCESS: "<:check:673212026226737153> | Ping of the site",
+    WEB_PING_TITLE: (site) => `<:processor:675368071497515034> Informations for ${site}`,
+    WEB_PING_OWNER: ":bust_in_silhouette: Owner :",
+    WEB_PING_ORGANISATION: "**Organisation :**",
+    WEB_PING_INTERNET: "**Internet Service Provider :**",
+    WEB_PING_LOCATION: ":earth_africa: Location :",
+    WEB_PING_COUNTRY: "**Country :**",
+    WEB_PING_CITY: "**City :**",
+    WEB_PING_OTHER: ":zap: Other :",
+    WEB_PING_MOBILE: "**Mobile :**",
+    WEB_PING_PROXY: "**Proxy :**",
+    WEB_PING_HOSTING: "**Hosting:**",
+    /* Commande Weather : */
+    SYNTAXE_WEATHER: "weather [City/Region]```",
+    WEATHER: "weather",
+    WEATHER_SUCESS: (city) => `🌦️ Weather for : ${city}`,
     /* Commande Finduser : */
     SYNTAXE_FINDUSER: "finduser [User ID]```",
     FINDUSER: "finduser",
@@ -501,6 +515,19 @@ const languageData = {
     RGS_TITLE: "<:rockstar:777553264882352188> Status of rockstar games : ",
     RGS_ONLINE: " Online !",
     RGS_OFFLINE: " Offline !",
+    /* Ticket : */
+    TICKET_TITLE: "Ticket System",
+    TICKET_DESC: "React with 🎟️ to create a ticket.",
+    TICKET_OPEN_TITLE: "📝 | Open Ticket",
+    TICKET_OPEN_DESC: "We have just opened your ticket with support.\n",
+    TICKET_CHANNEL_TITLE: (user) => `Ticket opened by : ${user}\n`,
+    TICKET_CHANNEL_DESC_1: (user) => `Hello **${user}**, \n`,
+    TICKET_CHANNEL_DESC_2: (ticketName) => `Under the name : **${ticketName}**.`,
+    TICKET_CHANNEL_FIELD_1: ":bar_chart: User Information :",
+    TICKET_CHANNEL_FIELD_2: ":clipboard: User ID :",
+    TICKET_CLOSE_TITLE: "📥 | Ticket Closed",
+    TICKET_CLOSE_DESC: `You have just closed the request!`,
+    TICKET_ERROR: "**<:X_:673212163837526064> Erreur :** An error occurred with the ticket system please try again!",
 };
 
 const translate = (key, ...args) => {
