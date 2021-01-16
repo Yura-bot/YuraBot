@@ -11,28 +11,17 @@ class Weather extends Command {
         });
     }
 
-    async run(client, message, args) {
+    async run(client, message, args, db) {
 
         const Discord = require("discord.js");
-        const axios = require('axios');
 
-        let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
-
-        let prefix;
-        let guildLanguage;
-
-        if (guildSettingsExist) {
-            prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
-            guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
-        } else {
-            prefix = client.default_prefix;
-            guildLanguage = "english"
-        }
+        let prefix = !db.prefix ? config.prefix : db.prefix;
+        let guildLanguage = !db.lang ? "english": db.lang;
 
         const language = require(`../../languages/${guildLanguage}`);
 
         let city = args[1]
-        if (!city) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_WEB_PING"));
+        if (!city) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_WEATHER"));
 
         const exampleEmbed = new Discord.MessageEmbed()
         .setColor(client.color)

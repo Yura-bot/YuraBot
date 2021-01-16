@@ -3,8 +3,9 @@ const router = express.Router();
 const CheckAuth = require('../auth/CheckAuth');
 
 let bot = require("../../main.js")
+let config = require("../../configs/config.json")
 
-router.get("/:guildID", CheckAuth, (req, res) => {
+router.get("/:guildID", CheckAuth, async(req, res) => {
 
     //req.params.guildID
     //req.user.id
@@ -13,33 +14,20 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
     if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
 
-    let guildSettingsExist = bot.guildSettings.has(`${req.params.guildID}`)
+    let db = await bot.db.getGuild(req.params.guildID)
 
-    let obj = {
-        prefix: "?",
-        lang: "french",
-    };
-
-    let prefix;
-    let guildLanguage;
+    let prefix = !db.prefix ? config.prefix : db.prefix;
+    let guildLanguage = !db.lang ? "english": db.lang;
     let language2;
 
-    let suggestionEnabled;
-    let suggestionChannel;
+    let suggestionEnabled = db.suggestions
+    let suggestionChannel = db.suggestions
 
-    if (guildSettingsExist) {
-        prefix = bot.guildSettings.get(`${req.params.guildID}`, "prefix")
-        guildLanguage = bot.guildSettings.get(`${req.params.guildID}`, "lang")
-
-        suggestionEnabled = bot.guildSettings.has(`${req.params.guildID}`, "suggestionPlug")
-
-        if (suggestionEnabled) {
-            suggestionChannel = bot.guildSettings.get(`${req.params.guildID}`, "suggestionPlug.channel")
-        }
-        
+    if (suggestionEnabled && suggestionEnabled != null) {
+        suggestionChannel = db.suggestions
     } else {
-        bot.guildSettings.set(`${req.params.guildID}`, obj)
-        return res.redirect("/serveurs/"+req.params.guildID);
+        suggestionEnabled = false
+        suggestionChannel = false
     }
 
     if (guildLanguage === "english") { 
@@ -49,6 +37,8 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         guildLanguage = "Français"
         language2 = "Anglais" 
     }
+
+    let muteRole = db.muteRole
 
     res.render("guild", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
@@ -68,6 +58,7 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         language2: language2,
         suggestionEnabled: suggestionEnabled,
         suggestionChannel: suggestionChannel,
+        muteRole: muteRole,
         alert: false
     });
 }).post("/:guildID", CheckAuth, async function(req, res) {
@@ -80,13 +71,15 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!member) return res.redirect("/");
     if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
 
+    let db = await bot.db.getGuild(req.params.guildID)
+
     let data  = req.body;
 
     //Prefix :
     if(data.prefix.length > 3) {
         return;
     }
-    await bot.guildSettings.set(`${req.params.guildID}`, data.prefix, "prefix")
+    db.prefix = data.prefix;
 
     // Lang : 
     let language = data.language.toLowerCase();
@@ -98,18 +91,21 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     } else {
         return;
     }
-    await bot.guildSettings.set(`${req.params.guildID}`, language, "lang")
-
+    db.lang = language;
+    
     //Suggestion System :
     let suggestionEnabled = data.suggestionStatus === "on";
     let suggestionChannel = guild.channels.cache.find((ch) => "#"+ch.name === data.suggestionChannelID).id;
 
-    
     if (suggestionEnabled) {
-        await bot.guildSettings.set(`${req.params.guildID}`, suggestionChannel, "suggestionPlug.channel")
+        db.suggestions = suggestionChannel
     } else {
-        bot.guildSettings.delete(`${req.params.guildID}`, "suggestionPlug")
+        db.suggestions = null;
     }
+
+    db.muteRole = guild.roles.cache.find((r) => "@"+r.name === data.muteRole).id
+
+    await db.save();
 
     res.redirect(`/serveurs/${req.params.guildID}`);
 
@@ -119,35 +115,34 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
     if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
 
-    let guildSettingsExist = bot.guildSettings.has(`${req.params.guildID}`)
+    let db = await bot.db.getGuild(req.params.guildID)
 
-    if (guildSettingsExist === false ) {
-        return res.redirect("/serveurs/"+req.params.guildID);
-    }
+    let welcomeEnabled = db.welcome.enabled
+    let welcomeMpEnabled = db.welcomeMp
 
-    let welcomeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug")
-    let welcomeMpEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomeMpPlug")
-
-    let welcomeEmbedEnabled = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug.welcomeEmbed")
-    if (welcomeEmbedEnabled) welcomeEmbedEnabled = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeEmbed")
+    let welcomeEmbedEnabled = db.welcome.withEmbed
 
     let welcomeChannel; 
     let welcomeMessage;
 
     let welcomeImage = false
-    let colorImage = "#563d7c"
-    let colorImageTitle = "#563d7c"
-    let welcomeMpMessage = false
+    let colorImage = db.welcome.config.colorBackground
+    let colorImageTitle = db.welcome.config.colorTitle
+    let welcomeMpMessage = null
 
     if (welcomeEnabled) {
-        welcomeChannel = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeChannel")
-        welcomeMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeMessage")
+        welcomeChannel = db.welcome.channel
+        welcomeMessage = db.welcome.message
         if (welcomeEmbedEnabled) {
-            welcomeImage = bot.guildSettings.has(`${req.params.guildID}`, "welcomePlug.welcomeImage")
-            colorImage = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage.color")
-            colorImageTitle = bot.guildSettings.get(`${req.params.guildID}`, "welcomePlug.welcomeImage.colorTitle")
-        } 
-        if (welcomeMpEnabled) welcomeMpMessage = bot.guildSettings.get(`${req.params.guildID}`, "welcomeMpPlug.welcomeMessage")
+            welcomeImage = db.welcome.withImage
+        }
+    }
+
+    if (welcomeMpEnabled != null) {
+        welcomeMpEnabled = true
+        welcomeMpMessage = db.welcomeMp
+    } else {
+        welcomeMpEnabled = false
     }
 
     res.render("items/welcome", {
@@ -184,6 +179,8 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!member) return res.redirect("/");
     if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
 
+    let db = await bot.db.getGuild(req.params.guildID)
+
     let data  = req.body;
 
     //Status :
@@ -191,64 +188,42 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     let statusMpWelcome = data.statusMpWelcome;
 
     if (statusWelcome != "on") {
-        bot.guildSettings.delete(`${req.params.guildID}`, "welcomePlug")
+        db.welcome.enabled = false
         statusWelcome = false 
     }
 
     if (statusMpWelcome != "on") {
-        bot.guildSettings.delete(`${req.params.guildID}`, "welcomeMpPlug")
+        db.welcomeMp = null
         statusMpWelcome = false 
     }
 
     if (statusWelcome != false) {
+        db.welcome.enabled = true
         // Channel : 
-        let welcomeChannelConfig = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
+        db.welcome.channel = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
         //Message
-        let welcomeMessageConfig = data.welcomeMessage;
+        db.welcome.message = data.welcomeMessage;
         //Embed ?
         let welcomeEmbedConfig = data.withEmbed === "on"
         //Image ?
         let welcomeImageConfig = data.withImage === "on"
         
-        if (welcomeImageConfig) {
-            const obj = {
-                welcomePlug: {
-                    welcomeChannel: welcomeChannelConfig,
-                    welcomeMessage: welcomeMessageConfig,
-                    welcomeEmbed: welcomeEmbedConfig,
-                    welcomeImage: {
-                        color: data.imgColor,
-                        colorTitle: data.imgColorTitle
-                    }
-                }
-            }
-    
-            await bot.guildSettings.update(`${req.params.guildID}`, obj)
-        } else {
-            const obj = {
-                welcomePlug: {
-                    welcomeChannel: welcomeChannelConfig,
-                    welcomeMessage: welcomeMessageConfig,
-                    welcomeEmbed: welcomeEmbedConfig
-                }
-            }
-    
-            bot.guildSettings.update(`${req.params.guildID}`, obj)
-            bot.guildSettings.delete(`${req.params.guildID}`, "welcomePlug.welcomeImage")
-        }
+        if (welcomeEmbedConfig) {
+            db.welcome.withEmbed = true
+            if (welcomeImageConfig) {
+                db.welcome.withImage = true
+                db.welcome.config.colorTitle = data.imgColorTitle
+                db.welcome.config.colorBackground = data.imgColor
+            } else db.welcome.withImage = false
+        } else db.welcome.withEmbed = false
     }
 
     if (statusMpWelcome != false) {
-        let welcomeMpMessageConfig = data.welcomeMpMessage;
-
-        const obj = {
-            welcomeMpPlug: {
-                welcomeMessage: welcomeMpMessageConfig,
-            }
-        }
-
-        await bot.guildSettings.update(`${req.params.guildID}`, obj)
+        db.welcomeMp = data.welcomeMpMessage
     }
+
+    db.markModified("welcome");
+    await db.save();
 
     res.redirect(`/serveurs/${req.params.guildID}/tools/welcome`);
 
@@ -258,23 +233,13 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
     if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
 
-    let guildSettingsExist = bot.guildSettings.has(`${req.params.guildID}`)
+    let db = await bot.db.getGuild(req.params.guildID)
 
-    if (guildSettingsExist === false ) {
-        return res.redirect("/serveurs/"+req.params.guildID);
-    }
+    let goodbyeEnabled = db.goodbye.enabled
 
-    let goodbyeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "goodbyePlug")
-
-    let goodbyeChannel; 
-    let goodbyeMessage;
-    let goodbyeImage;
-
-    if (goodbyeEnabled) {
-        goodbyeChannel = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeChannel")
-        goodbyeMessage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeMessage")
-        goodbyeImage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeImage")
-    }
+    let goodbyeChannel = db.goodbye.channel
+    let goodbyeMessage = db.goodbye.message
+    let goodbyeImage = db.goodbye.withImage
 
     res.render("items/goodbye", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
@@ -305,17 +270,7 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!member) return res.redirect("/");
     if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
 
-    let goodbyeEnabled = bot.guildSettings.has(`${req.params.guildID}`, "goodbyePlug")
-
-    let goodbyeChannel; 
-    let goodbyeMessage;
-    let goodbyeImage;
-
-    if (goodbyeEnabled) {
-        goodbyeChannel = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeChannel")
-        goodbyeMessage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeMessage")
-        goodbyeImage = bot.guildSettings.get(`${req.params.guildID}`, "goodbyePlug.goodbyeImage")
-    }
+    let db = await bot.db.getGuild(req.params.guildID)
 
     let data  = req.body;
 
@@ -323,26 +278,26 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     let statusGoodbye = data.statusGoodbye;
 
     if (statusGoodbye != "on") {
-        bot.guildSettings.delete(`${req.params.guildID}`, "goodbyePlug")
-        return res.redirect("/serveurs/"+req.params.guildID+"/tools/goodbye");
-    }
-
-    // Channel : 
-    let goodbyeChannelConfig = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
-    //Message
-    let goodbyeMessageConfig = data.goodbyeMessage;
-    //Image ?
-    let goodbyeImageConfig = data.withImage === "on"
+        statusGoodbye = false
+    } else statusGoodbye = true
 
     const obj = {
-        goodbyePlug: {
-            goodbyeChannel: goodbyeChannelConfig,
-            goodbyeMessage: goodbyeMessageConfig,
-            goodbyeImage: goodbyeImageConfig,
-            goodbyeImageURL: "URL",
+        enabled: statusGoodbye,
+        channel: guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id,
+        message: data.goodbyeMessage,
+        withEmbed: false,
+        withImage: false,
+        config : {
+            colorTitle : "#563d7c",
+            colorBackground : "#563d7c",
+            img : null
         }
     }
-    await bot.guildSettings.update(`${req.params.guildID}`, obj)
+
+    db.goodbye = obj
+    
+    db.markModified("goodbye");
+    await db.save();
 
     res.redirect(`/serveurs/${req.params.guildID}/tools/goodbye`);
 
@@ -352,17 +307,13 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
     if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
 
-    let guildSettingsExist = bot.guildSettings.has(`${req.params.guildID}`)
+    let db = await bot.db.getGuild(req.params.guildID)
 
-    if (guildSettingsExist === false ) {
-        return res.redirect("/serveurs/"+req.params.guildID);
-    }
-
-    let autoroleEnabled = bot.guildSettings.has(`${req.params.guildID}`, "autorolePlug")
+    let autoroleEnabled = db.autorole.enabled
     let autoroleRole; 
 
     if (autoroleEnabled) {
-        autoroleRole = bot.guildSettings.get(`${req.params.guildID}`, "autorolePlug.role")
+        autoroleRole = db.autorole.role
     }
 
     res.render("items/autorole", {
@@ -392,25 +343,26 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!member) return res.redirect("/");
     if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
 
+    let db = await bot.db.getGuild(req.params.guildID)
+
     let data  = req.body;
 
     //Status :
     let statusAutorole = data.statusAutorole;
 
     if (statusAutorole != "on") {
-        bot.guildSettings.delete(`${req.params.guildID}`, "autorolePlug")
-        return res.redirect("/serveurs/"+req.params.guildID+"/tools/autorole");
-    }
-
-    // Role : 
-    let autoroleRole = guild.roles.cache.find((r) => "@"+r.name === data.roleID).id
+        statusAutorole = false
+    } else statusAutorole = true
 
     const obj = {
-        autorolePlug: {
-            role: autoroleRole
-        }
+        enabled: statusAutorole,
+        role: guild.roles.cache.find((r) => "@"+r.name === data.roleID).id
     }
-    await bot.guildSettings.update(`${req.params.guildID}`, obj)
+
+    db.autorole = obj
+    
+    db.markModified("autorole");
+    await db.save();
 
     res.redirect(`/serveurs/${req.params.guildID}/tools/autorole`);
 
@@ -420,25 +372,12 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
     if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
 
-    let guildSettingsExist = bot.guildSettings.has(`${req.params.guildID}`)
+    let db = await bot.db.getGuild(req.params.guildID)
 
-    if (guildSettingsExist === false ) {
-        return res.redirect("/serveurs/"+req.params.guildID);
-    }
-
-    let automodEnabled = bot.guildSettings.has(`${req.params.guildID}`, "automodPlug")
-
-    let antiraid = false;
-    let antipub = false;
-    let antilink = false;
-    let antibadworlds = false;
-
-    if (automodEnabled) {
-        antiraid = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antiraid")
-        antipub = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antipub")
-        antilink = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antilink")
-        antibadworlds = bot.guildSettings.get(`${req.params.guildID}`, "automodPlug.antibadworlds")
-    }
+    let antiraid = db.automod.antiRaid
+    let antipub = db.automod.antiPub
+    let antilink = db.automod.antiLink
+    let antibadworlds = db.automod.antiBadWords
 
     res.render("items/auto-mod", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
@@ -469,6 +408,8 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     if (!member) return res.redirect("/");
     if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
 
+    let db = await bot.db.getGuild(req.params.guildID)
+
     let data  = req.body;
 
     let statusAntiraid = data.statusAntiRaid;
@@ -489,14 +430,16 @@ router.get("/:guildID", CheckAuth, (req, res) => {
     else statusAntibadworlds = true
 
     const obj = {
-        automodPlug: {
-            antiraid: statusAntiraid,
-            antipub: statusAntipub,
-            antilink: statusAntilink,
-            antibadworlds: statusAntibadworlds
-        }
+        antiRaid: statusAntiraid,
+        antiPub: statusAntipub,
+        antiLink: statusAntilink,
+        antiBadWords: statusAntibadworlds
     }
-    await bot.guildSettings.update(`${req.params.guildID}`, obj)
+
+    db.automod = obj
+    
+    db.markModified("automod");
+    await db.save();
 
     res.redirect(`/serveurs/${req.params.guildID}/tools/auto-mod`);
 })

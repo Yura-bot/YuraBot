@@ -11,45 +11,29 @@ class TempLock extends Command {
         });
     }
 
-    async run(client, message, args) {
+    async run(client, message, args, db) {
 
         const Discord = require("discord.js");
         const ms = require('ms');
 
-        let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
-
-        let prefix;
-        let guildLanguage;
-
-        if (guildSettingsExist) {
-            prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
-            guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
-        } else {
-            prefix = client.default_prefix;
-            guildLanguage = "english"
-        }
+        let prefix = !db.prefix ? config.prefix : db.prefix;
+        let guildLanguage = !db.lang ? "english": db.lang;
 
         const language = require(`../../languages/${guildLanguage}`);
 
         if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
 
-        let ifChannelLock = client.mod.has(`${message.channel.id}-lock`)
+        let ifChannelLock = message.channel.permissionsFor(message.guild.roles.everyone).toArray().includes('SEND_MESSAGES')
 
-        if (ifChannelLock === false) {
+        if (ifChannelLock) {
 
             let time = args[1];
             if (!time && isNaN(time)) return message.reply(language("TIMELOCK_ERROR_TIME"));
-
-            const obj = {
-                id: message.channel.id
-            }
 
             message.channel.createOverwrite(message.guild.id, {
                 SEND_MESSAGES: false
             }).catch(error => {});
 
-            client.mod.set(`${message.channel.id}-lock`, obj);
-    
             message.channel.send(`${language("LOCK_MESSAGE_1")}${message.author.username}${language("LOCK_MESSAGE_2")}`);
 
             setTimeout(() => {

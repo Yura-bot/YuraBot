@@ -7,7 +7,7 @@ module.exports = (client, guild) => {
         .setThumbnail(guild.iconURL())
         .addField("📋 __Nom du serveur__", guild.name)
         .addField("📊 __Nombre de membres__ :", guild.memberCount)
-        .addField("👤 __Propriétaire__ :", guild.owner)
+        .addField("👤 __Propriétaire__ :", guild.owner.user.tag)
         .addField("🌍 __Région du serveur__ :", guild.region)
         .setFooter(`Le bot est désormais sur ${client.guilds.cache.size} serveurs !`)
         .setColor("#F03A17")

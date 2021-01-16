@@ -57,6 +57,7 @@ module.exports.load = async(client) => {
         .use("/", require("./router/index"))
         .use("/profile", require("./router/profile"))
         .use("/serveurs", require("./router/serveurs"))
+        .use("/extensions", require("./router/extensions"))
         .get("*", function(req, res) {
             res.status(404).render("404");
         })

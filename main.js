@@ -4,7 +4,6 @@ const Config = require('./configs/config.json');
 const Snippet = require('./configs/Snippet');
 const Handler = require('./structure/Handler');
 
-const Enmap = require("enmap");
 const webhook = require('discord-webhook-node');
 const { GiveawaysManager } = require('discord-giveaways');
 
@@ -19,7 +18,7 @@ class Class extends Client {
     constructor() {
         super({ 
             disableMentions: "everyone" , 
-            ws : { intents: [ "GUILDS", "GUILD_MEMBERS", "GUILD_VOICE_STATES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_PRESENCES" ] },
+            ws : { intents: [ "GUILDS", "GUILD_MEMBERS", "GUILD_VOICE_STATES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_PRESENCES", "GUILD_MESSAGE_TYPING", "DIRECT_MESSAGE_TYPING" ] },
             partials: ['MESSAGE', 'CHANNEL', 'REACTION'] 
         });
 
@@ -35,11 +34,7 @@ class Class extends Client {
             leaveOnEnd: true
         });
 
-        this.guildSettings = new Enmap({ name: 'guildSettings' });
-        this.ticket = new Enmap({ name: 'ticket' });
-        this.userData = new Enmap({ name: 'userData' });
-        this.warn = new Enmap({ name: 'warn' });
-        this.mod = new Enmap({ name: 'mod' });
+        this.db = require("./structure/Mongoose.js");
 
         this.giveawaysManager = new GiveawaysManager(this, {
             hasGuildMembersIntent: true,
@@ -77,6 +72,8 @@ class Class extends Client {
             ignoredUsers: [],
         });
 
+        require("./structure/Fonctions")(this);
+
         process.on('unhandledRejection', error => {
             this.emit('error', error, "bot");
         })
@@ -100,10 +97,6 @@ class Class extends Client {
 
         const handlers = new Handler(this);
         handlers.commands(); handlers.events(); handlers.musicEvents();
-    }
-
-    getEmoji(emojiId) {
-        return this.emojis.cache.get(emojiId).toString();
     }
 }
 

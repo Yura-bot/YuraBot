@@ -11,22 +11,12 @@ class Clear extends Command {
         });
     }
 
-    async run(client, message, args) {
+    async run(client, message, args, db) {
 
         const Discord = require("discord.js");
 
-        let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
-
-        let prefix;
-        let guildLanguage;
-
-        if (guildSettingsExist) {
-            prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
-            guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
-        } else {
-            prefix = client.default_prefix;
-            guildLanguage = "english"
-        }
+        let prefix = !db.prefix ? config.prefix : db.prefix;
+        let guildLanguage = !db.lang ? "english": db.lang;
 
         const language = require(`../../languages/${guildLanguage}`);
 
@@ -53,12 +43,11 @@ class Clear extends Command {
                 message.delete().catch(e => {});
         
                 message.channel.bulkDelete(x)
-                .catch(e => {
-                    return message.channel.send(language("CLEAR_14DAYS"));
-                })
-                .then(messages => message.channel.send(`<:check:673212026226737153> ** ${messages.size} ${language("DELETE_MESSAGE")}`)
-                .then(msg => msg.delete({timeout: 5000})
-                ));
+                .catch(e => {})
+                .then(messages => {
+                    if (messages.size === undefined) return message.channel.send(language("CLEAR_14DAYS")).then(msg => msg.delete({timeout: 5000}))
+                    message.channel.send(`<:check:673212026226737153> ** ${messages.size} ${language("DELETE_MESSAGE")}`).then(msg => msg.delete({timeout: 5000}))
+                });
             }
         }
     }

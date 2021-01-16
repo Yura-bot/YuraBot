@@ -11,22 +11,12 @@ class K4 extends Command {
         });
     }
 
-    async run(client, message, args) {
+    async run(client, message, args, db) {
 
         const Discord = require("discord.js");
 
-        let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
-
-        let prefix;
-        let guildLanguage;
-
-        if (guildSettingsExist) {
-            prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
-            guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
-        } else {
-            prefix = client.default_prefix;
-            guildLanguage = "english"
-        }
+        let prefix = !db.prefix ? config.prefix : db.prefix;
+        let guildLanguage = !db.lang ? "english": db.lang;
 
         const language = require(`../../languages/${guildLanguage}`);
 

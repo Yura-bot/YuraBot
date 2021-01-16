@@ -1,28 +1,16 @@
-module.exports = (client, member) => {
+module.exports = async(client, member) => {
 
-    let guildSettingsExist = client.guildSettings.has(`${member.guild.id}`)
-    if (guildSettingsExist === false) return;
+    let db = await client.db.getGuild(member.guild.id)
 
-    let prefix;
-    let guildLanguage;
+    let guildLanguage = !db.lang ? "english": db.lang;
+    let language = require(`../languages/${guildLanguage}`);
 
-    if (guildSettingsExist) {
-        prefix = client.guildSettings.get(`${member.guild.id}`, "prefix")
-        guildLanguage = client.guildSettings.get(`${member.guild.id}`, "lang")
-    } else {
-        prefix = client.default_prefix;
-        guildLanguage = "english"
-    }
-
-    const language = require(`../languages/${guildLanguage}`);
-
-    let goodbyeEnabled = client.guildSettings.has(`${member.guild.id}`, "goodbyePlug")
+    let goodbyeEnabled = db.goodbye.enabled
 
     if (goodbyeEnabled) {
 
-        let goodbyeChannel = client.guildSettings.get(`${member.guild.id}`, "goodbyePlug.goodbyeChannel")
-        let goodbyeMessage = client.guildSettings.get(`${member.guild.id}`, "goodbyePlug.goodbyeMessage")
-        let goodbyeImage = client.guildSettings.get(`${member.guild.id}`, "goodbyePlug.goodbyeImage")
+        let goodbyeChannel = db.goodbye.channel
+        let goodbyeMessage = db.goodbye.message
 
         if(client.channels.cache.has(goodbyeChannel) === false){
             return member.guild.owner.send(language("EVENTS_GUILDMEMBERREMOVE_GOODBYE_ERROR")).catch(e => {});

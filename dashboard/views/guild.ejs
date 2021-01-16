@@ -103,6 +103,22 @@
                         </div>
                       </div>
 
+                      <div class="form-group">
+                        <label>Mute Role :</label>
+                        <select class="form-control" name="muteRole">
+                            <% if(muteRole && guild.roles.cache.has(muteRole)){ %>
+                                <option selected="selected">@<%= guild.roles.cache.get(muteRole).name %></option>
+                                <% guild.roles.cache.filter((r) => r.id !== muteRole && r.name !== "@everyone").forEach((r) => { %>
+                                    <option>@<%= r.name %></option>
+                                <% }); } else { %>
+                                <option selected="selected">@<%= guild.roles.cache.filter((r) => r.name !== "@everyone").first().name %></option>
+                                <% guild.roles.cache.filter((r) => r.id !== guild.roles.cache.filter((r) => r.name !== "@everyone").first().id && r.name !== "@everyone").forEach((r) => { %>
+                                    <option>@<%= r.name %></option>
+                                <% }); %>
+                            <% } %>
+                        </select>
+                    </div>
+
                     </div>
 
                     <div class="card-footer">

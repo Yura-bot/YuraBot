@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/header'); %>
+    <title>Yura | Serveur</title>
+</head>
+
+<body>
+
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <%- include('../partials/headbar'); %>
+      <div class="page-body-wrapper sidebar-icon">
+        <%- include('../partials/nav'); %>
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-header">
+              <div class="row">
+                <div class="col-6">
+                  <h3>
+                    <%= guild.name %></h3>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Dashboard Yura</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+
+                <% if(alert) { %>
+                    <div class="alert alert-danger dark alert-dismissible fade show" role="alert">
+                        <p>⚠ Votre id de sauvegarde est invalide veuillez ressayer !</p>
+                        <button class="close" type="button" data-dismiss="alert" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+                    </div>
+
+                <% } %>
+
+                <% if(sucess) { %>
+                    <div class="alert alert-success outline alert-dismissible fade show" role="alert">
+                      <p><i data-feather="thumbs-up"></i><b>&ensp; Bien joué ! </b>La backup a été chargé !</p>
+                      <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+  
+                  <% } %>
+
+                  
+                <% if(create) { %>
+                    <div class="alert alert-success outline alert-dismissible fade show" role="alert">
+                      <p><i data-feather="thumbs-up"></i><b>&ensp; Bien joué ! </b>La backup a été crée ! Son id est : </p><%= createID %>
+                      <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+  
+                  <% } %>
+
+                <div class="card">
+                  <div class="card-header">
+                    <h5>🧱 Créer une sauvegarde :</h5>
+                  </div>
+                  <form class="form theme-form" method="POST">
+                    <div class="card-footer">
+                      <button class="btn btn-primary" type="submit" name="create">Créer</button>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                      <h5>⌛️ Charger une sauvegarde :</h5>
+                    </div>
+                    <form class="form theme-form" method="POST">
+                      <div class="card-body">
+                        <div class="form-group">
+                            <label for="id">Mettez l'id de sauvegarde :</label>
+                            <input class="form-control" id="id" placeholder="ID" name="LOADID">
+                        </div>
+
+                      </div>
+  
+                      <div class="card-footer">
+                        <button class="btn btn-success" type="submit" name="load">Charger</button>
+                      </div>
+                    </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <%- include('../partials/footer'); %>
+      </div>
+    </div>
+    
+    <script src="/js/jquery-3.5.1.min.js"></script>
+
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.js"></script>
+
+    <script src="/js/icons/feather-icon/feather.min.js"></script>
+    <script src="/js/icons/feather-icon/feather-icon.js"></script>
+
+    <script src="/js/sidebar-menu.js"></script>
+    <script src="/js/config.js"></script>
+
+    <script src="/js/height-equal.js"></script>
+    <script src="/js/tooltip-init.js"></script>
+
+    <script src="/js/theme-customizer/customizer.js"></script>
+
+  </body>
+
+</html>

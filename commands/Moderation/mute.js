@@ -11,22 +11,12 @@ class Mute extends Command {
         });
     }
 
-    async run(client, message, args) {
+    async run(client, message, args, db) {
 
         const Discord = require("discord.js");
 
-        let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
-
-        let prefix;
-        let guildLanguage;
-
-        if (guildSettingsExist) {
-            prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
-            guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
-        } else {
-            prefix = client.default_prefix;
-            guildLanguage = "english"
-        }
+        let prefix = !db.prefix ? config.prefix : db.prefix;
+        let guildLanguage = !db.lang ? "english": db.lang;
 
         const language = require(`../../languages/${guildLanguage}`);
 
@@ -56,46 +46,38 @@ class Mute extends Command {
         let reason = args.slice(2).join(' ');
         if (reason.length < 1) reason = language("BAN_NO_REASON");
 
-        let muterole;
+        let muterole = db.muteRole
 
-        let hasDB = client.guildSettings.has(`${message.guild.id}`, "muteRole")
-        if (hasDB) {
-
-            let roleID = client.guildSettings.get(`${message.guild.id}`, "muteRole")
-            if (message.guild.roles.cache.has(roleID)) {
-                muterole = message.guild.roles.cache.get(roleID);
-            }
-            else {
-                muterole = message.guild.roles.cache.find(x => x.name === "Muted")
-            }
-
+        if (message.guild.roles.cache.has(muterole)) {
+            muterole = message.guild.roles.cache.get(muterole);
         } else {
             muterole = message.guild.roles.cache.find(x => x.name === "Muted")
-        }
 
-        if(!muterole) {
-            try {
-                muterole = await message.guild.roles.create({
-                    data: {
-                      name: 'Muted',
-                      color: '#070707',
-                    },
-                    reason: 'Création du role de mute.',
-                  })          
-        
-                message.guild.channels.cache.forEach(async (channel, id) => {
-                    await channel.createOverwrite(muterole, {
-                        SEND_MESSAGES: false,
-                        MANAGE_MESSAGES: false,
-                        READ_MESSAGES: false,
-                        ADD_REACTIONS: false
+            if(!muterole) {
+                try {
+                    muterole = await message.guild.roles.create({
+                        data: {
+                          name: 'Muted',
+                          color: '#070707',
+                        },
+                        reason: 'Création du role de mute.',
+                      })          
+            
+                    message.guild.channels.cache.forEach(async (channel, id) => {
+                        await channel.createOverwrite(muterole, {
+                            SEND_MESSAGES: false,
+                            MANAGE_MESSAGES: false,
+                            READ_MESSAGES: false,
+                            ADD_REACTIONS: false
+                        });
                     });
-                });
-            } catch(e) {
-                message.channel.send(language("MUTE_ERROR"))
-                return client.emit('error',e, "mute");
+                } catch(e) {
+                    message.channel.send(language("MUTE_ERROR"))
+                    return client.emit('error',e, "mute");
+                }
             }
         }
+
         if(usermute.roles.cache.has(muterole.id)) {
             return message.channel.send(language("USERMUTE"))
         }
@@ -115,7 +97,9 @@ class Mute extends Command {
         .setFooter(client.footer);
 
         message.channel.send(embed);
-        client.guildSettings.set(`${message.guild.id}`, muterole.id, "muteRole")
+
+        db.muteRole = muterole.id,
+        await db.save();
             
         usermute.send(`${language("MUTE_SUCESS_MP_1")}${message.guild.name}${language("MUTE_SUCESS_MP_2")}${message.author.username}__ `+" ! " + `${language("MUTE_SUCESS_MP_4")}\`${reason}\``).catch(e =>{
             message.channel.send(language("MUTE_SUCESS_MPCLOSE"))

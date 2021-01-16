@@ -16,7 +16,7 @@ class Export extends Command {
         const Discord = require("discord.js");
         const hastebin = require('hastebin-gen');
 
-        const haste = client.guildSettings.export();
+        const haste = "nop"
         hastebin(haste).then(r => {
     
             message.channel.send("`Guilds Settings :`  " + r);

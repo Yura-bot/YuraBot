@@ -2,30 +2,21 @@ module.exports = async(client, reaction, user) => {
     if(user.bot) return;
     const Discord = require("discord.js");
 
-    let guildSettingsExist = client.guildSettings.has(`${reaction.message.guild.id}`)
-    let isTicket = client.ticket.has(`${reaction.message.guild.id}`)
+    let db = await client.db.getGuild(reaction.message.guild.id)
 
-    let prefix;
-    let guildLanguage;
+    let guildLanguage = !db.lang ? "english": db.lang;
+    let language = require(`../languages/${guildLanguage}`);
 
-    if (guildSettingsExist) {
-        prefix = client.guildSettings.get(`${reaction.message.guild.id}`, "prefix")
-        guildLanguage = client.guildSettings.get(`${reaction.message.guild.id}`, "lang")
-    } else {
-        prefix = client.default_prefix;
-        guildLanguage = "english"
-    }
+    let isTicket = db.tickets.enabled
+    if (isTicket === false) return;
 
-    if (guildSettingsExist === false || isTicket === false) return;
-
-    const language = require(`../languages/${guildLanguage}`);
     const guild = reaction.message.guild;
 
-    let categorieId = client.ticket.get(`${reaction.message.guild.id}`, "category")
-    let channelId = client.ticket.get(`${reaction.message.guild.id}`, "channel")
-    let messageId = client.ticket.get(`${reaction.message.guild.id}`, "message")
+    let categorieId = db.tickets.category
+    let channelId = db.tickets.channel
+    let messageId = db.tickets.message
     let logId = false
-    let staffId = client.ticket.get(`${reaction.message.guild.id}`, "role")
+    let staffId = db.tickets.role
 
 
     if (client.channels.cache.has(categorieId) && client.channels.cache.has(channelId))

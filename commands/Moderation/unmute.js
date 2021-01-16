@@ -11,22 +11,12 @@ class UnMute extends Command {
         });
     }
 
-    async run(client, message, args) {
+    async run(client, message, args, db) {
 
         const Discord = require("discord.js");
 
-        let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
-
-        let prefix;
-        let guildLanguage;
-
-        if (guildSettingsExist) {
-            prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
-            guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
-        } else {
-            prefix = client.default_prefix;
-            guildLanguage = "english"
-        }
+        let prefix = !db.prefix ? config.prefix : db.prefix;
+        let guildLanguage = !db.lang ? "english": db.lang;
 
         const language = require(`../../languages/${guildLanguage}`);
 
@@ -49,21 +39,36 @@ class UnMute extends Command {
             );
         }
 
-        let muterole;
+        let muterole = db.muteRole
 
-        let hasDB = client.guildSettings.has(`${message.guild.id}`, "muteRole")
-        if (hasDB) {
-
-            let roleID = client.guildSettings.get(`${message.guild.id}`, "muteRole")
-            if (message.guild.roles.cache.has(roleID)) {
-                muterole = message.guild.roles.cache.get(roleID);
-            }
-            else {
-                muterole = message.guild.roles.cache.find(x => x.name === "Muted")
-            }
-
+        if (message.guild.roles.cache.has(muterole)) {
+            muterole = message.guild.roles.cache.get(muterole);
         } else {
             muterole = message.guild.roles.cache.find(x => x.name === "Muted")
+
+            if(!muterole) {
+                try {
+                    muterole = await message.guild.roles.create({
+                        data: {
+                          name: 'Muted',
+                          color: '#070707',
+                        },
+                        reason: 'Création du role de mute.',
+                      })          
+            
+                    message.guild.channels.cache.forEach(async (channel, id) => {
+                        await channel.createOverwrite(muterole, {
+                            SEND_MESSAGES: false,
+                            MANAGE_MESSAGES: false,
+                            READ_MESSAGES: false,
+                            ADD_REACTIONS: false
+                        });
+                    });
+                } catch(e) {
+                    message.channel.send(language("MUTE_ERROR"))
+                    return client.emit('error',e, "mute");
+                }
+            }
         }
 
         if(usermute.roles.cache.has(muterole.id) === false) {

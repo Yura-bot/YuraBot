@@ -1,34 +1,21 @@
 module.exports = async(client, member) => {
 
-    let guildSettingsExist = client.guildSettings.has(`${member.guild.id}`)
-    if (guildSettingsExist === false) return;
+    let db = await client.db.getGuild(member.guild.id)
 
-    let prefix;
-    let guildLanguage;
+    let guildLanguage = !db.lang ? "english": db.lang;
+    let language = require(`../languages/${guildLanguage}`);
 
-    if (guildSettingsExist) {
-        prefix = client.guildSettings.get(`${member.guild.id}`, "prefix")
-        guildLanguage = client.guildSettings.get(`${member.guild.id}`, "lang")
-    } else {
-        prefix = client.default_prefix;
-        guildLanguage = "english"
-    }
-
-    const language = require(`../languages/${guildLanguage}`);
-
-    let welcomeEnabled = client.guildSettings.has(`${member.guild.id}`, "welcomePlug")
-    let welcomeMpEnabled = client.guildSettings.has(`${member.guild.id}`, "welcomeMpPlug")
-    let autoroleEnabled = client.guildSettings.has(`${member.guild.id}`, "autorolePlug")
+    let welcomeEnabled = db.welcome.enabled
+    let welcomeMpEnabled = db.welcomeMp
+    let autoroleEnabled = db.autorole.enabled
 
     if (welcomeEnabled) {
 
-        let welcomeChannel = client.guildSettings.get(`${member.guild.id}`, "welcomePlug.welcomeChannel")
-        let welcomeMessage = client.guildSettings.get(`${member.guild.id}`, "welcomePlug.welcomeMessage")
+        let welcomeChannel = db.welcome.channel
+        let welcomeMessage = db.welcome.message
 
-        let welcomeEmbed = client.guildSettings.has(`${member.guild.id}`, "welcomePlug.welcomeEmbed")
-        if (welcomeEmbed) welcomeEmbed = client.guildSettings.get(`${member.guild.id}`, "welcomePlug.welcomeEmbed")
-
-        let welcomeImage = client.guildSettings.has(`${member.guild.id}`, "welcomePlug.welcomeImage")
+        let welcomeEmbed = db.welcome.withEmbed
+        let welcomeImage = db.welcome.withImage
 
         if(client.channels.cache.has(welcomeChannel) === false){
             return member.guild.owner.send(language("EVENTS_GUILDMEMBERADD_WELCOME_ERROR")).catch(e => {});
@@ -48,8 +35,8 @@ module.exports = async(client, member) => {
                 Discord = require("discord.js"),
                 Clean = require('js-string-cleaner');
 
-                let color = client.guildSettings.get(`${member.guild.id}`, "welcomePlug.welcomeImage.color")
-                let colorTitle = client.guildSettings.get(`${member.guild.id}`, "welcomePlug.welcomeImage.colorTitle")
+                let color = db.welcome.config.colorBackground
+                let colorTitle = db.welcome.config.colorTitle
 
                 const image = await new Canvas.Welcome()
                 .setUsername(Clean(member.user.username))
@@ -108,7 +95,7 @@ module.exports = async(client, member) => {
     }
 
     if (welcomeMpEnabled) {
-        let welcomeMessage = client.guildSettings.get(`${member.guild.id}`, "welcomeMpPlug.welcomeMessage")
+        let welcomeMessage = db.welcomeMp
 
         let messageSend = welcomeMessage
         .replace('{member}', member)
@@ -123,7 +110,7 @@ module.exports = async(client, member) => {
 
     if (autoroleEnabled) {
 
-        let autoroleRole = client.guildSettings.get(`${member.guild.id}`, "autorolePlug.role")
+        let autoroleRole = db.autorole.role
 
         if(member.guild.roles.cache.has(autoroleRole) === false){
             return member.guild.owner.send(language("EVENTS_GUILDMEMBERADD_AUTOROLE_ERROR")).catch(e => {});

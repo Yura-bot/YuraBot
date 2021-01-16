@@ -11,24 +11,21 @@ class Suggest extends Command {
         });
     }
 
-    async run(client, message, args) {
+    async run(client, message, args, db) {
 
         const Discord = require("discord.js");
 
-        let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
-        let statusSuggest = client.guildSettings.has(`${message.guild.id}`, "suggestionPlug")
+        let prefix = !db.prefix ? config.prefix : db.prefix;
+        let guildLanguage = !db.lang ? "english": db.lang;
 
-        let prefix;
-        let guildLanguage;
+        const language = require(`../../languages/${guildLanguage}`);
 
-        if (guildSettingsExist && statusSuggest) {
-            prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
-            guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
-            const language = require(`../../languages/${guildLanguage}`);
+        let statusSuggest = db.suggestions
 
+        if (statusSuggest) {
             let contenu = args.slice(1).join(" ")
 
-            let suggestionChannel = client.guildSettings.get(`${message.guild.id}`, "suggestionPlug.channel")
+            let suggestionChannel = db.suggestions
             if (client.channels.cache.has(suggestionChannel) === false ) return message.channel.send({embed: {color: '0xFF0000', description: language("SUGGEST_ERROR_NO_CHANNEL") }})
 
             if(!args[1]) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_SUGGEST"));
@@ -52,9 +49,6 @@ class Suggest extends Command {
             message.author.send(language("SUGGEST_SUCESS")).catch(e => {});
 
         } else {
-            prefix = client.default_prefix;
-            guildLanguage = "english"
-            const language = require(`../../languages/${guildLanguage}`);
             return message.channel.send({embed: {color: '0xFF0000', description: language("SUGGEST_ERROR_NO_SYSTEM") }})
         }
     }

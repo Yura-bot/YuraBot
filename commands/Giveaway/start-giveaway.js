@@ -7,27 +7,17 @@ class CreateGiveaway extends Command {
             aliases: ['sta-give', 's-g'],
             category: 'giveaway',
             description: 'Permet de crée et de lancer un giveaway.',
-            usage: 'start-giveaway [Channel] [Temps] [Nombre de gagnants] [Prix] '
+            usage: 'start-giveaway [Channel] [Temps] [Nombre de gagnants] [Prix] (condition [Role])'
         });
     }
 
-    async run(client, message, args) {
+    async run(client, message, args, db) {
 
         const Discord = require("discord.js");
         const ms = require('ms');
 
-        let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
-
-        let prefix;
-        let guildLanguage;
-
-        if (guildSettingsExist) {
-            prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
-            guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
-        } else {
-            prefix = client.default_prefix;
-            guildLanguage = "english"
-        }
+        let prefix = !db.prefix ? config.prefix : db.prefix;
+        let guildLanguage = !db.lang ? "english": db.lang;
 
         const language = require(`../../languages/${guildLanguage}`);
 
@@ -59,12 +49,25 @@ class CreateGiveaway extends Command {
             return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_GIVEAWAY_START"));
         }
 
+        let condition = false
+
+        let roleCondition = message.mentions.roles.first()
+        if (roleCondition) {
+            condition = true
+            roleCondition = message.mentions.roles.first().id
+        } else {
+            condition = false
+        }
+
         // Start the giveaway
        client.giveawaysManager.start(giveawayChannel, {
          time: ms(giveawayDuration),
          prize: giveawayPrize,
          winnerCount: giveawayNumberWinners,
          hostedBy: true ? message.author : null,
+         condition: {
+            role: roleCondition,
+        },
          messages: {
              giveaway: language("GIVEAWAY_START_TITLE"),
              giveawayEnded: language("GIVEAWAY_START_ENDED"),

@@ -8,7 +8,7 @@ module.exports = (client, guild) => {
         .addField("📋 __Nom du serveur__", guild.name)
         .addField("📊 __Nombre de membres__ :", guild.memberCount)
         .addField("💻 __Nombre de salons__ :", guild.channels.cache.size)
-        .addField("👤 __Propriétaire__ :", guild.owner)
+        .addField("👤 __Propriétaire__ :", guild.owner.user.tag)
         .addField("🌍 __Région du serveur__ :", guild.region)
         .addField("💎 __Boosts du serveur__ :", guild.premiumSubscriptionCount)
         .setFooter(`Le bot est désormais sur ${client.guilds.cache.size} serveurs !`)
