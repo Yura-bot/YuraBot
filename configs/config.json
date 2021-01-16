@@ -18,6 +18,8 @@
     "footer": "By Yura | yurabot.xyz",
 
     "webhook": "https://discordapp.com/api/webhooks/695611800686821427/2B3xnQbg6z7I0_MzDB4Y25Uw4ZMpBHsYVQ8f4IxsmnHd3vAuGg_A3jFHFo8VwxFUXWHu",
+    
+    "mongoKey": "mongodb://localhost:27017/Yura",
 
     "emojis": {
         "yes": "673212026226737153",
