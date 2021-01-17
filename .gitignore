@@ -1,0 +1,6 @@
+giveaways.json
+package-lock.json
+configs/config.json
+data/
+node_modules/
+main.js
