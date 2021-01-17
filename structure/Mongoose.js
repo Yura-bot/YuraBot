@@ -39,3 +39,15 @@ module.exports.getGuild = async function (guildID){
       return guildDB;
     }
 };
+
+module.exports.deleteGuild = async function (guildID){
+
+  let guildDB = await Guild.findOne( { id: guildID } );
+
+  if(guildDB){
+    await Guild.deleteOne({ id: guildID });
+    return true;
+  } else {
+    return false;
+  }
+};

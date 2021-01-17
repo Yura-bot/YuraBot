@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-module.exports = (client, guild) => {
+module.exports = async(client, guild) => {
 
     const joinembed = new Discord.MessageEmbed()
         .setDescription(`📌 Merci à **${guild.name}** d'avoir ajouté ${client.user.username}`)
@@ -14,6 +14,8 @@ module.exports = (client, guild) => {
         .setFooter(`Le bot est désormais sur ${client.guilds.cache.size} serveurs !`)
         .setColor("#08C300")
       client.channels.cache.get('665849169717624848').send(joinembed);
+
+      let db = await client.db.getGuild(guild.id)
 
       let status = `yurabot.xyz | ?help | ${client.guilds.cache.size} guilds !`
       client.user.setActivity(status, {type: "PLAYING"})
