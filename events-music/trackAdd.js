@@ -1,17 +1,9 @@
-module.exports = (client, message, queue, track) => {
+module.exports = async(client, message, queue, track) => {
 
-    let guildSettingsExist = client.guildSettings.has(`${message.guild.id}`)
+    let db = await client.db.getGuild(message.guild.id)
 
-    let prefix;
-    let guildLanguage;
-
-    if (guildSettingsExist) {
-        prefix = client.guildSettings.get(`${message.guild.id}`, "prefix")
-        guildLanguage = client.guildSettings.get(`${message.guild.id}`, "lang")
-    } else {
-        prefix = client.default_prefix;
-        guildLanguage = "english"
-    }
+    let prefix = !db.prefix ? config.prefix : db.prefix;
+    let guildLanguage = !db.lang ? "english": db.lang;
 
     const language = require(`../languages/${guildLanguage}`);
 
