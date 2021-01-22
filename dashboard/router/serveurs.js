@@ -12,7 +12,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let serv = req.bot.guilds.cache.get(req.params.guildID);
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    if (req.user.id != config.owner) {
+       if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    }
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -65,11 +67,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let guild = req.bot.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
-
-    const member = guild.members.cache.get(req.user.id);
-    if (!member) return res.redirect("/");
-    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
+    if (req.user.id != config.owner) {
+        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    }
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -113,7 +113,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let serv = req.bot.guilds.cache.get(req.params.guildID);
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+    if (req.user.id != config.owner) {
+       if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    }
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -173,11 +175,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let guild = req.bot.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
-
-    const member = guild.members.cache.get(req.user.id);
-    if (!member) return res.redirect("/");
-    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
+    if (req.user.id != config.owner) {
+        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    }
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -231,7 +231,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let serv = req.bot.guilds.cache.get(req.params.guildID);
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+    if (req.user.id != config.owner) {
+        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    }
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -264,11 +266,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let guild = req.bot.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
-
-    const member = guild.members.cache.get(req.user.id);
-    if (!member) return res.redirect("/");
-    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
+    if (req.user.id != config.owner) {
+        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    }
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -305,7 +305,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let serv = req.bot.guilds.cache.get(req.params.guildID);
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+    if (req.user.id != config.owner) {
+        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    }
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -337,11 +339,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let guild = req.bot.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
-
-    const member = guild.members.cache.get(req.user.id);
-    if (!member) return res.redirect("/");
-    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
+    if (req.user.id != config.owner) {
+        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    }
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -370,7 +370,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let serv = req.bot.guilds.cache.get(req.params.guildID);
     if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
+    if (req.user.id != config.owner) {
+        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    }
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -402,11 +404,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let guild = req.bot.guilds.cache.get(req.params.guildID);
     if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    if (!req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD")) return res.redirect("/");
-
-    const member = guild.members.cache.get(req.user.id);
-    if (!member) return res.redirect("/");
-    if (!member.permissions.has("MANAGE_GUILD")) return res.redirect("/");
+    if (req.user.id != config.owner) {
+        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+    }
 
     let db = await bot.db.getGuild(req.params.guildID)
 
