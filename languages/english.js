@@ -7,7 +7,8 @@ const languageData = {
     ERRROR_BOT: "<:X_:673212163837526064> **Error :**",
     SYNTAXE: "<:X_:673212163837526064> Your syntax is incorrect. \n```Syntax : ",
     X_EMOJI: "<:X_:673212163837526064> ",
-    MSG_MENTION: (prefix) => `<a:heyy:784089404774809600> Hi, I'm Yura! My prefix on this server is **${prefix}** ! \nSo to see the help menu do **${prefix}help**.`,
+    COOLDOWNBOT: (time) => `<:X_:673212163837526064> **You must wait** \`${time}\` **before you can use this command again!**`,
+    MSG_MENTION: (prefix) => `<a:heyy:784089404774809600> Hi, I'm Yura! My prefix on this server is \`${prefix}\` ! \nSo to see the help menu do **${prefix}help**.`,
     /* Permissions : */
     MISSING_PERMISSION_ADMINISTRATOR: "<:X_:673212163837526064> **You do not have the necessary permissions to make this command !** \n **You must have permission `ADMINISTRATOR` !**",
     MISSING_PERMISSION_MANAGE_GUILD: "<:X_:673212163837526064> **You do not have the necessary permissions to make this command !** \n **You must have permission `MANAGE_GUILD` !**",
