@@ -19,7 +19,7 @@ module.exports = async(client, message) => {
         let antilink = db.automod.antiLink
         let antibadwords = db.automod.antiBadWords
 
-        if (antiraid) client.antiSpam.message(message, client)
+        if (antiraid) client.antiSpam.message(message, client, db)
 
         if (antilink) {
             if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
