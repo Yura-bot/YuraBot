@@ -45,7 +45,7 @@ class Clear extends Command {
                 message.channel.bulkDelete(x)
                 .catch(e => {})
                 .then(messages => {
-                    if (messages.size === undefined) return message.channel.send(language("CLEAR_14DAYS")).then(msg => msg.delete({timeout: 5000}))
+                    if (messages === undefined) return message.channel.send(language("CLEAR_14DAYS")).then(msg => msg.delete({timeout: 5000}))
                     message.channel.send(`<:check:673212026226737153> ** ${messages.size} ${language("DELETE_MESSAGE")}`).then(msg => msg.delete({timeout: 5000}))
                 });
             }
