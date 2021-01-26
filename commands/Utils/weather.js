@@ -20,14 +20,18 @@ class Weather extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        let city = args[1]
+        let city = args.slice(1).join(" ")
         if (!city) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_WEATHER"));
+
+        let txtFormated = city.split(" ").join("%20");
+        let lang = !db.lang ? "en": "fr";
+        let link = `https://wttr.in/${txtFormated}_lang=${lang}.png`
 
         const exampleEmbed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setTitle(language("WEATHER_SUCESS", city))
         .setURL(client.url)
-        .setImage(`https://wttr.in/${city}.png`)
+        .setImage(link)
         .setTimestamp()
         .setFooter(client.footer, client.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }));
     
