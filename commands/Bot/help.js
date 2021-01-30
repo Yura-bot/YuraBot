@@ -79,6 +79,9 @@ class Help extends Command {
                     ],
                     url: client.url,
                     color: client.color,
+                    image: {
+                        url: 'https://i.goopics.net/9yqqy.gif',
+                    },
                     timestamp: new Date(),
                     footer: {
                         text: client.footer,
