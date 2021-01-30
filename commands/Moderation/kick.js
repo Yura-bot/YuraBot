@@ -45,7 +45,6 @@ class Kick extends Command {
         
         if (!message.guild.member(user).bannable) {
             message.channel.send(language("KICK_ERROR_INTERNE"));
-            return client.emit('error',e, "ban-Interne");
         } else {
           const embed = new Discord.MessageEmbed()
           .setColor(0xFF0000)
