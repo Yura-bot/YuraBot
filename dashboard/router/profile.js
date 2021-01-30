@@ -6,6 +6,17 @@ let bot = require("../../main.js")
 
 router.get('/', CheckAuth, async(req, res) => {
 
+    let tag = req.user.username + "#" + req.user.discriminator
+
+    let db = await bot.db.getUserTag(tag)
+    let points;
+
+    if (db != false) { 
+        points = db.points
+    } else {
+        points = 0
+    }
+
     res.render("profile", {
         guilds: req.user.guilds.filter(u => (u.permissions & 2146958591) === 2146958591),
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
@@ -17,7 +28,8 @@ router.get('/', CheckAuth, async(req, res) => {
         login: "oui",
         invite: `https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1`,
         message: "",
-        messageType: "success"
+        messageType: "success",
+        points: points
     });
 });
 

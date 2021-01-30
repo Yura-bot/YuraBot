@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { mongoKey } = require("../configs/config.json")
-const { Guild } = require("../models/index")
+const { Guild, User } = require("../models/index")
 
 module.exports = {
     init: () => {
@@ -20,7 +20,7 @@ module.exports.createGuild = async function (guildID){
       id: guildID
     })
 
-    await guildDB.save().catch(err => console.log(err));
+    await guildDB.save();
     return true;
 };
 
@@ -35,7 +35,7 @@ module.exports.getGuild = async function (guildID){
         _id: mongoose.Types.ObjectId(),
         id: guildID
       })
-      await guildDB.save().catch(err => console.log(err));
+      await guildDB.save();
       return guildDB;
     }
 };
@@ -50,4 +50,36 @@ module.exports.deleteGuild = async function (guildID){
   } else {
     return false;
   }
+};
+
+module.exports.getUser = async function (userID){
+
+  let UserDB = await User.findOne( { id: userID } );
+  
+  if (UserDB) {
+    return UserDB;
+  } else {
+    return false;
+  }
+};
+
+module.exports.getUserTag = async function (tag){
+
+  let UserDB = await User.findOne( { tag: tag } );
+  
+  if (UserDB) {
+    return UserDB;
+  } else {
+    return false;
+  }
+};
+
+module.exports.createUser = async function (userID){
+  UserDB = new User({
+    _id: mongoose.Types.ObjectId(),
+    id: userID
+  })
+
+  await UserDB.save();
+  return true;
 };
