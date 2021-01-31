@@ -38,6 +38,12 @@ module.exports = async(client, member) => {
                 let color = db.welcome.config.colorBackground
                 let colorTitle = db.welcome.config.colorTitle
 
+                let imageURL = db.welcome.config.img
+
+                if (imageURL != null && client.isURL(imageURL)) {
+                    imageURL = db.welcome.config.img
+                } else imageURL = "https://image.noelshack.com/fichiers/2020/28/5/1594371011-welcome-image.png"
+
                 const image = await new Canvas.Welcome()
                 .setUsername(Clean(member.user.username))
                 .setDiscriminator(member.user.discriminator)
@@ -54,7 +60,7 @@ module.exports = async(client, member) => {
                 .setOpacity("discriminator-box", 0.4)
                 .setOpacity("message-box", 0.4)
                 .setOpacity("border", 1)
-                .setBackground("https://image.noelshack.com/fichiers/2020/28/5/1594371011-welcome-image.png")
+                .setBackground(imageURL)
                 .setText("title", language("WELCOME"))
                 .setText("message", language("WELCOME_ON"))
                 .setText("member-count", language("MEMBER_COUNT"))

@@ -128,6 +128,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     let welcomeMessage;
 
     let welcomeImage = false
+    let imageURL = null
     let colorImage = db.welcome.config.colorBackground
     let colorImageTitle = db.welcome.config.colorTitle
     let welcomeMpMessage = null
@@ -137,6 +138,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         welcomeMessage = db.welcome.message
         if (welcomeEmbedEnabled) {
             welcomeImage = db.welcome.withImage
+            if (welcomeImage) {
+                imageURL = db.welcome.config.img
+            }
         }
     }
 
@@ -165,6 +169,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         welcomeEnabled: welcomeEnabled,
         welcomeEmbedEnabled: welcomeEmbedEnabled,
         welcomeImage: welcomeImage,
+        imageURL: imageURL,
         colorImage: colorImage,
         colorImageTitle: colorImageTitle,
         welcomeMpEnabled: welcomeMpEnabled,
@@ -214,6 +219,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
                 db.welcome.withImage = true
                 db.welcome.config.colorTitle = data.imgColorTitle
                 db.welcome.config.colorBackground = data.imgColor
+                if (data.imageURL) {
+                    db.welcome.config.img = data.imageURL
+                } else db.welcome.config.img = null
             } else db.welcome.withImage = false
         } else db.welcome.withEmbed = false
     }
