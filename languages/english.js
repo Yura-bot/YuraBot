@@ -6,6 +6,7 @@ const languageData = {
     LANGUAGE: "Anglais | EN | English",
     ERRROR_BOT: "<:X_:673212163837526064> **Error :**",
     SYNTAXE: "<:X_:673212163837526064> Your syntax is incorrect. \n```Syntax : ",
+    DASHCONFIG: "**<:horizontalsettingsmixer:675372744950677534> To configure the bot you have to go here : https://dash.yurabot.xyz <-**",
     X_EMOJI: "<:X_:673212163837526064> ",
     COOLDOWNBOT: (time) => `<:X_:673212163837526064> **You must wait** \`${time}\` **before you can use this command again!**`,
     MSG_MENTION: (prefix) => `<a:heyy:784089404774809600> Hi, I'm Yura! My prefix on this server is \`${prefix}\` ! \nSo to see the help menu do **${prefix}help**.`,
@@ -44,6 +45,9 @@ const languageData = {
     WELCOME: "Welcome",
     WELCOME_ON: "Welcome to {server}",
     MEMBER_COUNT: "- {count}th member !",
+    /* guildMemberRemove */
+    GOODBYE: "Goodbye",
+    GOODBYE_ON: "Leaving from {server}",
     /* GuildMemberRemove : */
     EVENTS_GUILDMEMBERREMOVE_GOODBYE_ERROR: "<:X_:673212163837526064> | An error occurred: the auto-role could not be activated because the role could not be found.",
     /* Commande Help : */

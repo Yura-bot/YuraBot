@@ -246,10 +246,27 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     let db = await bot.db.getGuild(req.params.guildID)
 
     let goodbyeEnabled = db.goodbye.enabled
+    let goodbyeChannel;
+    let goodbyeMessage;
 
-    let goodbyeChannel = db.goodbye.channel
-    let goodbyeMessage = db.goodbye.message
-    let goodbyeImage = db.goodbye.withImage
+    let goodbyeEmbedEnabled = db.goodbye.withEmbed
+
+    let goodbyeImage = false
+    let imageURL = null
+    let colorImage = db.goodbye.config.colorBackground
+    let colorImageTitle = db.goodbye.config.colorTitle
+    let goodbyeMpMessage = null
+
+    if (goodbyeEnabled) {
+        goodbyeChannel = db.goodbye.channel
+        goodbyeMessage = db.goodbye.message
+        if (goodbyeEmbedEnabled) {
+            goodbyeImage = db.goodbye.withImage
+            if (goodbyeImage) {
+                imageURL = db.goodbye.config.img
+            }
+        }
+    }
 
     res.render("items/goodbye", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
@@ -268,6 +285,11 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         goodbyeMessage: goodbyeMessage,
         goodbyeEnabled: goodbyeEnabled,
         goodbyeImage: goodbyeImage,
+        goodbyeEmbedEnabled: goodbyeEmbedEnabled,
+        goodbyeImage: goodbyeImage,
+        imageURL: imageURL,
+        colorImage: colorImage,
+        colorImageTitle: colorImageTitle,
         alert: false
     });   
 }).post("/:guildID/tools/goodbye", CheckAuth, async function(req, res) {
@@ -289,6 +311,31 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         statusGoodbye = false
     } else statusGoodbye = true
 
+    if (statusGoodbye != false) {
+        db.goodbye.enabled = true
+        // Channel : 
+        db.goodbye.channel = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
+        //Message
+        db.goodbye.message = data.goodbyeMessage;
+        //Embed ?
+        let goodbyeEmbedConfig = data.withEmbed === "on"
+        //Image ?
+        let goodbyeImageConfig = data.withImage === "on"
+        
+        if (goodbyeEmbedConfig) {
+            db.goodbye.withEmbed = true
+            if (goodbyeImageConfig) {
+                db.goodbye.withImage = true
+                db.goodbye.config.colorTitle = data.imgColorTitle
+                db.goodbye.config.colorBackground = data.imgColor
+                if (data.imageURL) {
+                    db.goodbye.config.img = data.imageURL
+                } else db.goodbye.config.img = null
+            } else db.goodbye.withImage = false
+        } else db.goodbye.withEmbed = false
+    } else db.goodbye.enabled = false
+
+    /*
     const obj = {
         enabled: statusGoodbye,
         channel: guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id,
@@ -303,6 +350,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     }
 
     db.goodbye = obj
+    */
     
     db.markModified("goodbye");
     await db.save();

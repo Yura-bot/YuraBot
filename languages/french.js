@@ -6,6 +6,7 @@ const languageData = {
     LANGUAGE: "Français | FR | French",
     ERRROR_BOT: "<:X_:673212163837526064> **Erreur :**",
     SYNTAXE: "<:X_:673212163837526064> Votre syntaxe est incorrecte. \n```Syntaxe : ",
+    DASHCONFIG: "**<:horizontalsettingsmixer:675372744950677534> Pour configurer le bot vous devez vous rendre ici : https://dash.yurabot.xyz <-**",
     X_EMOJI: "<:X_:673212163837526064> ",
     COOLDOWNBOT: (time) => `<:X_:673212163837526064> **Vous devez attendre** \`${time}\` **avant de pouvoir réutiliser cette commande !**`,
     MSG_MENTION: (prefix) => `<a:heyy:784089404774809600> Bonjour, moi c'est Yura ! Mon prefix sur ce serveur est \`${prefix}\` ! \nDonc pour voir le menu d'aide fait **${prefix}help**.`,
@@ -44,6 +45,9 @@ const languageData = {
     WELCOME: "Bienvenue",
     WELCOME_ON: "Bienvenue sur {server}",
     MEMBER_COUNT: "- {count}ème membre !",
+    /* guildMemberRemove */
+    GOODBYE: "Au revoir",
+    GOODBYE_ON: "Vient de partir de {server}",
     /* GuildMemberRemove : */
     EVENTS_GUILDMEMBERREMOVE_GOODBYE_ERROR: "<:X_:673212163837526064> | Une erreur est survenue : l\'autôrole n\'a pas pu être activé car le role est introuvable.",
     /* Commande Help : */

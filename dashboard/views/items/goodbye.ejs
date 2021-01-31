@@ -120,16 +120,63 @@
                             </div>
                         </div>
 
-                        <label class="badge badge-danger">Bientôt :</label></a></li>
+                        <label class="badge badge-danger">Nouveau :</label></a></li>
+
+                        <div class="checkbox checkbox-success">
+                          <% if(goodbyeEmbedEnabled) { %>
+                              <input id="checkbox-2" type="checkbox" name="withEmbed" checked>
+                          <% } else { %>
+                              <input id="checkbox-2" type="checkbox" name="withEmbed">
+                          <% } %>
+                          <label for="checkbox-2">Embed ?</label> 
+                        </div>
 
                         <div class="checkbox checkbox-success">
                             <% if(goodbyeImage) { %>
-                                <input id="checkbox-primary" type="checkbox" name="withImage" checked disabled>
+                                <input id="checkbox-1" type="checkbox" name="withImage" checked>
                             <% } else { %>
-                                <input id="checkbox-primary" type="checkbox" name="withImage" disabled>
+                                <input id="checkbox-1" type="checkbox" name="withImage">
                             <% } %>
-                            <label for="checkbox-primary"disabled>Image de départ ?</label> 
+                            <label for="checkbox-1">Image de bienvenue ?</label> 
                         </div>
+
+                        <br>
+
+                        <p><label class="badge badge-primary">Info :</label> Si vous voulez utiliser l'image de bienvenue vous devez activer l'embed !</p>
+
+                        <h6 class="sub-title">Configuration de l'image de bienvenue :</h6>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group mb-0">
+                              <label class="col-sm-3 col-form-label pt-0">Choississez la couleur de l'image pour le fond :</label>
+                              <input class="form-control" type="color" value="<%= colorImage %>" data-original-title="" name="imgColor">
+                            </div>
+                          </div>
+                        </div>  
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group mb-0">
+                              <label class="col-sm-3 col-form-label pt-0">Choississez la couleur de l'image pour le titre :</label>
+                              <input class="form-control" type="color" value="<%= colorImageTitle %>" data-original-title="" name="imgColorTitle">
+                            </div>
+                          </div>
+                        </div>  
+
+                        <br>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label for="imageURL">Mettez l'url d'une image de fond :</label>
+                              <input class="form-control" id="imageURL" value="<%= imageURL %>" maxlength="600" minlength="1" type="text" name="imageURL" placeholder="L'url de votre image..">
+                            </div>
+                          </div>
+                        </div>
+
+                        <p><label class="badge badge-primary">Info :</label> Vous pouvez héberger gratuitement votre image sur ce site : https://goopics.net <B>Attention seul le lien direct marche !!!</B></p>
+
                       </div>
 
                       <div class="card-footer">
