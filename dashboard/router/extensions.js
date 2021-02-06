@@ -72,15 +72,17 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
         .setColor("#36393f")
         .setDescription(language("TICKET_DESC"));
 
-        bot.channels.cache.get(guild.channels.cache.find((ch) => "#"+ch.name === data.channel).id).send(embed)
+        let Tchannel = guild.channels.cache.find((ch) => "#"+ch.name === data.channel)
+
+        guild.channels.cache.get(Tchannel.id).send(embed)
         .then(async m => {
           m.react('🎟');
 
           let obj = {
             enabled: true,
-            category: guild.channels.cache.find((ch) => "#"+ch.name === data.category).id,
-            channel: guild.channels.cache.find((ch) => "#"+ch.name === data.channel).id,
-            role: guild.roles.cache.find((r) => "@"+r.name === data.role).id,
+            category: guild.channels.cache.find((ch) => "#"+ch.name === data.category),
+            channel: Tchannel.id,
+            role: guild.roles.cache.find((r) => "@"+r.name === data.role),
             message: m.id
           };
 
