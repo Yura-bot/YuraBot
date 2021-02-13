@@ -1,4 +1,4 @@
-$("#mainNav ul li a[href^='#']").on('click', function(e) {
+$("#sidebar-menu ul li a[href^='#']").on('click', function(e) {
 
    // prevent default anchor click behavior
    e.preventDefault();
@@ -21,7 +21,7 @@ $("#mainNav ul li a[href^='#']").on('click', function(e) {
 
 
 // on scroll
-let mainNavLinks = document.querySelectorAll("nav ul li a");
+let sidebar-menuLinks = document.querySelectorAll("nav ul li a");
 let mainSections = document.querySelectorAll(".highlight-on-scroll");
 
 
@@ -41,7 +41,7 @@ window.addEventListener("scroll", event => {
 
   let fromTop = window.scrollY;
 
-  mainNavLinks.forEach(link => {
+  sidebar-menuLinks.forEach(link => {
     let section = document.querySelector(link.hash);
 
 

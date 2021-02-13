@@ -103,7 +103,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         db.suggestions = null;
     }
 
-    db.muteRole = guild.roles.cache.find((r) => "@"+r.name === data.muteRole).id
+    if (data.muteRole != "Desactivate") db.muteRole = guild.roles.cache.find((r) => "@"+r.name === data.muteRole).id
 
     await db.save();
 
@@ -188,21 +188,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let data  = req.body;
 
-    //Status :
-    let statusWelcome = data.statusWelcome;
-    let statusMpWelcome = data.statusMpWelcome;
-
-    if (statusWelcome != "on") {
-        db.welcome.enabled = false
-        statusWelcome = false 
-    }
-
-    if (statusMpWelcome != "on") {
-        db.welcomeMp = null
-        statusMpWelcome = false 
-    }
-
-    if (statusWelcome != false) {
+    if(Object.prototype.hasOwnProperty.call(data, "enable") || Object.prototype.hasOwnProperty.call(data, "update")) {
         db.welcome.enabled = true
         // Channel : 
         db.welcome.channel = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
@@ -225,9 +211,17 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
             } else db.welcome.withImage = false
         } else db.welcome.withEmbed = false
     }
+    
+    if(Object.prototype.hasOwnProperty.call(data, "disable")) {
+        db.welcome.enabled = false
+    }
 
-    if (statusMpWelcome != false) {
+    if(Object.prototype.hasOwnProperty.call(data, "enableMp") || Object.prototype.hasOwnProperty.call(data, "updateMp")) {
         db.welcomeMp = data.welcomeMpMessage
+    }
+
+    if(Object.prototype.hasOwnProperty.call(data, "disableMp")) {
+        db.welcomeMp = null
     }
 
     db.markModified("welcome");
@@ -304,14 +298,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let data  = req.body;
 
-    //Status :
-    let statusGoodbye = data.statusGoodbye;
-
-    if (statusGoodbye != "on") {
-        statusGoodbye = false
-    } else statusGoodbye = true
-
-    if (statusGoodbye != false) {
+    if(Object.prototype.hasOwnProperty.call(data, "enable") || Object.prototype.hasOwnProperty.call(data, "update")) {
         db.goodbye.enabled = true
         // Channel : 
         db.goodbye.channel = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
@@ -333,7 +320,11 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
                 } else db.goodbye.config.img = null
             } else db.goodbye.withImage = false
         } else db.goodbye.withEmbed = false
-    } else db.goodbye.enabled = false
+    }
+
+    if(Object.prototype.hasOwnProperty.call(data, "disable")) {
+        db.goodbye.enabled = false
+    }
 
     /*
     const obj = {
@@ -368,11 +359,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     let db = await bot.db.getGuild(req.params.guildID)
 
     let autoroleEnabled = db.autorole.enabled
-    let autoroleRole; 
-
-    if (autoroleEnabled) {
-        autoroleRole = db.autorole.role
-    }
+    let autoroleRole = db.autorole.role
 
     res.render("items/autorole", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
@@ -403,19 +390,18 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let data  = req.body;
 
-    //Status :
-    let statusAutorole = data.statusAutorole;
-
-    if (statusAutorole != "on") {
-        statusAutorole = false
-    } else statusAutorole = true
-
-    const obj = {
-        enabled: statusAutorole,
-        role: guild.roles.cache.find((r) => "@"+r.name === data.roleID).id
+    if(Object.prototype.hasOwnProperty.call(data, "enable") || Object.prototype.hasOwnProperty.call(data, "update")) {
+        const obj = {
+            enabled: true,
+            role: guild.roles.cache.find((r) => "@"+r.name === data.roleID).id
+        }
+    
+        db.autorole = obj
     }
 
-    db.autorole = obj
+    if(Object.prototype.hasOwnProperty.call(data, "disable")) {    
+        db.autorole.enabled = false
+    }
     
     db.markModified("autorole");
     await db.save();

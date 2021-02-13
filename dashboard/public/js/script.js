@@ -1,5 +1,6 @@
 (function ($) {
     "use strict";
+
     $(document).on('click', function (e) {
         var outside_space = $(".outside");
         if (!outside_space.is(e.target) &&
@@ -190,6 +191,16 @@ var tnum = 'en';
 
 $(document).ready(function () {
 
+    var lang = getLanguage()
+    console.log(lang)
+    
+    $('.lang').each(function(index, item) {
+      $(this).text(arrLang[lang][$(this).attr('key')]);
+    });
+
+    if (lang === "fr") { document.getElementById('flag').className = "flag-icon flag-icon-fr";  }
+    else document.getElementById('flag').className = "flag-icon flag-icon-us"; 
+
     if (localStorage.getItem("primary") != null) {
         var primary_val = localStorage.getItem("primary");
         $("#ColorPicker1").val(primary_val);
@@ -319,7 +330,7 @@ var trans = [{
 ];
 
 $(".mobile-title svg").click(function () {
-    $(".mega-menu-container").toggleClass("d-block");
+    $(".header-mega").toggleClass("d-block");
 });
 
 $(".onhover-dropdown").on("click", function () {
@@ -332,21 +343,21 @@ $(".onhover-dropdown").on("click", function () {
 // }
 
 
-if ($(window).width() < 991) {
-    $('<div class="bg-overlay"></div>').appendTo($('body'));
-    $(".bg-overlay").on("click", function () {
-        $(".page-header").addClass("close_icon");
-        $(".sidebar-wrapper").addClass("close_icon");
-        $(this).removeClass("active");
-    });
+// if ($(window).width() < 991) {
+//     $('<div class="bg-overlay"></div>').appendTo($('body'));
+//     $(".bg-overlay").on("click", function () {
+//         $(".page-header").addClass("close_icon");
+//         $(".sidebar-wrapper").addClass("close_icon");
+//         $(this).removeClass("active");
+//     });
 
-    $(".toggle-sidebar").on("click", function () {
-        $(".bg-overlay").addClass("active");
-    });
-    $(".back-btn").on("click", function () {
-        $(".bg-overlay").removeClass("active");
-    });
-}
+//     $(".toggle-sidebar").on("click", function () {
+//         $(".bg-overlay").addClass("active");
+//     });
+//     $(".back-btn").on("click", function () {
+//         $(".bg-overlay").removeClass("active");
+//     });
+// }
 
 $("#flip-btn").click(function(){
     $(".flip-card-inner").addClass("flipped")

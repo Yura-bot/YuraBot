@@ -2,7 +2,6 @@
 $('.grid-layout-view').on('click', function(e) {
     $('.product-wrapper-grid').removeClass("list-view");
     $(".product-wrapper-grid").children().children().removeClass("col-xl-12");
-
 });
 $('.list-layout-view').on('click', function(e) {
     $('.collection-grid-view').css('opacity', '0');

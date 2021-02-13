@@ -1,172 +1,219 @@
-'use strict';
+(function (){})();
 
-var LANGUAGES = {
-  "English": {
-    "columns": [
-      "Base",
-      "Advance",
-      "scrollable",
-      "Tree View",
-      "Rating",
-      "News",
-      "Tables",
-      "Base",
-      "Advance",
-      "scrollable",
-      "Tree View",
-      "Rating",
-      "News",
-      "Tables"
-    ],
-    "heading": "Static Sub Nav",
+var arrLang = {
+  'en': {
+    "lang": "EN",
+    "dash": "Dashboard",
+    "home": "Home",
+    "profil": "Profile",
+    "myProfil": "My Profil",
+    "user": "User",
+    "login": "Login",
+    "logout": "Logout",
+    "link": "Liens",
+    "mainsite": "Main site",
+    "status": "Status",
+    "other": "Other",
+    "doc": "Documentation",
+    "cmd": "Commands",
+    "supportTicket": "Support Ticket",
+    "welcome": "Welcome to Yura's dashboard!",
+    "visitProfil": "Visit my profile!",
+    "soon": "Soon...",
+    "guilds": "Guilds",
+    "members": "Members",
+    "channels": "Channels",
+    "cmds": "Commands",
+    "ram": " RAM usage.",
+    "notifications": " Notitications",
+    "error404": "The page you are currently trying to reach is not available. This may be because the page does not exist or has been moved.",
+    "retourPage": "BACK TO THE HOME PAGE",
+    "points": "Your points :",
+    "choiseGuilds": "Please choose your server :",
+    "params": "Settings",
+    "extensions": "Extensions",
+    "config": "Configuration",
+    "bvn": "Welcome",
+    "goodbye": "Goodbye",
+    "autorole": "Autorole",
+    "auto_mod": "Auto-moderation",
+    "ticket": "Ticket",
+    "backup": "Backup",
+    "giveaway": "Giveaway",
+    "prefix_setup": "Prefix of the bot on this server :",
+    "lang_setup": "Bot language on this server :",
+    "suggest": "Enable suggestions ?",
+    "suggestChannel": "Suggestion Channel :",
+    "muteRole": "Mute Role :",
+    "save": "Save",
+    "ticketConfig": "📚 Configuration of the ticket system :",
+    "activate": "Activate",
+    "desactivate": "Deactivate",
+    "ticketCategorie": "Category :",
+    "ticketChannel": "Channel :",
+    "ticketRole": "Support role :",
+    "backupIdError": "⚠ Your backup id is invalid please try again!",
+    "backupLoaded": "The backup has been loaded !",
+    "goodjob": "Well done ! ",
+    "backupCreated": "The backup has been created ! His id is : ",
+    "createBackup": "🧱 Create a backup :",
+    "createBackupButton": "Create",
+    "loadBackup": "⌛️ Loading a backup :",
+    "loadBackupWithID": "Set the backup id :",
+    "loadBackupButton": "Load",
+    "bvnConfig": "👋 Setting up the welcome message :",
+    "bvnBasicConfig": "Basic Configuration :",
+    "varListTitle": "List of variables :",
+    "varmember": "➜ Mention the member : {member}",
+    "varUser": "➜ Display the member's nickname : {user}",
+    "varTag": "➜ Gives the member's tag : {tag}",
+    "varMemberID": "➜ Gives the member's id : {memberid}",
+    "varServer": "➜ Displays the server name : {server}",
+    "varmemberCount": "➜ Gives the amount of members of the server : {membercount}",
+    "msgBvn": "Set up your welcome message :",
+    "channelBvn": "Channel :",
+    "new": "New :",
+    "embedBvn": "Embed ?",
+    "imgBvn": "Welcome image ?",
+    "info": "Info :",
+    "msgInfo": " If you want to use the image you have to activate the embed !",
+    "configImgBvn": "Setting up the welcome image :",
+    "imgColorBvn": "Choose the color of the image for the background :",
+    "imgColorTitleBvn": "Choose the color of the image for the title :",
+    "imgUrlImageBvn": "Put a background image url :",
+    "msgInfo2": "You can host your image for free on this site : https://goopics.net ",
+    "msgInfo3": "Attention only the direct link works !!",
+    "bvnPrivateConfig": "👋 Private message configuration :",
+    "bvnPrivatePrvConfig": "Private configuration :",
+    "goodbyeConfig": "😢 Setting up the leaving Message :",
+    "goodbyeMsg": "Configure your leaving message :",
+    "imgGoodbye": "Leaving image ?",
+    "configImgGoodbye": "Setting up the leaving image :",
+    "autoMod": "⚙ Configuring Auto Moderation :",
+    "antiRaid": "Anti Raid :",
+    "antiPub": "Anti Pub :",
+    "antiLink": "Anti Link :",
+    "antiBadWords": "Anti Bad Words :",
+    "disabled": "Disabled !",
+    "enabled": "Activated !",
+    "autoroleTitle": "🎖️ Configuring the autorole :",
+    "autoroleRole": "Choose your role :",
   },
-  "German": {
-    "columns": [
-      "Basis",
-      "Fortschritt",
-      "scrollable",
-      "Baumansicht",
-      "Die Einschaltquote",
-      "Nachrichten",
-      "Tische",
-      "Basis",
-      "Fortschritt",
-      "scrollable",
-      "Baumansicht",
-      "Die Einschaltquote",
-      "Nachrichten",
-      "Tische"
-    ],
-    "heading": "Statisches U-Boot Nav",
-  },
-  "Russian": {
-    "columns": [
-      "Основа",
-      "Прогресс",
-      "прокручиваемый",
-      "Представление Дерева",
-      "Оценка",
-      "новости",
-      "Столы",
-      "Основа",
-      "Прогресс",
-      "прокручиваемый",
-      "Представление Дерева",
-      "Оценка",
-      "новости",
-      "Столы"
-    ],
-    "heading": "Статический Sub Военно - морской",
-  },
-  "Arabic": {
-    "columns": [
-      "قاعدة",
-      "مقدما",
-      "التمرير",
-      "عرض الشجرة",
-      "تصنيف",
-      "أخبار",
-      "الجداول",
-      "قاعدة",
-      "مقدما",
-      "التمرير",
-      "عرض الشجرة",
-      "تصنيف",
-      "أخبار",
-      "الجداول"
-    ],
-    "heading": "صافي قيمة الأصول شبه الثابتة",
+  'fr': {
+    "lang": "FR",
+    "dash": "Dashboard",
+    "home": "Accueil",
+    "profil": "Profil",
+    "myProfil": "Mon Profil",
+    "user": "Utilisateur",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "link": "Liens",
+    "mainsite": "Site principal",
+    "status": "Status",
+    "other": "Autres",
+    "doc": "Documentation",
+    "cmd": "Commandes",
+    "supportTicket": "Support",
+    "welcome": "Bienvenue sur le dashboard de Yura !",
+    "visitProfil": "Visiter mon profil !",
+    "soon": "Soon...",
+    "guilds": "Serveurs",
+    "members": "Membres",
+    "channels": "Salons",
+    "cmds": "Commandes",
+    "ram": " Utilisation de la RAM.",
+    "notifications": " Notitications",
+    "error404": "La page que vous essayez d'atteindre n'est pas disponible actuellement. Cela peut être dû au fait que la page n'existe pas ou a été déplacée.",
+    "retourPage": "RETOUR À LA PAGE D'ACCUEIL",
+    "points": "Vos points :",
+    "choiseGuilds": "Veuillez choisir votre serveur :",
+    "params": "Paramètres",
+    "extensions": "Extensions",
+    "config": "Configuration",
+    "bvn": "Bienvenue",
+    "goodbye": "Départ",
+    "autorole": "Autorole",
+    "auto_mod": "Auto-modération",
+    "ticket": "Ticket",
+    "backup": "Backup",
+    "giveaway": "Giveaway",
+    "prefix_setup": "Prefix du bot sur ce serveur :",
+    "lang_setup": "Langue du bot sur ce serveur :",
+    "suggest": "Activer les suggestions ?",
+    "suggestChannel": "Suggestion Channel :",
+    "muteRole": "Mute Role :",
+    "save": "Sauvegarder",
+    "ticketConfig": "📚 Configuration du système de ticket :",
+    "activate": "Activer",
+    "desactivate": "Désactiver",
+    "ticketCategorie": "Catégorie :",
+    "ticketChannel": "Salon :",
+    "ticketRole": "Support role :",
+    "backupIdError": "⚠ Votre id de sauvegarde est invalide veuillez ressayer !",
+    "backupLoaded": "La backup a été chargé !",
+    "goodjob": "Bien joué ! ",
+    "backupCreated": "La backup a été crée ! Son id est : ",
+    "createBackup": "🧱 Créer une sauvegarde :",
+    "createBackupButton": "Créer",
+    "loadBackup": "⌛️ Charger une sauvegarde :",
+    "loadBackupWithID": "Mettez l'id de sauvegarde :",
+    "loadBackupButton": "Charger",
+    "bvnConfig": "👋 Configuration du message de bienvenue :",
+    "bvnBasicConfig": "Configuration Basique :",
+    "varListTitle": "Liste des variables :",
+    "varmember": "➜ Mentionner le membre : {member}",
+    "varUser": "➜ Afficher le pseudo du membre : {user}",
+    "varTag": "➜ Donne le tag du membre : {tag}",
+    "varMemberID": "➜ Donne l'id du membre : {memberid}",
+    "varServer": "➜ Affiche le nom du serveur : {server}",
+    "varmemberCount": "➜ Donne le nombre de membres du serveur : {membercount}",
+    "msgBvn": "Configurez votre message de bienvenue :",
+    "channelBvn": "Channel :",
+    "new": "Nouveau :",
+    "embedBvn": "Embed ?",
+    "imgBvn": "Image de bienvenue ?",
+    "info": "Info :",
+    "msgInfo": " Si vous voulez utiliser l'image vous devez activer l'embed !",
+    "configImgBvn": "Configuration de l'image de bienvenue :",
+    "imgColorBvn": "Choississez la couleur de l'image pour le fond :",
+    "imgColorTitleBvn": "Choississez la couleur de l'image pour le titre :",
+    "imgUrlImageBvn": "Mettez l'url d'une image de fond :",
+    "msgInfo2": "Vous pouvez héberger gratuitement votre image sur ce site : https://goopics.net ",
+    "msgInfo3": "Attention seul le lien direct marche !!!",
+    "bvnPrivateConfig": "👋 Configuration en message privé :",
+    "bvnPrivatePrvConfig": "Configuration en privée :",
+    "goodbyeConfig": "😢 Configuration du message de départ :",
+    "goodbyeMsg": "Configurez votre message de départ :",
+    "imgGoodbye": "Image de départ ?",
+    "configImgGoodbye": "Configuration de l'image de départ :",
+    "autoMod": "⚙ Configuration de l'auto modération :",
+    "antiRaid": "Anti Raid :",
+    "antiPub": "Anti Pub :",
+    "antiLink": "Anti Link :",
+    "antiBadWords": "Anti Bad Words :",
+    "disabled": "Désactivé !",
+    "enabled": "Activé !",
+    "autoroleTitle": "🎖️ Configuration de l'autorole :",
+    "autoroleRole": "Choissisez votre role :",
   }
 };
 
-var LanguageSelector = function($element) {
-  this.$element = $element;
-  this.$languageListItem = null;
-  this.$languageSelect = null;
-  this.$languagePageHdg = null;
-  this.chosenLanguage = null;
-  this.isEnabled = false;
-  this.init();
-};
-
-LanguageSelector.prototype.init = function() {
-  this.createChildren()
-      .enable();
-  
-  return this;
-};
-
-LanguageSelector.prototype.createChildren = function() {
-  this.$languageListItem = this.$element.find('> li');
-  this.$languageSelect = $('.js-languageSelect');
-  this.$languagePageHdg = $('.js-languagePageHdg');
-  
-  return this;
-};
-
-LanguageSelector.prototype.removeChildren = function () {
-    this.$languageListItem = null;
-    this.$languageSelect = null;
-    this.$languagePageHdg = null;
-    
-    return this;
-};
-
-LanguageSelector.prototype.enable = function() {
-  if (this.isEnabled) {
-      return this;
-  }
-  this.isEnabled = true;
-  this.$languageSelect.on('change', $.proxy(this.changeLanguage, this));
-  
-  return this;
-};
-
-LanguageSelector.prototype.disable = function () {
-    if (!this.isEnabled) {
-        return this;
+function getLanguage() {
+  if (localStorage.getItem('language') == null)  {
+    var userLang = navigator.language || navigator.userLanguage; 
+    if (userLang != "en" && userLang != "fr") {
+      setLanguage("en")
+      return "en"
+    } else {
+      setLanguage(userLang)
+      return userLang
     }
-    this.isEnabled = false;
-    
-    this.$languageSelect.off('change', $.proxy(this.changeLanguage, this));
-    return this;
-};
-
-LanguageSelector.prototype.destroy = function () {
-    this.disable()
-        .removeChildren();
-        
-    return this;
-};
-
-LanguageSelector.prototype.changeLanguage = function() {
-  var numListItems = this.$languageListItem.length;
-  
-  this.chosenLanguage = LANGUAGES[this.$languageSelect.find(':selected').val()];
-  
-  // set the language text for each list item
-  for (var i = 0; i < numListItems; i++) {
-    this.$languageListItem.eq(i).find('a').text(this.chosenLanguage.columns[i]);
+  } else {
+    return localStorage.getItem('language')
   }
-  
-  // set the heading text
-  this.$languagePageHdg.html(this.chosenLanguage.heading);
-  
-  // set the header background color
-  this.$element.css({
-    background: this.chosenLanguage.background
-  });
-  
-  // set the header text color
-  this.$languageListItem.find('a').css({
-    color: this.chosenLanguage.color
-  });
+}
 
-
-  return this;
-};
-
-
-$(document).ready(function() {
-  var languageSelector = new LanguageSelector($('.js-languageList'));
-});
+function setLanguage(lang) {
+  localStorage.setItem('language', lang);
+}

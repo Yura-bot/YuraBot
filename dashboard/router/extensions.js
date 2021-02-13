@@ -20,15 +20,9 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
     
     let isTicket = db.tickets.enabled
 
-    let channel = false
-    let category = false
-    let role = false
-
-    if (isTicket) {
-        channel = db.tickets.channel
-        category = db.tickets.category
-        role = db.tickets.role
-    }
+    let channel = db.tickets.channel
+    let category = db.tickets.category
+    let role = db.tickets.role
 
     res.render("extensions/ticket", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
@@ -61,9 +55,8 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
     const language = require(`../../languages/${guildLanguage}`);
 
     let data  = req.body;
-    let activate = data.statusTicket === "on";
 
-    if (activate) {
+    if(Object.prototype.hasOwnProperty.call(data, "enable") || Object.prototype.hasOwnProperty.call(data, "update")) {
 
         const Discord = require("discord.js");
 
@@ -74,7 +67,8 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
 
         let Tchannel = guild.channels.cache.find((ch) => "#"+ch.name === data.channel)
 
-        guild.channels.cache.get(Tchannel.id).send(embed)
+        guild.channels.cache.get(Tchannel.id)
+        .send(embed)
         .then(async m => {
           m.react('🎟');
 
@@ -92,12 +86,13 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
 
         })
         .catch(e => { member.send(language("TICKET_ERROR")).catch(e => {}) })
-
-    } else {
+    }
+    
+    if(Object.prototype.hasOwnProperty.call(data, "disable")) {
         db.tickets.enabled = false
         db.markModified("tickets");
         await db.save();
-    }
+	}
 
     res.redirect(`/extensions/${req.params.guildID}/ticket`);
 }).get("/:guildID/backup", CheckAuth, async(req, res) => {

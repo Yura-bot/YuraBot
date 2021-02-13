@@ -1,12 +1,18 @@
-(function($) {
-	"use strict";
+
+"use strict";
+$(document).ready(function() {
 	var tooltip_init = {
 		init: function() {
 			$("button").tooltip();
 			$("a").tooltip();
 			$("input").tooltip();
-			$("img").tooltip();
 		}
 	};
     tooltip_init.init()
-})(jQuery);
+});
+
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})

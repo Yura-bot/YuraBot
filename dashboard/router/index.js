@@ -8,6 +8,7 @@ let bot = require("../../main.js")
 router.get("/", function(req, res) {
 
         res.render("index.ejs", {
+            username: (req.isAuthenticated() ? `${req.user.username}` : `User`),
             name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
             avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
             status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),

@@ -55,33 +55,8 @@ var customcard = {
             });
             clipboard.on('error', function(e) {
             });
-        });
-        $(".rtl .card-header-left .close-card").on('click', function() {
-            var $this = $(this);
-            $this.parents('.card').animate({
-                'opacity': '0',
-                '-webkit-transform': 'scale3d(.3, .3, .3)',
-                'transform': 'scale3d(.3, .3, .3)'
-            });
-            setTimeout(function() {
-                $this.parents('.card').remove();
-            }, 800);
-        }), $(".rtl .card-header-right .card-option .icofont-double-right").on('click', function() {
-            var $this = $(this);
-            if ($this.hasClass('icofont-simple-left')) {
-                $this.parents('.card-option').animate({
-                    'width': '35px',
-                });
-            } else {
-                $this.parents('.card-option').animate({
-                    'width': '230px',
-                });
-            }
-            $(this).toggleClass("icofont-simple-left").fadeIn('slow');
-        });
-
-
-    }
+        });     
+           }
 };
 
 (function($) {

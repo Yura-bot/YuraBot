@@ -1,17 +1,17 @@
-$(document).ready(function() {
+$(document).ready(function () {
   var engine, remoteHost, template, empty;
 
   $.support.cors = true;
 
   remoteHost = 'https://typeahead-js-twitter-api-proxy.herokuapp.com';
-  template = Handlebars.compile($("#result-template").html());
-  empty = Handlebars.compile($("#empty-template").html());
+  template = Handlebars.compile($(".result-template").html());
+  empty = Handlebars.compile($(".empty-template").html());
 
   engine = new Bloodhound({
-    identify: function(o) { return o.id_str; },
+    identify: function (o) { return o.id_str; },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name', 'screen_name'),
-    dupDetector: function(a, b) { return a.id_str === b.id_str; },
+    dupDetector: function (a, b) { return a.id_str === b.id_str; },
     prefetch: remoteHost + '/demo/prefetch',
     remote: {
       url: remoteHost + '/demo/search?q=%QUERY',
@@ -52,11 +52,11 @@ $(document).ready(function() {
       empty: empty
     }
   })
-      .on('typeahead:asyncrequest', function() {
-        $('.Typeahead-spinner').show();
-      })
-      .on('typeahead:asynccancel typeahead:asyncreceive', function() {
-        $('.Typeahead-spinner').hide();
-      });
+    .on('typeahead:asyncrequest', function () {
+      $('.Typeahead-spinner').show();
+    })
+    .on('typeahead:asynccancel typeahead:asyncreceive', function () {
+      $('.Typeahead-spinner').hide();
+    });
 
 });

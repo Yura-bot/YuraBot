@@ -51,7 +51,7 @@
 
         series: [
             {
-                data: [1.2, 2.3, 1.7, 3.2, 1.8, 3.2, 1]
+                data: [4, 2, 7, 8, 10, 12, 14]
             }
         ],
         tooltip: {
@@ -116,12 +116,10 @@
 
         },
         colors:[CubaAdminConfig.secondary],
-
-
         series: [
             {
                 name: 'series1',
-                data: [12, 5, 10, 5, 16, 11, 20]
+                data: [2, 4, 6, 8, 6, 12, 14]
             }
         ],
         tooltip: {
@@ -190,7 +188,7 @@
 
         series: [
             {
-                data: [24, 55, 21, 67, 22, 43, 21]
+                data: [16, 14, 10, 12, 8, 4, 2]
             }
         ],
         tooltip: {
@@ -219,6 +217,7 @@ var optionscolumnchart = {
           name: 'Free Cash Flow',
           data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
         }],
+        
     legend: {
         show: false
     },
@@ -291,52 +290,50 @@ chartcolumnchart.render();
 
 
 // earning chart
-
-var optionsearningchart = {
-    chart: {
-        height: 360,
-        type: 'radialBar',
-    },
-    plotOptions: {
-        radialBar: {
-            startAngle: -135,
-            endAngle: 135,
+ var options = {
+          series: [70],
+          chart: {
+          height: 350,
+          type: 'radialBar',
+        },
+        plotOptions: {
+          radialBar: {
+            hollow: {
+              margin: 15,
+              size: '70%',
+              image: '../assets/images/email-template/success.png',
+              imageWidth: 64,
+              imageHeight: 64,
+              imageClipped: false
+            },
             dataLabels: {
-                name: {
-                    fontSize: '16px',
-                    color: '#000000',
-                    offsetY: 120
-                },
-                value: {
-                    offsetY: 76,
-                    fontSize: '22px',
-                    color: '#000000',
-                    formatter: function (val) {
-                        return val + "%";
-                    }
-                }
+              name: {
+                show: false,
+                color: '#fff'
+              },
+              value: {
+                show: true,
+                color: '#333',
+                offsetY: 70,
+                fontSize: '22px'
+              }
             }
-        }
-    },
+          }
+        },
+        fill: {
+          type: 'image',
+          image: {
+            src: ['../assets/images/user-card/5.jpg'],
+          }
+        },
+        stroke: {
+          lineCap: 'round'
+        },
+        labels: ['Volatility'],
+        };
 
-    fill: {
-        opacity: 1
-    },
-    colors:['#f73164'],
-
-    stroke: {
-        dashArray: 4
-    },
-    series: [67],
-    labels: ['Median Ratio'],
-
-}
-
-var chartearningchart = new ApexCharts(
-    document.querySelector("#chart-widget5"),
-    optionsearningchart
-);
-chartearningchart.render();
+        var chart = new ApexCharts(document.querySelector("#chart-widget5"), options);
+        chart.render();
 
 // product chart
 var optionsproductchart = {
@@ -1016,7 +1013,9 @@ var chartuserchart = new ApexCharts(
             range: 2700000,
 
         },
-
+yaxis: {
+              decimalsInFloat: 1,
+          },
         legend: {
             show: true
         },
@@ -1112,6 +1111,9 @@ var chartuserchart = new ApexCharts(
             type: 'datetime',
             range: 2700000,
         },
+         yaxis: {
+              decimalsInFloat: 1,
+          },
         title: {
             text: 'Processes',
             align: 'left',

@@ -93,13 +93,13 @@ var get_modal = function(content) {
 				<div class="modal-content">\
 					<div class="modal-header">\
 					<h4 class="modal-title">Edit HTML</h4>\
-						<button type="button" class="close" data-dismiss="modal">×</button>\
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>\
 					</div>\
 					<div class="modal-body ui-front">\
 						<textarea class="form-control btn-square" \
 							style="min-height: 200px; margin-bottom: 10px;\
 							font-family: Monaco, Fixed">'+content+'</textarea>\
-						<button class="btn btn-theme btn-square">Update</button>\
+						<button class="btn btn-light btn-square">Update</button>\
 					</div>\
 				</div>\
 			</div>\
