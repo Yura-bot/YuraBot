@@ -7,5 +7,5 @@ module.exports = async(client, message, query, tracks, content, collector) => {
 
     const language = require(`../languages/${guildLanguage}`);
 
-    return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_SEARCH_INVALIDE_RESPONSE", tracks.length) }})
+    return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_SEARCH_INVALIDE_RESPONSE").remplace("{track}", tracks.length) }})
 };

@@ -29,7 +29,7 @@ class Weather extends Command {
 
         const exampleEmbed = new Discord.MessageEmbed()
         .setColor(client.color)
-        .setTitle(language("WEATHER_SUCESS", city))
+        .setTitle(language("WEATHER_SUCESS").replace("{city}", city))
         .setURL(client.url)
         .setImage(link)
         .setTimestamp()

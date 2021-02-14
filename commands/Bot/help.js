@@ -28,8 +28,8 @@ class Help extends Command {
                     },
                     description: language("HELP_INFOS") + 
                       "[»](" + client.url + ") `" + prefix + "help [command]`\n\n" +
-                      language("HELP_TITLE", client.commands.size) + 
-                      language("HELP_PREFIX", prefix) +
+                      language("HELP_TITLE").replace("{CS}", client.commands.size) + 
+                      language("HELP_PREFIX").replace("{prefix}", prefix) +
                       language("HELP_LISTCMDS"),
                     fields: [
                         {

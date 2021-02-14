@@ -86,7 +86,7 @@ module.exports = async(client, message) => {
 
     if(message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))){
         if(message.guild){
-            return message.channel.send(language("MSG_MENTION", prefix)).catch(e => {});
+            return message.channel.send(language("MSG_MENTION").replace(/{prefix}/ig, prefix)).catch(e => {});
         } else return;
     }
 

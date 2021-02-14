@@ -32,7 +32,7 @@ class Shuffle extends Command {
 
         client.player.shuffle(message);
 
-        return message.channel.send({embed: {color: '0x00FF46', description: language("QUEUE_SHUFFLE", client.player.getQueue(message).tracks.length) }})
+        return message.channel.send({embed: {color: '0x00FF46', description: language("QUEUE_SHUFFLE").replace("{shu}", client.player.getQueue(message).tracks.length) }})
     }
 }
 

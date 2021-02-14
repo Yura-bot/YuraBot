@@ -18,8 +18,8 @@ module.exports = async(client, error, message) => {
             message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_3") }})
             break;
         default:
-            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_4", error) }})
-            return client.emit('error',error, "Music Error 4");
+            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_4").remplace("{error}", error) }})
+            return client.emit('error', error, "Music Error 4");
     };
 
 };

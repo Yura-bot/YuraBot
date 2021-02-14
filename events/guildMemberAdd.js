@@ -76,7 +76,7 @@ module.exports = async(client, member) => {
                     },
                     timestamp: new Date(),
                     footer: {
-                      text: language("EVENTS_GUILDMEMBERADD_WELCOME_EMBED_FOOTER", member.guild.memberCount),
+                      text: language("EVENTS_GUILDMEMBERADD_WELCOME_EMBED_FOOTER").replace(/{memberCount}/ig, member.guild.memberCount),
                       icon_url: client.user.displayAvatarURL({format: 'png'})
                     },
                 };
@@ -88,7 +88,7 @@ module.exports = async(client, member) => {
                     title: messageSend,
                     timestamp: new Date(),
                     footer: {
-                      text: language("EVENTS_GUILDMEMBERADD_WELCOME_EMBED_FOOTER", member.guild.memberCount),
+                      text: language("EVENTS_GUILDMEMBERADD_WELCOME_EMBED_FOOTER").replace(/{memberCount}/ig, member.guild.memberCount),
                       icon_url: client.user.displayAvatarURL({format: 'png'})
                     },
                 };

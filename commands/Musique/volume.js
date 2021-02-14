@@ -37,7 +37,7 @@ class Volume extends Command {
 
         client.player.setVolume(message, parseInt(args.slice(1).join(' ')));
 
-        return message.channel.send({embed: {color: '0x00FF46', description: language("SET_VOLUME_SUCESS", args.slice(1).join(' ')) }})
+        return message.channel.send({embed: {color: '0x00FF46', description: language("SET_VOLUME_SUCESS").replace("{vol}", args.slice(1).join(' ')) }})
     }
 }
 

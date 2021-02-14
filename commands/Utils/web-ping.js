@@ -31,7 +31,7 @@ class WebPing extends Command {
                 message.channel.send(language("WEB_PING_NOSITEFOUND"))
             } else if (response.data.status = "success") {
                 let embed = new Discord.MessageEmbed()
-                    .setTitle(`${language("WEB_PING_TITLE", site)} (${response.data.query})`)
+                    .setTitle(`${language("WEB_PING_TITLE").replace("{site}", site)} (${response.data.query})`)
                     .setColor("#36393f")
                     .addField(language("WEB_PING_OWNER"), `${language("WEB_PING_ORGANISATION")} ${response.data.org} \n${language("WEB_PING_INTERNET")} ${response.data.isp} (${response.data.as})`)
                     .addField(language("WEB_PING_LOCATION"), `${language("WEB_PING_COUNTRY")} ${response.data.country} \n${language("WEB_PING_CITY")} ${response.data.city}`)

@@ -80,9 +80,9 @@ class UnMute extends Command {
             return client.emit('error',e, "unmute");
         });
           
-        await message.channel.send(language("UNMUTE_SUCESS", usermute))
+        await message.channel.send(language("UNMUTE_SUCESS").replace("{usermute}", usermute))
         
-        usermute.send(language("UNMUTE_SENDUSER", message.guild.name)).catch(e =>{
+        usermute.send(language("UNMUTE_SENDUSER").replace("{guild}", message.guild.name)).catch(e =>{
             message.channel.send(language("MUTE_SUCESS_MPCLOSE"))
         });
     }

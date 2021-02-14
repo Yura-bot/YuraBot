@@ -41,8 +41,8 @@ class EveryRole extends Command {
                 });
             } else {
                 role = message.guild.roles.cache.find(e => e.name === args.slice(1).join(' '));
-                if(!role) return message.channel.send(language("EVERYROLE_NO_ROLEFOUND", role));
-                message.channel.send(language("EVERYROLE_SUCESS", role));
+                if(!role) return message.channel.send(language("EVERYROLE_NO_ROLEFOUND").replace("{role}", role));
+                message.channel.send(language("EVERYROLE_SUCESS").replace("{role}", role));
                 message.guild.members.cache.forEach(element => {
                     element.roles.add(role);
                 });

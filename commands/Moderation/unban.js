@@ -52,7 +52,7 @@ class UnBan extends Command {
           
       let banneduser = bans.find(b => b.user.id == user)
       //if(banneduser.size == 0) return 
-      if(!banneduser) return message.channel.send(language("UNBAN_NOBAN", bannedMember.username));
+      if(!banneduser) return message.channel.send(language("UNBAN_NOBAN").replace("{name}", bannedMember.username) );
 
       message.guild.members.unban(bannedMember, reason).catch(e =>{});
 

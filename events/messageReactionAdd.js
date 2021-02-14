@@ -79,9 +79,9 @@ module.exports = async(client, reaction, user) => {
 
                 ticketChannel.send({
                     embed: {
-                        title: language("TICKET_CHANNEL_TITLE", user.tag),
-                        description: language("TICKET_CHANNEL_TITLE", user.username) +
-                        language("TICKET_CHANNEL_DESC_2", ticketName),
+                        title: language("TICKET_CHANNEL_TITLE").replace("{user}", user.tag),
+                        description: language("TICKET_CHANNEL_TITLE").replace("{user}", user.username) +
+                        language("TICKET_CHANNEL_DESC_2").replace("{ticketName}", ticketName),
                         thumbnail: {
                             url: user.displayAvatarURL({format: 'png', dynamic: true})
                         },

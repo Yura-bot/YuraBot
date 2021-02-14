@@ -35,7 +35,7 @@ class Drop extends Command {
         .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
         .setColor("#D8FF00")
         .setTitle("🎁 » __**DROP**__")
-        .setDescription(`${language("DROP_DESC_1", message.author)} ⋄ **${message.author.tag}** \n${language("DROP_DESC_2", dropPrize)}`)
+        .setDescription(`${language("DROP_DESC_1").replace("{author}", message.author)} ⋄ **${message.author.tag}** \n${language("DROP_DESC_2").replace("{dropPrize}", dropPrize)}`)
 
         message.channel.send({ embed }).then(async msg => {
             msg.react("🎊");
@@ -52,7 +52,7 @@ class Drop extends Command {
                     .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                     .setColor("#D8FF00")
                     .setTitle("🎁 » __**DROP**__")
-                    .setDescription(`${language("DROP_WIN_DESC_1", dropPrize)}${language("DROP_WIN_DESC_2", msg.reactions.cache.first().users.cache.filter(u => !u.bot && u.id !== message.author.id).first().id)} ⋄ **${msg.reactions.cache.first().users.cache.filter(u => !u.bot && u.id !== message.author.id).first().tag}**`)
+                    .setDescription(`${language("DROP_WIN_DESC_1").replace("{dropPrize}", dropPrize)}${language("DROP_WIN_DESC_2").replace("{winner}", msg.reactions.cache.first().users.cache.filter(u => !u.bot && u.id !== message.author.id).first().id)} ⋄ **${msg.reactions.cache.first().users.cache.filter(u => !u.bot && u.id !== message.author.id).first().tag}**`)
     
                 msg.edit({ embed: winEmbed });
             });

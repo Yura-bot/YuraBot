@@ -2,14 +2,13 @@ const languageData = {
     GENERATION: " Génération en cours...",
     PING_BEFORE: " Calcul en cours...",
     PING_AFTER: " **»** Latence du bot : `",
-    PING: (ms) => `Pong! Latence du bot: ${ms}ms`,
+    PING: "Pong! Latence du bot: {ping}ms",
     LANGUAGE: "Français | FR | French",
     ERRROR_BOT: "<:X_:673212163837526064> **Erreur :**",
     SYNTAXE: "<:X_:673212163837526064> Votre syntaxe est incorrecte. \n```Syntaxe : ",
     DASHCONFIG: "**<:horizontalsettingsmixer:675372744950677534> Pour configurer le bot vous devez vous rendre ici : https://dash.yurabot.xyz <-**",
-    X_EMOJI: "<:X_:673212163837526064> ",
-    COOLDOWNBOT: (time) => `<:X_:673212163837526064> **Vous devez attendre** \`${time}\` **avant de pouvoir réutiliser cette commande !**`,
-    MSG_MENTION: (prefix) => `<a:heyy:784089404774809600> Bonjour, moi c'est Yura ! Mon prefix sur ce serveur est \`${prefix}\` ! \nDonc pour voir le menu d'aide fait **${prefix}help**.`,
+    COOLDOWNBOT: "<:X_:673212163837526064> **Vous devez attendre** \`{time}\` **avant de pouvoir réutiliser cette commande !**",
+    MSG_MENTION: "<a:heyy:784089404774809600> Bonjour, moi c'est Yura ! Mon prefix sur ce serveur est \`{prefix}\` ! \nDonc pour voir le menu d'aide fait **{prefix}help**.",
     /* Permissions : */
     MISSING_PERMISSION_ADMINISTRATOR: "<:X_:673212163837526064> **Vous ne disposez pas les permissions nécessaires pour effectuer cette commande !** \n **Vous devez avoir la permission `ADMINISTRATOR` !**",
     MISSING_PERMISSION_MANAGE_GUILD: "<:X_:673212163837526064> **Vous ne disposez pas les permissions nécessaires pour effectuer cette commande !** \n **Vous devez avoir la permission `MANAGE_GUILD` !**",
@@ -41,7 +40,7 @@ const languageData = {
     /* GuildMemberAdd : */
     EVENTS_GUILDMEMBERADD_WELCOME_ERROR: "<:X_:673212163837526064> | Une erreur est survenue : le message de bienvenue n\'a pas pu être envoyé car le salon est introuvable. Veuillez re-setup le système.",
     EVENTS_GUILDMEMBERADD_AUTOROLE_ERROR: "<:X_:673212163837526064> | Une erreur est survenue : l\'autôrole n\'a pas pu être activé car le role est introuvable.",
-    EVENTS_GUILDMEMBERADD_WELCOME_EMBED_FOOTER: (memberCount) => `Nous sommes désormais ${memberCount} !`,
+    EVENTS_GUILDMEMBERADD_WELCOME_EMBED_FOOTER: "Nous sommes désormais {memberCount} !",
     WELCOME: "Bienvenue",
     WELCOME_ON: "Bienvenue sur {server}",
     MEMBER_COUNT: "- {count}ème membre !",
@@ -53,8 +52,8 @@ const languageData = {
     /* Commande Help : */
     HELP_YURA: ":pushpin: Aide Yura'Bot",
     HELP_INFOS: "Pour **plus d'informations** sur une commande:\n",
-    HELP_TITLE: (CS) => `Nombre de commandes : **${CS}** \n`,
-    HELP_PREFIX: (prefix) => `Prefix sur ce serveur : **${prefix}** \n\n`,
+    HELP_TITLE: "Nombre de commandes : **{CS}** \n",
+    HELP_PREFIX: "Prefix sur ce serveur : **{prefix}** \n\n",
     HELP_LISTCMDS: "__**Voici la liste des commandes :**__  \n\n",
     HELP_ADMIN: "<:adminsettingsmale:675368904637546506> • Commandes Administration : (**",
     HELP_MOD: ":rotating_light: • Commandes Modération : (**",
@@ -171,10 +170,10 @@ const languageData = {
     /* Drop : */
     DROP: "drop",
     SYNTAXE_DROP: "drop [Lot]```",
-    DROP_DESC_1: (author) => `😃 \`Par\` ➔ ${author}`,
-    DROP_DESC_2: (dropPrize) => `🥇 \`Lot\` ➔ ${dropPrize} \n\n→ Le premier qui clique sur la réaction 🎊 remporte le lot mis en jeu !`,
-    DROP_WIN_DESC_1: (dropPrize) => `🥇 \`Lot\` ➔ ${dropPrize} \n\n`,
-    DROP_WIN_DESC_2: (winner) => `➡ **Nous avons un gagnant !** \n\n→ <@${winner}>`,
+    DROP_DESC_1: "😃 \`Par\` ➔ {author}",
+    DROP_DESC_2: "🥇 \`Lot\` ➔ {dropPrize} \n\n→ Le premier qui clique sur la réaction 🎊 remporte le lot mis en jeu !",
+    DROP_WIN_DESC_1: "🥇 \`Lot\` ➔ {dropPrize} \n\n",
+    DROP_WIN_DESC_2: "➡ **Nous avons un gagnant !** \n\n→ <@{winner}>",
     /* NSFW : */
     NSFW_NO_CHANNEL_NSFW: "**:warning: | Ce n’est pas un salon NSFW ! | :warning:**",
     NSFW_LOADING: "Veuillez patienter... <a:loading:675233191870595082>",
@@ -185,10 +184,10 @@ const languageData = {
     MUSIC_NOTHING_PLAYING: "<:X_:673212163837526064> | Il n'y a rien à jouer !",
     MUSIC_DISCONECTED: "<:X_:673212163837526064> | La musique s'est arrêtée car j'ai été déconnecté du salon vocal !",
     MUSIC_CHANNEL_EMPTY: "<:X_:673212163837526064> | La musique s'est arrêtée car il n'y a plus de membre dans le salon vocal !",
-    MUSIC_NO_RESULTS: (query) => `<:X_:673212163837526064> | Aucun résultat trouvé sur YouTube pour ${query} !`,
+    MUSIC_NO_RESULTS: "<:X_:673212163837526064> | Aucun résultat trouvé sur YouTube pour {query} !",
     MUSIC_SEARCH_CANCEL: "<:X_:673212163837526064> | Vous n'avez pas fourni de réponse valable ... Veuillez envoyer la commande à nouveau !",
-    MUSIC_SEARCH_INVALIDE_RESPONSE: (track) => `<:X_:673212163837526064> | Vous devez envoyer un numéro valide entre **1** et **${track}** !`,
-    MUSIC_TRACK_ADD: (title) => `<:check:673212026226737153> | ${title} ajouté à la file d'attente !`,
+    MUSIC_SEARCH_INVALIDE_RESPONSE: "<:X_:673212163837526064> | Vous devez envoyer un numéro valide entre **1** et **{track}** !",
+    MUSIC_TRACK_ADD: "<:check:673212026226737153> | {title} ajouté à la file d'attente !",
     /* Play : */
     PLAY_NO_REQUEST: "<:X_:673212163837526064> | Veuillez entrer une requête pour jouer la musique !",
     PLAY_ALREADYPLAYMUSIC: "<:X_:673212163837526064> | Je suis en train de jouer de la musique sur ce serveur dans un autre salon vocal, alors rejoignez le canal vocal dans lequel je suis pour commander le bot.",
@@ -199,12 +198,12 @@ const languageData = {
     PLAY_REPEAT: "🔁 | Répétition :\n ",
     PLAY_PLAYNOW: "🎶 | Joue maintenant :\n ",
     PLAY_INTO: " dans ",
-    PLAY_SEARCH_RESULTS: (results) => `Voici les résultats de votre recherche pour ${results} :`,
+    PLAY_SEARCH_RESULTS: "Voici les résultats de votre recherche pour {query} :",
     /* Errors : */
     MUSIC_ERROR_1: "<:X_:673212163837526064> | Aucune musique n'est diffusée sur ce serveur !",
     MUSIC_ERROR_2: "<:X_:673212163837526064> | Vous n'êtes connecté à aucun canal vocal !",
     MUSIC_ERROR_3: "<:X_:673212163837526064> | Je ne peux pas me joindre à votre canal vocal, veuillez vérifier mes autorisations !",
-    MUSIC_ERROR_4: (error) => `<:X_:673212163837526064> | Quelque chose a mal tourné ... Erreur : ${error}`,
+    MUSIC_ERROR_4: "<:X_:673212163837526064> | Quelque chose a mal tourné ... Erreur : {error}",
     /* Clear Queue : */
     CLEAR_QUEUE_CLEAR: "<:check:673212026226737153> | La file d'attente est dégagée !",
     /* Loop : */
@@ -226,19 +225,19 @@ const languageData = {
     STOP_STOP: "⏹ | Déconnecté !",
     /* Queue : */
     QUEUE_QUEUE_IN_PROGRESS: "En cours",
-    QUEUE_SHUFFLE: (shu) => `<:check:673212026226737153> | Queue mélangée **${shu}** musique(s)`,
+    QUEUE_SHUFFLE: "<:check:673212026226737153> | Queue mélangée **{shu}** musique(s)",
     QUEUE_REQUESTBY: "demandé par",
     QUEUE_NOQUEUE: "<:X_:673212163837526064> | Aucune musique dans la queue.",
     /* Set Volume : */
     SET_VOLUME_NUMBER: "<:X_:673212163837526064> | Veuillez entrer un numéro !",
     SET_VOLUME_NUMBER_VALIDE: "<:X_:673212163837526064> | Veuillez entrer un numéro valide (entre 1 et 100) !",
-    SET_VOLUME_SUCESS: (vol) => `<:check:673212026226737153> | Volume réglé sur **${vol}%** !`,
+    SET_VOLUME_SUCESS: "<:check:673212026226737153> | Volume réglé sur **{vol}%** !",
     /* Filtre : */
     FILTER_NO: "<:X_:673212163837526064> | Veuillez spécifier un filtre valide à activer ou désactiver !",
     FILTER_NOT_EXIST: "<:X_:673212163837526064> | Ce filtre n'existe pas !",
     FILTER_ADDED: "<:check:673212026226737153> | J'ajoute le filtre à la musique, attendez s'il vous plaît... \n Note : plus la musique est longue, plus cela prendra de temps !",
     FILTER_REMOVE: "<:check:673212026226737153> | Je **désactive** le filtre sur la musique, veuillez patienter... \n Note : plus la musique est longue, plus cela prendra de temps !",
-    FILTER_LIST: (pre) => `Liste de tous les filtres activés ou désactivés.\nUtilisez \`${pre}filter\` pour ajouter un filtre à une chanson.`,
+    FILTER_LIST: "Liste de tous les filtres activés ou désactivés.\nUtilisez \`{prefix}filter\` pour ajouter un filtre à une chanson.",
     /* Modération : */
     MOD_ACTION: "Action :",
     MOD_MEMBER: "Membre :",
@@ -262,7 +261,7 @@ const languageData = {
     /* Unban : */
     SYNTAXE_UNBAN: "unban [Membre] (Raison)```",
     UNBAN: "unban",
-    UNBAN_NOBAN: (name) => `<:X_:673212163837526064> | **${name}** n'est pas banni !`,
+    UNBAN_NOBAN: "<:X_:673212163837526064> | **{name}** n'est pas banni !",
     UNBAN_INVALIDE_ID: "<:X_:673212163837526064> | Impossible de trouver le membre ! Vérifiez que vous avez bien indiqué un id.",
     UNBAN_SUCESS_1: "<:check:673212026226737153> Vous vous êtes fait unbannir sur **",
     UNBAN_SUCESS_2: "** par __",
@@ -323,9 +322,9 @@ const languageData = {
     SYNTAXE_UNMUTE: "unmute [Membre]```",
     UNMUTE: "unmute",
     UNMUTE_NOMUTE: "<:X_:673212163837526064> **Erreur:** Ce membre n'est pas mute !",
-    UNMUTE_SUCESS: (usermute) => `<:check:673212026226737153> | **${usermute}** est unmute !`,
+    UNMUTE_SUCESS: "<:check:673212026226737153> | **{usermute}** est unmute !",
     UNMUTE_SUCESS_MPCLOSE: "<:check:673212026226737153> Je l'ai bien unmuter mais je n'ai pas pu le prévenir.",
-    UNMUTE_SENDUSER: (guild) => `<:check:673212026226737153> | Vous êtes unmute sur **${guild}**`,
+    UNMUTE_SENDUSER: "<:check:673212026226737153> | Vous êtes unmute sur **{guild}**",
     UNMUTE_ERROR: "<:X_:673212163837526064> **Erreur:** Une erreur est survenue, je n'ai pas pu l'unmute !",
     /* Commande TempMute : */
     SYNTAXE_TEMPMUTE: "tempmute [Membre] [Temps] (Raison)```",
@@ -343,8 +342,8 @@ const languageData = {
     SYNTAXE_EVERYROLE: "everyrole [Role]```",
     EVERYROLE: "everyrole",
     EVERYROLE_MENTION: "<:X_:673212163837526064> **Erreur :** Veuillez mentionner un role !",
-    EVERYROLE_NO_ROLEFOUND: (role) => `<:X_:673212163837526064> | Aucun rôle trouvé pour **${role}**.`,
-    EVERYROLE_SUCESS: (role) => `<:check:673212026226737153> | J'ai ajouté le rôle **${role}** à **tout le monde**.`,
+    EVERYROLE_NO_ROLEFOUND: "<:X_:673212163837526064> | Aucun rôle trouvé pour **{role}**.",
+    EVERYROLE_SUCESS: "<:check:673212026226737153> | J'ai ajouté le rôle **{role}** à **tout le monde**.",
     /* Utilitaire : */
     ONLINE: "",
     OFFLINE: "",
@@ -380,7 +379,7 @@ const languageData = {
     SYNTAXE_WEB_PING: "web-ping [site]```",
     WEB_PING: "web-ping",
     WEB_PING_NOSITEFOUND: "<:X_:673212163837526064> **Erreur : Site introuvable !**",
-    WEB_PING_TITLE: (site) => `<:processor:675368071497515034> Informations pour ${site}`,
+    WEB_PING_TITLE: "<:processor:675368071497515034> Informations pour {site}",
     WEB_PING_OWNER: ":bust_in_silhouette: Propriétaire :",
     WEB_PING_ORGANISATION: "**Organisation :**",
     WEB_PING_INTERNET: "**Fournisseur d'accès à Internet :**",
@@ -394,7 +393,7 @@ const languageData = {
     /* Commande Weather : */
     SYNTAXE_WEATHER: "weather [Ville/Région]```",
     WEATHER: "weather",
-    WEATHER_SUCESS: (city) => `🌦️ Météo pour : ${city}`,
+    WEATHER_SUCESS: "🌦️ Météo pour : {city}",
     /* Commande Finduser : */
     SYNTAXE_FINDUSER: "finduser [id]```",
     FINDUSER: "finduser",
@@ -525,18 +524,18 @@ const languageData = {
     TICKET_DESC: "Réagissez avec 🎟️ pour créer un ticket.",
     TICKET_OPEN_TITLE: "📝 | Ticket Ouvert",
     TICKET_OPEN_DESC: "Nous venons d'ouvrir votre ticket auprès de l'assistance.\n",
-    TICKET_CHANNEL_TITLE: (user) => `Ticket ouvert par : ${user}\n`,
-    TICKET_CHANNEL_DESC_1: (user) => `Bonjour **${user}**, \n`,
-    TICKET_CHANNEL_DESC_2: (ticketName) => `Sous le nom : **${ticketName}**.`,
+    TICKET_CHANNEL_TITLE: "Ticket ouvert par : {user}\n",
+    TICKET_CHANNEL_DESC_1: "Bonjour **{user}**, \n",
+    TICKET_CHANNEL_DESC_2: "Sous le nom : **{ticketName}**.",
     TICKET_CHANNEL_FIELD_1: ":bar_chart: Informations sur l'utilisateur :",
     TICKET_CHANNEL_FIELD_2: ":clipboard: Identifiant :",
     TICKET_CLOSE_TITLE: "📥 | Ticket Fermé",
-    TICKET_CLOSE_DESC: `Vous venez de fermer la demande !`,
-    TICKET_ERROR: `**<:X_:673212163837526064> Erreur :** Une erreur est survenu avec le système de ticket veuillez ressayer !`,
+    TICKET_CLOSE_DESC: "Vous venez de fermer la demande !",
+    TICKET_ERROR: "**<:X_:673212163837526064> Erreur :** Une erreur est survenu avec le système de ticket veuillez ressayer !",
 };
 
 const translate = (key, ...args) => {
-    const translation = languageData[key]; 
+    const translation = languageData[key];
     if(typeof translation === "function") return translation(args);
     else return translation;
 };

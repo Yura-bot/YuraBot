@@ -46,7 +46,7 @@ class FilterList extends Command {
                     { name: '** **', value: filtersStatuses[1].join('\n'), inline: true },
                 ],
                 timestamp: new Date(),
-                description:language("FILTER_LIST", prefix),
+                description:language("FILTER_LIST").replace("{prefix}", prefix),
             },
         });
 
