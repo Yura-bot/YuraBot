@@ -10,7 +10,7 @@ module.exports = async(client, message, query, tracks) => {
     return message.channel.send({
         embed: {
             color: client.color,
-            author: { name: language("PLAY_SEARCH_RESULTS").remplace("{query}", query) },
+            author: { name: language("PLAY_SEARCH_RESULTS").replace("{query}", query) },
             footer: { text: client.footer },
             timestamp: new Date(),
             description: `${tracks.map((t, i) => `**${i + 1}** - ${t.title}`).join('\n')}`,
