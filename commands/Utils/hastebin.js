@@ -15,6 +15,7 @@ class Hastebin extends Command {
 
         const Discord = require("discord.js");
         const hastebin = require("hastebin-gen");
+        const SourceBin = require("sourcebin-api");
 
         let prefix = !db.prefix ? config.prefix : db.prefix;
         let guildLanguage = !db.lang ? "english": db.lang;
@@ -24,14 +25,14 @@ class Hastebin extends Command {
         let haste = args.slice(1).join(" ")
         if (!args[1]) { return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_HASTEBIN")); }
 
-        hastebin(haste).then(hasted => {
-            message.channel.send(language("HASTEBIN_SUCESS") + hasted);
-        }).catch(error => {
-            client.emit('error',error);
+        await SourceBin.postBin({ code: haste, title: "YuraBot sourcebin-api" })
+        .then((res) =>  message.channel.send(language("HASTEBIN_SUCESS") + res))
+        .catch(error => {
+            client.emit('error', error);
             return message.channel.send(language("HASTEBIN_ERROR"));
         });
-
     }
 }
+  
 
 module.exports = new Hastebin;

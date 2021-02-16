@@ -2,6 +2,7 @@ const Command = require("../../structure/Command.js");
 
 const Discord = require("discord.js"),
  { post } = require("node-superfetch");
+ const SourceBin = require("sourcebin-api");
 
 class Eval extends Command {
     constructor() {
@@ -36,9 +37,11 @@ class Eval extends Command {
     let output = clean(evaled);
     if (output.length > 1024) {
       // If the output was more than 1024 characters, we're gonna export them into the hastebin.
-      const {body} = await post("https://hastebin.com/documents").send(output);
-      embed.addField("Output", `https://hastebin.com/${body.key}.js`).setColor(0x7289DA);
-      // Sometimes, the body.key will turn into undefined. It might be the API is under maintenance or broken.
+      await SourceBin.postBin({ code: output, title: "YuraBot | sourcebin-api | eval |" })
+      .then((res) =>  embed.addField("Output", res).setColor(0x7289DA))
+      .catch(error => {
+          client.emit('error', error);
+      });
     } else {
       embed.addField("Output", "```js\n" + output + "```").setColor(0x7289DA)
     }
@@ -49,8 +52,11 @@ class Eval extends Command {
     let err = clean(error);
     if (err.length > 1024) {
       // Do the same like above if the error output was more than 1024 characters.
-      const {body} = await post("https://hastebin.com/documents").send(err);
-      embed.addField("Output", `https://hastebin.com/${body.key}.js`).setColor("RED");
+      await SourceBin.postBin({ code: err, title: "YuraBot | sourcebin-api | eval |" })
+      .then((res) =>  embed.addField("Output", res).setColor("RED"))
+      .catch(error => {
+          client.emit('error', error);
+      });
     } else {
       embed.addField("Output", "```js\n" + err + "```").setColor("RED");
     }
