@@ -88,13 +88,13 @@
                               <label for="channel-welcome-system" class="lang" key="channelBvn">Channel :</label>
                               <select class="form-control digits" id="channel-welcome-system" name="channelID">
 
-                              <% if(welcomeEnabled && bot.channels.cache.has(welcomeChannel)){ %>
-                                  <option selected="selected">#<%= bot.channels.cache.get(welcomeChannel).name %></option>
-                                  <% guild.channels.cache.filter((ch) => ch.id !== welcomeChannel && ch.type === "text").forEach((ch) => { %>
+                              <% if(welcomeChannel && guild.channels.find((r) => r.id === welcomeChannel)){ %>
+                                  <option selected="selected">#<%= guild.channels.find((r) => r.id === welcomeChannel).name %></option>
+                                  <% guild.channels.filter((ch) => ch.id !== welcomeChannel && ch.type === "text").forEach((ch) => { %>
                                       <option>#<%= ch.name %></option>
                                   <% }); } else { %>
-                                  <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
-                                  <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+                                  <option selected="selected">#<%= guild.channels.filter((ch) => ch.type === "text")[0].name %></option>
+                                  <% guild.channels.filter((ch) => ch.id !== guild.channels[0].id && ch.type === "text").forEach((ch) => { %>
                                       <option>#<%= ch.name %></option>
                                   <% }); %>
                               <% } %>

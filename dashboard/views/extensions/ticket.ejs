@@ -59,13 +59,13 @@
                           <label for="category" class="lang" key="ticketCategorie">Catégorie :</label>
                           <select class="form-control digits" id="category" name="category">
 
-                          <% if(category && bot.channels.cache.has(category)){ %>
-                              <option selected="selected">#<%= bot.channels.cache.get(category).name %></option>
-                              <% guild.channels.cache.filter((ch) => ch.id !== category && ch.type === "category").forEach((ch) => { %>
+                          <% if(category && guild.channels.find((r) => r.id === category)){ %>
+                              <option selected="selected">#<%= guild.channels.find((r) => r.id === category).name %></option>
+                              <% guild.channels.filter((ch) => ch.id !== category && ch.type === "category").forEach((ch) => { %>
                                   <option>#<%= ch.name %></option>
                               <% }); } else { %>
-                              <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "category").first().name %></option>
-                              <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "category").forEach((ch) => { %>
+                              <option selected="selected">#<%= guild.channels.filter((ch) => ch.type === "category")[0].name %></option>
+                              <% guild.channels.filter((ch) => ch.id !== guild.channels[0].id && ch.type === "category").forEach((ch) => { %>
                                   <option>#<%= ch.name %></option>
                               <% }); %>
                           <% } %>
@@ -83,13 +83,13 @@
                           <label for="channel" class="lang" key="ticketChannel">Salon :</label>
                           <select class="form-control digits" id="channel" name="channel">
 
-                          <% if(channel && bot.channels.cache.has(channel)){ %>
-                              <option selected="selected">#<%= bot.channels.cache.get(channel).name %></option>
-                              <% guild.channels.cache.filter((ch) => ch.id !== channel && ch.type === "text").forEach((ch) => { %>
+                          <% if(channel && guild.channels.find((r) => r.id === channel)){ %>
+                              <option selected="selected">#<%= guild.channels.find((r) => r.id === channel).name %></option>
+                              <% guild.channels.filter((ch) => ch.id !== channel && ch.type === "text").forEach((ch) => { %>
                                   <option>#<%= ch.name %></option>
                               <% }); } else { %>
-                              <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
-                              <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+                              <option selected="selected">#<%= guild.channels.filter((ch) => ch.type === "text")[0].name %></option>
+                              <% guild.channels.filter((ch) => ch.id !== guild.channels[0].id && ch.type === "text").forEach((ch) => { %>
                                   <option>#<%= ch.name %></option>
                               <% }); %>
                           <% } %>
@@ -104,13 +104,13 @@
                     <div class="form-group">
                       <label class="lang" key="ticketRole">Support role :</label>
                       <select class="form-control" name="role">
-                          <% if(role && guild.roles.cache.has(role)){ %>
-                              <option selected="selected">@<%= guild.roles.cache.get(role).name %></option>
-                              <% guild.roles.cache.filter((r) => r.id !== role && r.name !== "@everyone").forEach((r) => { %>
+                          <% if(role && guild.roles.find((r) => r.id === role)){ %>
+                              <option selected="selected">@<%= guild.roles.find((r) => r.id === role).name %></option>
+                              <% guild.roles.filter((r) => r.id !== role && r.name !== "@everyone").forEach((r) => { %>
                                   <option>@<%= r.name %></option>
                               <% }); } else { %>
-                              <option selected="selected">@<%= guild.roles.cache.filter((r) => r.name !== "@everyone").first().name %></option>
-                              <% guild.roles.cache.filter((r) => r.id !== guild.roles.cache.filter((r) => r.name !== "@everyone").first().id && r.name !== "@everyone").forEach((r) => { %>
+                              <option selected="selected">@<%= guild.roles.filter((r) => r.name !== "@everyone")[0].name %></option>
+                              <% guild.roles.filter((r) => r.id !== guild.roles.filter((r) => r.name !== "@everyone")[0].id && r.name !== "@everyone").forEach((r) => { %>
                                   <option>@<%= r.name %></option>
                               <% }); %>
                           <% } %>

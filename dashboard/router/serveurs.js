@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const CheckAuth = require('../auth/CheckAuth');
+const Discord = require("discord.js");
 
 let bot = require("../../main.js")
 let config = require("../../configs/config.json")
@@ -10,11 +11,22 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     //req.params.guildID
     //req.user.id
 
-    let serv = req.bot.guilds.cache.get(req.params.guildID);
-    if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
+    const serv = results.find((g) => g);
+    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const found = serv.members.find(element => element === req.user.id)
+
     if (req.user.id != config.owner) {
-       if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+
+     let bits = new Discord.Permissions(userPerm);
+     let perms = bits.toArray();
+
+     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
+
+    const guildInfos = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -50,7 +62,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         bot: bot,
         user: req.user,
         login: "oui",
-        guild: serv,
+        guild: guildInfos,
         avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
         iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
         message: "",
@@ -65,11 +77,22 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     });
 }).post("/:guildID", CheckAuth, async function(req, res) {
 
-    let guild = req.bot.guilds.cache.get(req.params.guildID);
-    if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
+    const serv = results.find((g) => g);
+    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const found = serv.members.find(element => element === req.user.id)
+
     if (req.user.id != config.owner) {
-        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+
+     let bits = new Discord.Permissions(userPerm);
+     let perms = bits.toArray();
+
+     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
+
+    const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -95,7 +118,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     
     //Suggestion System :
     let suggestionEnabled = data.suggestionStatus === "on";
-    let suggestionChannel = guild.channels.cache.find((ch) => "#"+ch.name === data.suggestionChannelID).id;
+    let suggestionChannel = guild.channels.find((ch) => "#"+ch.name === data.suggestionChannelID).id;
 
     if (suggestionEnabled) {
         db.suggestions = suggestionChannel
@@ -103,7 +126,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         db.suggestions = null;
     }
 
-    if (data.muteRole != "Desactivate") db.muteRole = guild.roles.cache.find((r) => "@"+r.name === data.muteRole).id
+    if (data.muteRole != "Desactivate") db.muteRole = guild.roles.find((r) => "@"+r.name === data.muteRole).id
 
     await db.save();
 
@@ -111,38 +134,38 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
 }).get("/:guildID/tools/welcome", CheckAuth, async(req, res) => {
 
-    let serv = req.bot.guilds.cache.get(req.params.guildID);
-    if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
+    const serv = results.find((g) => g);
+    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const found = serv.members.find(element => element === req.user.id)
+
     if (req.user.id != config.owner) {
-       if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+
+     let bits = new Discord.Permissions(userPerm);
+     let perms = bits.toArray();
+
+     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
 
-    let db = await bot.db.getGuild(req.params.guildID)
+    const guildInfos = await req.bot.fetchGuild(serv.id);
+
+    let db = await bot.db.getGuild(serv.id)
 
     let welcomeEnabled = db.welcome.enabled
     let welcomeMpEnabled = db.welcomeMp
 
     let welcomeEmbedEnabled = db.welcome.withEmbed
 
-    let welcomeChannel; 
-    let welcomeMessage;
+    let welcomeChannel = db.welcome.channel
+    let welcomeMessage = db.welcome.message
 
-    let welcomeImage = false
-    let imageURL = null
+    let welcomeImage = db.welcome.withImage
+    let imageURL = db.welcome.config.img
     let colorImage = db.welcome.config.colorBackground
     let colorImageTitle = db.welcome.config.colorTitle
     let welcomeMpMessage = null
-
-    if (welcomeEnabled) {
-        welcomeChannel = db.welcome.channel
-        welcomeMessage = db.welcome.message
-        if (welcomeEmbedEnabled) {
-            welcomeImage = db.welcome.withImage
-            if (welcomeImage) {
-                imageURL = db.welcome.config.img
-            }
-        }
-    }
 
     if (welcomeMpEnabled != null) {
         welcomeMpEnabled = true
@@ -159,7 +182,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         bot: bot,
         user: req.user,
         login: "oui",
-        guild: serv,
+        guild: guildInfos,
         avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
         iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
         message: "",
@@ -178,11 +201,22 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     });
 }).post("/:guildID/tools/welcome", CheckAuth, async function(req, res) {
 
-    let guild = req.bot.guilds.cache.get(req.params.guildID);
-    if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
+    const serv = results.find((g) => g);
+    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const found = serv.members.find(element => element === req.user.id)
+
     if (req.user.id != config.owner) {
-        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+
+     let bits = new Discord.Permissions(userPerm);
+     let perms = bits.toArray();
+
+     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
+
+    const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -191,7 +225,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     if(Object.prototype.hasOwnProperty.call(data, "enable") || Object.prototype.hasOwnProperty.call(data, "update")) {
         db.welcome.enabled = true
         // Channel : 
-        db.welcome.channel = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
+        db.welcome.channel = guild.channels.find((ch) => "#"+ch.name === data.channelID).id;
         //Message
         db.welcome.message = data.welcomeMessage;
         //Embed ?
@@ -231,36 +265,36 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
 }).get("/:guildID/tools/goodbye", CheckAuth, async(req, res) => {
 
-    let serv = req.bot.guilds.cache.get(req.params.guildID);
-    if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
+    const serv = results.find((g) => g);
+    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const found = serv.members.find(element => element === req.user.id)
+
     if (req.user.id != config.owner) {
-        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+
+     let bits = new Discord.Permissions(userPerm);
+     let perms = bits.toArray();
+
+     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
+
+    const guildInfos = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
     let goodbyeEnabled = db.goodbye.enabled
-    let goodbyeChannel;
-    let goodbyeMessage;
+    let goodbyeChannel = db.goodbye.channel
+    let goodbyeMessage = db.goodbye.message
 
     let goodbyeEmbedEnabled = db.goodbye.withEmbed
 
-    let goodbyeImage = false
-    let imageURL = null
+    let goodbyeImage = db.goodbye.withImage
+    let imageURL = db.goodbye.config.img
     let colorImage = db.goodbye.config.colorBackground
     let colorImageTitle = db.goodbye.config.colorTitle
     let goodbyeMpMessage = null
-
-    if (goodbyeEnabled) {
-        goodbyeChannel = db.goodbye.channel
-        goodbyeMessage = db.goodbye.message
-        if (goodbyeEmbedEnabled) {
-            goodbyeImage = db.goodbye.withImage
-            if (goodbyeImage) {
-                imageURL = db.goodbye.config.img
-            }
-        }
-    }
 
     res.render("items/goodbye", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
@@ -270,7 +304,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         bot: bot,
         user: req.user,
         login: "oui",
-        guild: serv,
+        guild: guildInfos,
         avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
         iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
         message: "",
@@ -288,11 +322,22 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     });   
 }).post("/:guildID/tools/goodbye", CheckAuth, async function(req, res) {
 
-    let guild = req.bot.guilds.cache.get(req.params.guildID);
-    if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
+    const serv = results.find((g) => g);
+    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const found = serv.members.find(element => element === req.user.id)
+
     if (req.user.id != config.owner) {
-        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+
+     let bits = new Discord.Permissions(userPerm);
+     let perms = bits.toArray();
+
+     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
+
+    const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -301,7 +346,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     if(Object.prototype.hasOwnProperty.call(data, "enable") || Object.prototype.hasOwnProperty.call(data, "update")) {
         db.goodbye.enabled = true
         // Channel : 
-        db.goodbye.channel = guild.channels.cache.find((ch) => "#"+ch.name === data.channelID).id;
+        db.goodbye.channel = guild.channels.find((ch) => "#"+ch.name === data.channelID).id;
         //Message
         db.goodbye.message = data.goodbyeMessage;
         //Embed ?
@@ -350,11 +395,22 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
 }).get("/:guildID/tools/autorole", CheckAuth, async(req, res) => {
 
-    let serv = req.bot.guilds.cache.get(req.params.guildID);
-    if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
+    const serv = results.find((g) => g);
+    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const found = serv.members.find(element => element === req.user.id)
+
     if (req.user.id != config.owner) {
-        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+
+     let bits = new Discord.Permissions(userPerm);
+     let perms = bits.toArray();
+
+     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
+
+    const guildInfos = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -369,7 +425,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         bot: bot,
         user: req.user,
         login: "oui",
-        guild: serv,
+        guild: guildInfos,
         avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
         iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
         message: "",
@@ -380,11 +436,22 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     });   
 }).post("/:guildID/tools/autorole", CheckAuth, async function(req, res) {
 
-    let guild = req.bot.guilds.cache.get(req.params.guildID);
-    if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
+    const serv = results.find((g) => g);
+    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const found = serv.members.find(element => element === req.user.id)
+
     if (req.user.id != config.owner) {
-        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+
+     let bits = new Discord.Permissions(userPerm);
+     let perms = bits.toArray();
+
+     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
+
+    const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -393,7 +460,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     if(Object.prototype.hasOwnProperty.call(data, "enable") || Object.prototype.hasOwnProperty.call(data, "update")) {
         const obj = {
             enabled: true,
-            role: guild.roles.cache.find((r) => "@"+r.name === data.roleID).id
+            role: guild.roles.find((r) => "@"+r.name === data.roleID).id
         }
     
         db.autorole = obj
@@ -410,11 +477,22 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
 }).get("/:guildID/tools/auto-mod", CheckAuth, async(req, res) => {
 
-    let serv = req.bot.guilds.cache.get(req.params.guildID);
-    if (!serv) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
+    const serv = results.find((g) => g);
+    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const found = serv.members.find(element => element === req.user.id)
+
     if (req.user.id != config.owner) {
-        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+
+     let bits = new Discord.Permissions(userPerm);
+     let perms = bits.toArray();
+
+     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
+
+    const guildInfos = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -431,7 +509,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         bot: bot,
         user: req.user,
         login: "oui",
-        guild: serv,
+        guild: guildInfos,
         avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
         iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
         message: "",
@@ -444,12 +522,23 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     });   
 }).post("/:guildID/tools/auto-mod", CheckAuth, async function(req, res) {
 
-    let guild = req.bot.guilds.cache.get(req.params.guildID);
-    if (!guild) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
+    const serv = results.find((g) => g);
+    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const found = serv.members.find(element => element === req.user.id)
+
     if (req.user.id != config.owner) {
-        if (req.bot.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).hasPermission("MANAGE_GUILD") === false) return res.redirect("/");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+
+     let bits = new Discord.Permissions(userPerm);
+     let perms = bits.toArray();
+
+     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
 
+    const guild = await req.bot.fetchGuild(serv.id);
+    
     let db = await bot.db.getGuild(req.params.guildID)
 
     let data  = req.body;

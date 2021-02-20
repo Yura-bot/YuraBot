@@ -57,13 +57,13 @@
                       <div class="form-group">
                           <label class="lang" key="autoroleRole">Choissisez votre role :</label>
                           <select class="form-control" name="roleID">
-                              <% if(autoroleRole && guild.roles.cache.has(autoroleRole)){ %>
-                                  <option selected="selected">@<%= guild.roles.cache.get(autoroleRole).name %></option>
-                                  <% guild.roles.cache.filter((r) => r.id !== autoroleRole && r.name !== "@everyone").forEach((r) => { %>
+                              <% if(autoroleRole && guild.roles.find((r) => r.id === autoroleRole)){ %>
+                                  <option selected="selected">@<%= guild.roles.find((r) => r.id === autoroleRole).name %></option>
+                                  <% guild.roles.filter((r) => r.id !== autoroleRole && r.name !== "@everyone").forEach((r) => { %>
                                       <option>@<%= r.name %></option>
                                   <% }); } else { %>
-                                  <option selected="selected">@<%= guild.roles.cache.filter((r) => r.name !== "@everyone").first().name %></option>
-                                  <% guild.roles.cache.filter((r) => r.id !== guild.roles.cache.filter((r) => r.name !== "@everyone").first().id && r.name !== "@everyone").forEach((r) => { %>
+                                  <option selected="selected">@<%= guild.roles.filter((r) => r.name !== "@everyone")[0].name %></option>
+                                  <% guild.roles.filter((r) => r.id !== guild.roles.filter((r) => r.name !== "@everyone")[0].id && r.name !== "@everyone").forEach((r) => { %>
                                       <option>@<%= r.name %></option>
                                   <% }); %>
                               <% } %>

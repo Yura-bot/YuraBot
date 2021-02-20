@@ -5,7 +5,12 @@ const CheckAuth = require('../auth/CheckAuth');
 
 let bot = require("../../main.js")
 
-router.get("/", function(req, res) {
+router.get("/", async function(req, res) {
+
+    let guildCount = await bot.shard.fetchClientValues('guilds.cache.size')
+    let membersCount = await bot.shard.fetchClientValues("users.cache.size");
+    let channelsCount = await bot.shard.fetchClientValues("channels.cache.size");
+    const reducer = (p, count) => p + count
 
         res.render("index.ejs", {
             username: (req.isAuthenticated() ? `${req.user.username}` : `User`),
@@ -18,7 +23,10 @@ router.get("/", function(req, res) {
             login: (req.isAuthenticated() ? "oui" : "non"),
             invite: `https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1`,
             message: "",
-            messageType: "success"
+            messageType: "success",
+            guildCount: guildCount.reduce(reducer),
+            membersCount: membersCount.reduce(reducer),
+            channelsCount: channelsCount.reduce(reducer),
         });
     })
     .get("/login", passport.authenticate("discord", { failureRedirect: "/" }),

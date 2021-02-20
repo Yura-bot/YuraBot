@@ -85,13 +85,13 @@
                               <label for="channel-goodbye-system" class="lang" key="channelBvn">Channel :</label>
                               <select class="form-control digits" id="channel-goodbye-system" name="channelID">
 
-                              <% if(goodbyeEnabled && bot.channels.cache.has(goodbyeChannel)){ %>
-                                  <option selected="selected">#<%= bot.channels.cache.get(goodbyeChannel).name %></option>
-                                  <% guild.channels.cache.filter((ch) => ch.id !== goodbyeChannel && ch.type === "text").forEach((ch) => { %>
+                              <% if(goodbyeChannel && guild.channels.find((r) => r.id === goodbyeChannel)){ %>
+                                  <option selected="selected">#<%= guild.channels.find((r) => r.id === goodbyeChannel).name %></option>
+                                  <% guild.channels.filter((ch) => ch.id !== goodbyeChannel && ch.type === "text").forEach((ch) => { %>
                                       <option>#<%= ch.name %></option>
                                   <% }); } else { %>
-                                  <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
-                                  <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+                                  <option selected="selected">#<%= guild.channels.filter((ch) => ch.type === "text")[0].name %></option>
+                                  <% guild.channels.filter((ch) => ch.id !== guild.channels[0].id && ch.type === "text").forEach((ch) => { %>
                                       <option>#<%= ch.name %></option>
                                   <% }); %>
                               <% } %>

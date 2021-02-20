@@ -71,4 +71,6 @@ module.exports.load = async(client) => {
         if (err) throw err;
         console.log(`Dashboard online on port ${app.get('port')}`);
     });
+
+    client.spawned = true;
 };

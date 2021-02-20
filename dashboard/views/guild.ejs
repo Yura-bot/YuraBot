@@ -103,13 +103,13 @@
                           <label for="suggestionSystem" class="lang" key="suggestChannel">Suggestion Channel :</label>
                           <select class="form-control digits" id="suggestionSystem" name="suggestionChannelID">
 
-                          <% if(suggestionEnabled && bot.channels.cache.has(suggestionChannel)){ %>
-                              <option selected="selected">#<%= bot.channels.cache.get(suggestionChannel).name %></option>
-                              <% guild.channels.cache.filter((ch) => ch.id !== suggestionChannel && ch.type === "text").forEach((ch) => { %>
+                          <% if(suggestionEnabled && guild.channels.find((r) => r.id === suggestionChannel)){ %>
+                              <option selected="selected">#<%= guild.channels.find((r) => r.id === suggestionChannel).name %></option>
+                              <% guild.channels.filter((ch) => ch.id !== suggestionChannel && ch.type === "text").forEach((ch) => { %>
                                   <option>#<%= ch.name %></option>
                               <% }); } else { %>
-                              <option selected="selected">#<%= guild.channels.cache.filter((ch) => ch.type === "text").first().name %></option>
-                              <% guild.channels.cache.filter((ch) => ch.id !== guild.channels.cache.first().id && ch.type === "text").forEach((ch) => { %>
+                              <option selected="selected">#<%= guild.channels.filter((ch) => ch.type === "text")[0].name %></option>
+                              <% guild.channels.filter((ch) => ch.id !== guild.channels[0].id && ch.type === "text").forEach((ch) => { %>
                                   <option>#<%= ch.name %></option>
                               <% }); %>
                           <% } %>
@@ -124,14 +124,14 @@
                     <div class="form-group">
                       <label class="lang" key="muteRole">Mute Role :</label>
                       <select class="form-control" name="muteRole">
-                          <% if(muteRole && guild.roles.cache.has(muteRole)){ %>
+                          <% if(muteRole && guild.roles.find((r) => r.id === muteRole)){ %>
                               <option>Desactivate</option>
-                              <option selected="selected">@<%= guild.roles.cache.get(muteRole).name %></option>
-                              <% guild.roles.cache.filter((r) => r.id !== muteRole && r.name !== "@everyone").forEach((r) => { %>
+                              <option selected="selected">@<%= guild.roles.find((r) => r.id === muteRole).name %></option>
+                              <% guild.roles.filter((r) => r.id !== muteRole && r.name !== "@everyone").forEach((r) => { %>
                                   <option>@<%= r.name %></option>
                               <% }); } else { %>
-                              <option selected="selected">@<%= guild.roles.cache.filter((r) => r.name !== "@everyone").first().name %></option>
-                              <% guild.roles.cache.filter((r) => r.id !== guild.roles.cache.filter((r) => r.name !== "@everyone").first().id && r.name !== "@everyone").forEach((r) => { %>
+                              <option selected="selected">@<%= guild.roles.filter((r) => r.name !== "@everyone")[0].name %></option>
+                              <% guild.roles.filter((r) => r.id !== guild.roles.filter((r) => r.name !== "@everyone")[0].id && r.name !== "@everyone").forEach((r) => { %>
                                   <option>@<%= r.name %></option>
                               <% }); %>
                           <% } %>

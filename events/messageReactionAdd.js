@@ -14,7 +14,6 @@ module.exports = async(client, reaction, user) => {
 
     let categorieId = db.tickets.category
     let channelId = db.tickets.channel
-    let messageId = db.tickets.message
     let logId = false
     let staffId = db.tickets.role
 
@@ -24,7 +23,6 @@ module.exports = async(client, reaction, user) => {
 
     switch (reaction.message.channel.id) {
         case channelId:
-            if(reaction.message.id !== messageId) return;
             if(reaction.emoji.name !== '🎟') return;
 
             reaction.message.reactions.resolve('🎟').users.remove(user.id).then();
@@ -115,8 +113,8 @@ module.exports = async(client, reaction, user) => {
         
         reaction.message.reactions.resolve('🔒').users.remove(user.id)
         Promise.all([
-            reaction.message.react(client.config.emojis.yes),
-            reaction.message.react(client.config.emojis.no)
+            reaction.message.react(client.config.yes),
+            reaction.message.react(client.config.no)
         ])
 
         reaction.message.awaitReactions((r, u) => u.id === user.id && (r.emoji.id === client.config.emojis.yes || r.emoji.id === client.config.emojis.no), {
@@ -124,8 +122,8 @@ module.exports = async(client, reaction, user) => {
         }).then(collected => {
             if(collected.first().emoji.id !== client.config.emojis.yes) {
                 Promise.all([
-                    reaction.message.reactions.resolve(client.config.emojis.no).remove(),
-                    reaction.message.reactions.resolve(client.config.emojis.yes).remove()
+                    reaction.message.reactions.resolve(client.config.no).remove(),
+                    reaction.message.reactions.resolve(client.config.yes).remove()
                 ])
             } else {
                 return reaction.message.channel.delete()
@@ -150,8 +148,8 @@ module.exports = async(client, reaction, user) => {
                         }).catch(e => {});
                     }
                     */
-                });
-                
+                })
+                .catch(e => {});
             }
         })
     }
