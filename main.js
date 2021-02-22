@@ -9,7 +9,6 @@ const { GiveawaysManager } = require('discord-giveaways');
 
 const ameClient = require("amethyste-api")
 const { Client: Joke } = require("blague.xyz");
-const DBL = require("dblapi.js");
 
 const { Player } = require("discord-player");
 const AntiSpam = require('discord-anti-spam');
@@ -36,7 +35,13 @@ class Class extends Client {
 
         this.db = require("./structure/Mongoose.js");
 
-        this.giveawaysManager = new GiveawaysManager(this, {
+        const GiveawayManagerWithShardSupport = class extends GiveawaysManager {
+            async refreshStorage() {
+                return this.client.shard.broadcastEval(() => this.giveawaysManager.getAllGiveaways());
+            }
+        };
+
+        this.giveawaysManager = new GiveawayManagerWithShardSupport(this, {
             hasGuildMembersIntent: true,
             storage: "./giveaways.json",
             updateCountdownEvery: 5000,
@@ -51,9 +56,8 @@ class Class extends Client {
         this.ameApi = new ameClient(Config.ameToken)
         this.joke = new Joke(Config.jokeToken, { defaultLang: "fr" });
 
-        this.dbl = new DBL(Config.dblApi, this);
-
         this.dash = require("./dashboard/dashboard.js");
+        this.spawned = false;
 
         this.antiSpam = new AntiSpam({
             warnThreshold: 2,
@@ -77,7 +81,7 @@ class Class extends Client {
         process.on('unhandledRejection', error => {
             this.emit('error', error, "bot");
         })
-
+        
         this.on("disconnect", () => this.hook.info("Bot is disconnecting...", "warn"))
         .on("reconnecting", () => this.logger.info("Bot reconnecting...", "log"))
         .on("error", (e, cmd) => this.hook.error('**Bot error**', `Quelque chose s'est mal passé, commande : **${cmd}**`, `${e}`).catch(e => {}))
@@ -101,4 +105,3 @@ class Class extends Client {
 }
 
 module.exports = new Class();
-
