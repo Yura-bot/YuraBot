@@ -6,7 +6,7 @@ const GuildSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     id: String,
     prefix: { type: String, default: config.prefix },
-    lang: { type: String, default: config.lang },
+    lang: { type: String, default: "english" },
     plugins: { type: Object, default: {}},
     welcome: { type: Object, default: {
         enabled: false,
