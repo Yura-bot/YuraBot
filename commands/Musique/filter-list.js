@@ -27,8 +27,8 @@ class FilterList extends Command {
 
         if (!client.player.getQueue(message)) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
 
-        const disabledEmoji = client.getEmoji(client.config.emojis.no);
-        const enabledEmoji = client.getEmoji(client.config.emojis.yes);
+        const disabledEmoji = client.config.emojis.no;
+        const enabledEmoji = client.config.emojis.yes;
     
         const filtersStatuses = [[], []];
     

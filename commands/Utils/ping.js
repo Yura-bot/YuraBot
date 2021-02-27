@@ -18,8 +18,8 @@ class Ping extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        await message.channel.send(client.getEmoji(client.config.emojis.loading)+language("PING_BEFORE")).then(msg => {
-            msg.edit(client.getEmoji(client.config.emojis.online)+language("PING_AFTER")+Math.sqrt(((new Date() - message.createdTimestamp)/(5*2))**2)+" ms`.").catch(e => {
+        await message.channel.send(client.config.emojis.loading+language("PING_BEFORE")).then(msg => {
+            msg.edit(client.config.emojis.online+language("PING_AFTER")+Math.sqrt(((new Date() - message.createdTimestamp)/(5*2))**2)+" ms`.").catch(e => {
                 return client.emit('error',e);
             });
         }).catch(e => {

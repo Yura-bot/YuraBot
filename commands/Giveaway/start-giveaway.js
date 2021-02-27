@@ -89,7 +89,7 @@ class CreateGiveaway extends Command {
         }
        });
 
-       message.channel.send({embed: {color: '0x00FF46', description: `${client.getEmoji(client.config.emojis.yes)} | ${language("GIVEAWAY_GO")}${giveawayChannel} !` }}).catch(e => {
+       message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("GIVEAWAY_GO")}${giveawayChannel} !` }}).catch(e => {
         return client.emit('error',e, "start-giveaway");
     });
     }

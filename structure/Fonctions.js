@@ -1,9 +1,4 @@
 module.exports = client => {
-    client.getEmoji = (emojiId) => {
-        client.emojis.cache.get(emojiId).toString();
-        return null;
-    }
-
     client.isURL = (str) => {
         let array = [ ".png", ".jpg" ]
         return array.some(list => str.includes(list))

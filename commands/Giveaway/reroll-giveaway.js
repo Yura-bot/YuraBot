@@ -41,7 +41,7 @@ class RerollGiveaway extends Command {
 
         client.giveawaysManager.reroll(giveaway.messageID)
         .then(() => {
-            return message.channel.send({embed: {color: '0x00FF46', description: `${client.getEmoji(client.config.emojis.yes)} | ${language("GIVEAWAY_REROLL_SUCESS")}` }})
+            return message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("GIVEAWAY_REROLL_SUCESS")}` }})
         })
         .catch((e) => {
             if(e.startsWith(`${language("GIVEAWAY_REROLL_NO_END_1")}${giveaway.messageID}${language("GIVEAWAY_REROLL_NO_END_2")}`)){

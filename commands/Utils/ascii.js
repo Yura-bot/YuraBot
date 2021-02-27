@@ -22,7 +22,7 @@ class Ascii extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         try {
-            if(args.slice(1).join(' ').length > 20) return message.channel.send({embed: {color: '0xFF0000', description: `${client.getEmoji(client.config.emojis.no)} | ${language("ASCII_LIMIT_MESSAGE")}` }})
+            if(args.slice(1).join(' ').length > 20) return message.channel.send({embed: {color: '0xFF0000', description: `${client.config.emojis.no} | ${language("ASCII_LIMIT_MESSAGE")}` }})
             if (!args.slice(1).join(' ')) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_ASCII"));
             figlet(args.slice(1).join(' '), (err, data) => {
                 return message.channel.send('\`\`\`' + data + '\`\`\`');

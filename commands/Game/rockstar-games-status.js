@@ -32,14 +32,14 @@ class RockstarGameStatus extends Command {
             let statusSocialClub = res[2].status_tag;
             let statusRockStarLauncher = res[3].status_tag;
 
-            if (statusDedReadOnline === "Actif") statusDedReadOnline = client.getEmoji(client.config.emojis.online)+language("RGS_ONLINE")
-            else statusDedReadOnline =  client.getEmoji(client.config.emojis.dnd)+language("RGS_OFFLINE")
-            if (statusGrandTheftAuto === "Actif") statusGrandTheftAuto = client.getEmoji(client.config.emojis.online)+language("RGS_ONLINE")
-            else statusGrandTheftAuto =  client.getEmoji(client.config.emojis.dnd)+language("RGS_OFFLINE")
-            if (statusSocialClub === "Actif") statusSocialClub = client.getEmoji(client.config.emojis.online)+language("RGS_ONLINE")
-            else statusSocialClub =  client.getEmoji(client.config.emojis.dnd)+language("RGS_OFFLINE")
-            if (statusRockStarLauncher === "Actif") statusRockStarLauncher = client.getEmoji(client.config.emojis.online)+language("RGS_ONLINE")
-            else statusRockStarLauncher =  client.getEmoji(client.config.emojis.dnd)+language("RGS_OFFLINE")
+            if (statusDedReadOnline === "Actif") statusDedReadOnline = client.config.emojis.online+language("RGS_ONLINE")
+            else statusDedReadOnline =  client.config.emojis.dnd+language("RGS_OFFLINE")
+            if (statusGrandTheftAuto === "Actif") statusGrandTheftAuto = client.config.emojis.online+language("RGS_ONLINE")
+            else statusGrandTheftAuto =  client.config.emojis.dnd+language("RGS_OFFLINE")
+            if (statusSocialClub === "Actif") statusSocialClub = client.config.emojis.online+language("RGS_ONLINE")
+            else statusSocialClub =  client.config.emojis.dnd+language("RGS_OFFLINE")
+            if (statusRockStarLauncher === "Actif") statusRockStarLauncher = client.config.emojis.online+language("RGS_ONLINE")
+            else statusRockStarLauncher =  client.config.emojis.dnd+language("RGS_OFFLINE")
 
             message.channel.send({
                 embed: {

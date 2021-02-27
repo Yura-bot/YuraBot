@@ -22,7 +22,7 @@ class Triggered extends Command {
 
         let avatar = message.mentions.users.size ? message.mentions.users.first().avatarURL({ format: 'png', size: 512 }).replace(".webp", ".gif") : message.author.avatarURL({ format: 'png', size: 512 }).replace(".webp", ".gif")
 
-        const msg = await message.channel.send(client.getEmoji(client.config.emojis.loading)+language("GENERATION")).catch(e => {
+        const msg = await message.channel.send(client.config.emojis.loading+language("GENERATION")).catch(e => {
             return client.emit('error',e);
         });
 

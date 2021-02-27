@@ -26,7 +26,7 @@ class EndGiveaway extends Command {
         }
 
         if(!args[1]){
-            return message.channel.send({embed: {color: '0xFF0000', description: `${client.getEmoji(client.config.emojis.no)} | ${language("GIVEAWAY_END_ID_INVALIDE")} !` }})
+            return message.channel.send({embed: {color: '0xFF0000', description: `${client.config.emojis.no} | ${language("GIVEAWAY_END_ID_INVALIDE")} !` }})
         }
 
         let giveaway = 
@@ -36,14 +36,14 @@ class EndGiveaway extends Command {
         client.giveawaysManager.giveaways.find((g) => g.messageID === args[1]);
 
         if(!giveaway){
-            return message.channel.send({embed: {color: '0xFF0000', description: `${client.getEmoji(client.config.emojis.no)} | ${language("GIVEAWAY_END_ERROR")}`+'`'+args.slice(1).join(' ')+'`' }})
+            return message.channel.send({embed: {color: '0xFF0000', description: `${client.config.emojis.no} | ${language("GIVEAWAY_END_ERROR")}`+'`'+args.slice(1).join(' ')+'`' }})
         }
 
         client.giveawaysManager.edit(giveaway.messageID, {
             setEndTimestamp: Date.now()
         })
         .then(() => {
-            message.channel.send({embed: {color: '0x00FF46', description: `${client.getEmoji(client.config.emojis.yes)} | ${language("GIVEAWAY_END_SUCESS")}${client.giveawaysManager.options.updateCountdownEvery/1000} seconds...` }})
+            message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("GIVEAWAY_END_SUCESS")}${client.giveawaysManager.options.updateCountdownEvery/1000} seconds...` }})
             //message.channel.send(language("GIVEAWAY_END_SUCESS")+(client.giveawaysManager.options.updateCountdownEvery/1000)+' seconds...');
         })
         .catch((e) => {

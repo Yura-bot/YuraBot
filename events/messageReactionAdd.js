@@ -113,17 +113,17 @@ module.exports = async(client, reaction, user) => {
         
         reaction.message.reactions.resolve('🔒').users.remove(user.id)
         Promise.all([
-            reaction.message.react(client.config.yes),
-            reaction.message.react(client.config.no)
+            reaction.message.react("712662632200667266"),
+            reaction.message.react("712662704526983230")
         ])
 
-        reaction.message.awaitReactions((r, u) => u.id === user.id && (r.emoji.id === client.config.emojis.yes || r.emoji.id === client.config.emojis.no), {
+        reaction.message.awaitReactions((r, u) => u.id === user.id && (r.emoji.id === "712662632200667266" || r.emoji.id === "712662704526983230"), {
             max: 1
         }).then(collected => {
-            if(collected.first().emoji.id !== client.config.emojis.yes) {
+            if(collected.first().emoji.id !== "712662632200667266") {
                 Promise.all([
-                    reaction.message.reactions.resolve(client.config.no).remove(),
-                    reaction.message.reactions.resolve(client.config.yes).remove()
+                    reaction.message.reactions.resolve("712662704526983230").remove(),
+                    reaction.message.reactions.resolve("712662632200667266").remove()
                 ])
             } else {
                 return reaction.message.channel.delete()

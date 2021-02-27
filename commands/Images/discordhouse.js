@@ -34,7 +34,7 @@ class Discordhouse extends Command {
             houseName = "balance";
         }
         
-        const msg = await message.channel.send(client.getEmoji(client.config.emojis.loading)+language("GENERATION")).catch(e => {
+        const msg = await message.channel.send(client.config.emojis.loading+language("GENERATION")).catch(e => {
             return client.emit('error',e);
         });
 

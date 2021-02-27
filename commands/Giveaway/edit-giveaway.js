@@ -34,7 +34,7 @@ class EditGiveaway extends Command {
         client.giveawaysManager.giveaways.find((g) => g.messageID === args[1]);
 
         if(!giveaway){
-            return message.channel.send({embed: {color: '0xFF0000', description: `${client.getEmoji(client.config.emojis.no)} | ${language("GIVEAWAY_EDIT_NO_FOUND")}`+'`'+args.slice(1).join(' ')+'`' }})
+            return message.channel.send({embed: {color: '0xFF0000', description: `${client.config.emojis.no} | ${language("GIVEAWAY_EDIT_NO_FOUND")}`+'`'+args.slice(1).join(' ')+'`' }})
         }    
 
         let giveawayNumberWinners = args[2];
@@ -49,7 +49,7 @@ class EditGiveaway extends Command {
             newPrize: giveawayPrize,
             addTime: 5000
         }).then(() => {
-            message.channel.send({embed: {color: '0x00FF46', description: `${client.getEmoji(client.config.emojis.yes)} | ${language("GIVEAWAY_EDIT_SUCESS")}` }})
+            message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("GIVEAWAY_EDIT_SUCESS")}` }})
         }).catch((err) => {
             client.emit('error',e, "edit-giveaway");
             message.channel.send(language("GIVEAWAY_EDIT_ERROR_OCCURED"));
