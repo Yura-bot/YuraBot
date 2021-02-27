@@ -199,7 +199,8 @@ $(document).ready(function () {
     });
 
     if (lang === "fr") { document.getElementById('flag').className = "flag-icon flag-icon-fr";  }
-    else document.getElementById('flag').className = "flag-icon flag-icon-us"; 
+    else if (lang === "en") document.getElementById('flag').className = "flag-icon flag-icon-us";
+    else if (lang === "es") document.getElementById('flag').className = "flag-icon flag-icon-es"; 
 
     if (localStorage.getItem("primary") != null) {
         var primary_val = localStorage.getItem("primary");
