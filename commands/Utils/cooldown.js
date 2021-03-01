@@ -14,6 +14,7 @@ class Cooldown extends Command {
     async run(client, message, args, db) {
 
         const Discord = require("discord.js");
+        const ms = require("ms")
 
         let prefix = !db.prefix ? config.prefix : db.prefix;
         let guildLanguage = !db.lang ? "english": db.lang;
