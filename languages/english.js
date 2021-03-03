@@ -532,6 +532,10 @@ const languageData = {
     TICKET_CLOSE_TITLE: "📥 | Ticket Closed",
     TICKET_CLOSE_DESC: "You have just closed the request!",
     TICKET_ERROR: "**<:X_:673212163837526064> Erreur :** An error occurred with the ticket system please try again!",
+    /* Reaction Roles : */
+    RR_ROLE_ERROR_FETCH_MSG: "**<:X_:673212163837526064> Erreur Reaction Roles :** The message is not found, please re-setup the reaction role !",
+    RR_ROLE_NO_FOUND: "**<:X_:673212163837526064> Erreur Reaction Roles :** The role is untraceable or it is below the role of the Bot !",
+    RR_ROLE_MEMBER_ADMIN: "**<:X_:673212163837526064> Erreur Reaction Roles :** You outrank me, so I can't give/remove you a role !",
 };
 
 const translate = (key, ...args) => {

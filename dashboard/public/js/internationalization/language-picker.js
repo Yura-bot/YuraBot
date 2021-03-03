@@ -98,6 +98,8 @@ var arrLang = {
     "enabled": "Activated !",
     "autoroleTitle": "🎖️ Configuring the autorole :",
     "autoroleRole": "Choose your role :",
+    "reactionroles": "Reaction Roles",
+    "reactionRolesConfig": "🔮 Configuration of the reaction system roles :",
   },
   'fr': {
     "lang": "FR",
@@ -196,6 +198,8 @@ var arrLang = {
     "enabled": "Activé !",
     "autoroleTitle": "🎖️ Configuration de l'autorole :",
     "autoroleRole": "Choissisez votre role :",
+    "reactionroles": "Roles Reaction",
+    "reactionRolesConfig": "🔮 Configuration du système de roles réaction :",
   },
   'es': {
     "activate": "Activar",

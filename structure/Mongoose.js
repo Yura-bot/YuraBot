@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { mongoKey } = require("../configs/config.json")
-const { Guild, User } = require("../models/index")
+const { Guild, User, Reaction_Roles } = require("../models/index")
 
 module.exports = {
     init: () => {
@@ -82,4 +82,16 @@ module.exports.createUser = async function (userID){
 
   await UserDB.save();
   return true;
+};
+
+module.exports.getReactionRoles = async function (messageID, guildID){
+  let guild;
+  if (messageID) guild = await Reaction_Roles.findOne( { messageId: messageID } );
+  else if (guildID) guild = await Reaction_Roles.findOne( { guildId: guildID } );
+
+  if(guild){
+    return guild;
+  } else {
+    return false
+  }
 };

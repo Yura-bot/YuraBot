@@ -7,6 +7,9 @@ module.exports = async(client, reaction, user) => {
     let guildLanguage = !db.lang ? "english": db.lang;
     let language = require(`../languages/${guildLanguage}`);
 
+    let reactionRolesDB = await client.db.getReactionRoles(reaction.message.id, false)
+    if (reactionRolesDB) addRole(reaction.message, reaction.emoji, user, reactionRolesDB, language)
+
     let isTicket = db.tickets.enabled
     if (isTicket === false) return;
 
@@ -16,7 +19,6 @@ module.exports = async(client, reaction, user) => {
     let channelId = db.tickets.channel
     let logId = false
     let staffId = db.tickets.role
-
 
     if (client.channels.cache.has(categorieId) && client.channels.cache.has(channelId))
     if (guild.roles.cache.has(staffId) === false) return reaction.message.guild.owner.send(language("TICKET_ERROR")).catch(e => {});
@@ -152,5 +154,28 @@ module.exports = async(client, reaction, user) => {
                 .catch(e => {});
             }
         })
+    }
+}
+
+async function addRole(message, emoji, user, db, language) {
+    if (user.bot || message.id !== db.messageId) return;
+  
+    if (message.partial) {
+      try {
+        await message.fetch();
+      } catch (err) {
+        return member.send(language("RR_ROLE_ERROR_FETCH_MSG")).catch(e => {});
+      }
+    }
+  
+    const member = message.guild.members.cache.get(user.id);
+    const role = message.guild.roles.cache.get(db.data[emoji.name]);
+  
+    if (!role) return member.send(language("RR_ROLE_NO_FOUND")).catch(e => {});
+    
+    try {
+        member.roles.add(role.id);
+    } catch (err) {
+        return member.send(language("RR_ROLE_MEMBER_ADMIN")).catch(e => {});
     }
 }
