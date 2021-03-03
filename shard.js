@@ -8,7 +8,7 @@ const manager = new ShardingManager('./main.js', {
     token: config.token,
     autoSpawn: true,
     respawn: true,
-    totalShards: 2
+    totalShards: 1
 });
 
 manager.on('shardCreate', shard => {
