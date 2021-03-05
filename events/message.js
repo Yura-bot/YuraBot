@@ -19,9 +19,11 @@ module.exports = async(client, message) => {
         let antilink = db.automod.antiLink
         let antibadwords = db.automod.antiBadWords
 
-        if (antiraid) client.antiSpam.message(message, client, db)
+        let ignored = db.automod.ignored
 
-        if (antilink) {
+        if (antiraid && !ignored.channels.includes(message.channel.id)) client.antiSpam.message(message, client, db)
+
+        if (antilink && !ignored.channels.includes(message.channel.id)) {
             if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
 
                 const link = [
@@ -51,7 +53,7 @@ module.exports = async(client, message) => {
             }
         }
 
-        if (antipub) {
+        if (antipub && !ignored.channels.includes(message.channel.id)) {
             if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
 
                 const pub = [
@@ -69,7 +71,7 @@ module.exports = async(client, message) => {
             }
         }
 
-        if (antibadwords) {
+        if (antibadwords && !ignored.channels.includes(message.channel.id)) {
 
             if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
 
