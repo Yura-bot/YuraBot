@@ -21,9 +21,19 @@ module.exports = async(client, message) => {
 
         let ignored = db.automod.ignored
 
-        if (antiraid && !ignored.channels.includes(message.channel.id)) client.antiSpam.message(message, client, db)
+        const ignoredRoles = ignored.roles
+        const memberRoles = message.member.roles.cache.map(value => value.id);
+        
+        let memberAuthorised = true
+        
+        ignoredRoles.forEach(element => {
+          let result = memberRoles.find(el => el === element)
+          if (result) memberAuthorised = false
+        });
 
-        if (antilink && !ignored.channels.includes(message.channel.id)) {
+        if (antiraid && !ignored.channels.includes(message.channel.id) && memberAuthorised) client.antiSpam.message(message, client, db)
+
+        if (antilink && !ignored.channels.includes(message.channel.id) && memberAuthorised) {
             if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
 
                 const link = [
@@ -53,7 +63,7 @@ module.exports = async(client, message) => {
             }
         }
 
-        if (antipub && !ignored.channels.includes(message.channel.id)) {
+        if (antipub && !ignored.channels.includes(message.channel.id) && memberAuthorised) {
             if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
 
                 const pub = [
@@ -71,7 +81,7 @@ module.exports = async(client, message) => {
             }
         }
 
-        if (antibadwords && !ignored.channels.includes(message.channel.id)) {
+        if (antibadwords && !ignored.channels.includes(message.channel.id) && memberAuthorised) {
 
             if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
 
