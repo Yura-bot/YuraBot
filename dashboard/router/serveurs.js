@@ -580,11 +580,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
                 else roles = null
             }
     
-            db.automod.ignored.channels = channels
-            db.automod.ignored.roles = roles
+            db.automod.ignored = { channels: channels, roles: roles }
         } else {
-            db.automod.ignored.channels = null
-            db.automod.ignored.roles = null
+            db.automod.ignored = { channels: null, roles: null }
         }
 
         db.markModified("automod");
