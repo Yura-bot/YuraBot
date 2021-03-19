@@ -5,6 +5,8 @@ const CheckAuth = require('../auth/CheckAuth');
 let bot = require("../../main.js")
 let config = require("../../configs/config.json")
 
+const Discord = require("discord.js");
+
 router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
 
     //req.params.guildID
