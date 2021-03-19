@@ -84,8 +84,6 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
 
         let Tchannel = guild.channels.find((ch) => "#"+ch.name === data.channel)
 
-        const Discord = require("discord.js");
-
         let embed = new Discord.MessageEmbed()
         .setTitle(language("TICKET_TITLE"))
         .setColor("#36393f")
