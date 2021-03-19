@@ -168,8 +168,11 @@ async function addRole(message, emoji, user, db, language) {
       }
     }
   
-    const member = message.guild.members.cache.get(user.id);
-    const role = message.guild.roles.cache.get(db.data[emoji.name]);
+    let member = message.guild.members.cache.get(user.id);
+    let role = message.guild.roles.cache.get(db.data[emoji.name]);
+
+    let emojiID = emoji.id
+    if (emojiID) role = message.guild.roles.cache.get(db.data[emoji.id]);
   
     if (!role) return member.send(language("RR_ROLE_NO_FOUND")).catch(e => {});
     

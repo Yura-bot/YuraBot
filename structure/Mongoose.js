@@ -85,13 +85,38 @@ module.exports.createUser = async function (userID){
 };
 
 module.exports.getReactionRoles = async function (messageID, guildID){
-  let guild;
-  if (messageID) guild = await Reaction_Roles.findOne( { messageId: messageID } );
-  else if (guildID) guild = await Reaction_Roles.findOne( { guildId: guildID } );
+  let reactRoles;
+  if (messageID) reactRoles = await Reaction_Roles.findOne( { messageId: messageID } );
+  else if (guildID) reactRoles = await Reaction_Roles.find( { guildId: guildID } );
 
-  if(guild){
-    return guild;
+  if(reactRoles){
+    return reactRoles;
   } else {
     return false
+  }
+};
+
+module.exports.createReactionRoles = async function (messageID, guildID, pro, data){
+  reactRoles = new Reaction_Roles({
+    _id: mongoose.Types.ObjectId(),
+    messageId: messageID,
+    guildId: guildID,
+    pro: pro,
+    data: data
+  })
+
+  await reactRoles.save();
+  return true;
+};
+
+module.exports.deleteReactionRoles = async function (messageID, guildID){
+  let reactRoles;
+  if (messageID) reactRoles = await Reaction_Roles.deleteOne({ messageId: messageID });
+  else if (guildID) reactRoles = await Reaction_Roles.deleteMany({ guildId: guildID });
+
+  if(reactRoles){
+    return true;
+  } else {
+    return false;
   }
 };
