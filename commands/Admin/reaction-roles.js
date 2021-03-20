@@ -16,6 +16,7 @@ class ReactionRoles extends Command {
         const Discord = require("discord.js");
 
         const reactionRolesDBGlobal = await client.db.getReactionRoles(false, message.guild.id)
+        console.log(reactionRolesDBGlobal)
 
         let prefix = !db.prefix ? config.prefix : db.prefix;
         let guildLanguage = !db.lang ? "english": db.lang;
@@ -82,47 +83,51 @@ class ReactionRoles extends Command {
             if(MessageID === undefined) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_RR_DELETE"));
 
             const reactionRolesDB = await client.db.getReactionRoles(MessageID, false)
+            if (!reactionRolesDB) return message.channel.send(language("RR_MSG_NO_FOUND"));
 
-            //A FINIR
+            if (!Emoji) {
+                await client.db.deleteReactionRoles(MessageID, false)
+                return message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("RR_DELETE_SUCESS")}` }})
+            } else {
 
-        } else if (args[1] === "list") {
+                let emoji = client.emojis.cache.get(message.guild.emojis.resolveIdentifier(Emoji).split('%3A')[1])
+                if (emoji) Emoji = emoji.id
 
-            //A FINIR
-            
-            message.channel.send({
-                embed: {
-                    title: language("RR_EMBED_TITLE"),
-                    thumbnail: {
-                        url: client.user.displayAvatarURL({format: 'png'})
-                    },
-                    description: language("HELP_INFOS") + 
-                      "[»](" + client.url + ") `" + prefix + "help [command]`\n\n" +
-                      language("HELP_TITLE").replace("{CS}", client.commands.size) + 
-                      language("HELP_PREFIX").replace("{prefix}", prefix) +
-                      language("HELP_LISTCMDS"),
-                    fields: [
-                        {
-                            name: language("HELP_ADMIN") + client.commands.filter((command) => command.category === 'admin').size + '**)',
-                            value: client.commands.filter((command) => command.category === 'admin').map((command) => "`" + command.name + "`").join(', ')
-                        },
-                        {
-                            name: language("HELP_LINKS"),
-                            value: `[${language("HELP_WEBSITE")}](https://yurabot.xyz) | [${language("HELP_INVITEBOT")}](https://discordapp.com/oauth2/authorize?client_id=662775890194989066&scope=bot&permissions=2146958847) | [${language("HELP_SERVSUPPORT")}](https://discord.gg/etQ3uJN) | [Dashboard](https://dash.yurabot.xyz) | [Status](https://yurabot.xyz/status)`
-                        }
-                    ],
-                    url: client.url,
-                    color: client.color,
-                    image: {
-                        url: 'https://i.goopics.net/9yqqy.gif',
-                    },
-                    timestamp: new Date(),
-                    footer: {
-                        text: client.footer,
-                        icon_url: client.user.displayAvatarURL({format: 'png'})
-                    }
-                }
-            }).catch(e => {});
+                let dataBefore = reactionRolesDB.data
+
+                delete dataBefore[Emoji]
+
+                reactionRolesDB.markModified("data");
+                await reactionRolesDB.save();
+
+                return message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("RR_DELETE_SUCESS_EMOJI")}` }})
+            }
+
+        } 
+
+        /*
+        else if (args[1] === "list") {
+
+            console.log(reactionRolesDBGlobal)
+
+            const Embed = new Discord.MessageEmbed()
+            .setColor(client.color)
+            .setURL(client.url)
+            .setTitle(language("RR_EMBED_TITLE"))
+            .setAuthor(message.author.username, message.author.avatarURL(), client.url)
+            .setDescription(language("RR_EMBED_DESC"))
+            .setTimestamp()
+            .setFooter(client.footer, client.user.displayAvatarURL({format: 'png'}));
+
+            reactionRolesDBGlobal.forEach(element =>  {
+                Embed.addField('N°(num)', "")
+            });
+        
+            message.channel.send(Embed);
+            //.catch(e => {});
+
         }
+        */
     }
 }
 

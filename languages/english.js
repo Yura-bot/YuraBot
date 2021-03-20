@@ -539,13 +539,13 @@ const languageData = {
     RR_MSG_NO_CHANNEL: "**<:X_:673212163837526064> Error : **I can't find the id of the message, please check that it is in this salon!",
     RR_MSG_NO_ROLE: "**<:X_:673212163837526064> Error :** I can't find the role, check if you mentioned it or put its id!",
     RR_ERROR_EMOJI: "**<:X_:673212163837526064> Error :** I can't find the emoji, check that you didn't put its id!",
-    SYNTAXE_RR: "reaction-roles [add/delete/list]```",
+    SYNTAXE_RR: "reaction-roles [add/delete]```",
     SYNTAXE_RR_ADD: "reaction-roles add [message id] [emoji] [role]```",
     SYNTAXE_RR_DELETE: "reaction-roles delete [message id] (emoji)```",
     RR_UPDATE_SUCESS: "The role reactions system has been updated!",
-    /* Reaction Roles Embed : */
-    RR_EMBED_TITLE: ":pushpin: Reaction Roles System Yura'Bot:",
-    RR_EMBED_DESC: ":pushpin: Reaction Roles System Yura'Bot:",
+    RR_MSG_NO_FOUND: "**<:X_:673212163837526064> Error :** The message cannot be found, put the id of the valid message.",
+    RR_DELETE_SUCESS: "The reaction-role system has been removed on this message!",
+    RR_DELETE_SUCESS_EMOJI: "The reaction-role system has been removed on this emoji!",
 };
 
 const translate = (key, ...args) => {
