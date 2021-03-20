@@ -78,9 +78,15 @@ class Class extends Client {
 
         require("./structure/Fonctions")(this);
 
-        process.on('unhandledRejection', error => {
+        process
+        .on('unhandledRejection', error => {
             this.emit('error', error, "bot");
+            console.error(error);
         })
+        .on('warning', (warning) => {
+            this.emit('warn', warning.message, "bot");
+            console.warn(warning.stack);
+        });
         
         this.on("disconnect", () => this.hook.info("Bot is disconnecting...", "warn"))
         .on("reconnecting", () => this.logger.info("Bot reconnecting...", "log"))
