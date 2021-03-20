@@ -16,7 +16,6 @@ class ReactionRoles extends Command {
         const Discord = require("discord.js");
 
         const reactionRolesDBGlobal = await client.db.getReactionRoles(false, message.guild.id)
-        console.log(reactionRolesDBGlobal)
 
         let prefix = !db.prefix ? config.prefix : db.prefix;
         let guildLanguage = !db.lang ? "english": db.lang;
@@ -64,7 +63,8 @@ class ReactionRoles extends Command {
                         reactionRolesDB.markModified("data");
                         await reactionRolesDB.save();
                     } else {
-                        await client.db.createReactionRoles(MessageID, message.guild.id, false, addData)
+                        if (reactionRolesDBGlobal.length === 5) return message.channel.send(language("RR_LIMIT"));
+                        else await client.db.createReactionRoles(MessageID, message.guild.id, false, addData)
                     }
 
                 } else {

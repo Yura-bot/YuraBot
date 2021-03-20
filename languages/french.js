@@ -546,6 +546,7 @@ const languageData = {
     RR_MSG_NO_FOUND: "**<:X_:673212163837526064> Erreur :** Le message est introuvable, mettre l'id du message valide.",
     RR_DELETE_SUCESS: "Le système de réaction-rôles a été supprimé sur ce message !",
     RR_DELETE_SUCESS_EMOJI: "Le système de réaction-rôles a été supprimé sur cet emoji !",
+    RR_LIMIT: "**<:X_:673212163837526064> Erreur : **Vous avez atteint votre limite, vous ne pouvez plus crée de reaction roles.**",
 };
 
 const translate = (key, ...args) => {
