@@ -1,6 +1,4 @@
 giveaways.json
 package-lock.json
-configs/config.json
-data/
+configs/
 node_modules/
-main.js
