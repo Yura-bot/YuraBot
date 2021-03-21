@@ -5,6 +5,8 @@ const CheckAuth = require('../auth/CheckAuth');
 let bot = require("../../main.js")
 let config = require("../../configs/config.json")
 
+const Discord = require("discord.js");
+
 router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
 
     //req.params.guildID
@@ -81,8 +83,6 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
     if(Object.prototype.hasOwnProperty.call(data, "enable") || Object.prototype.hasOwnProperty.call(data, "update")) {
 
         let Tchannel = guild.channels.find((ch) => "#"+ch.name === data.channel)
-
-        const Discord = require("discord.js");
 
         let embed = new Discord.MessageEmbed()
         .setTitle(language("TICKET_TITLE"))
