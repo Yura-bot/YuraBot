@@ -14,6 +14,9 @@ module.exports = async(client, reaction, user) => {
 async function removeRole(message, emoji, user, db, language) {
     if (user.bot || message.id !== db.messageId) return;
 
+    let emmo = !db.data[emoji.name] ? db.data[emoji.id] : db.data[emoji.name];
+    if (!emmo) return
+
     if (message.partial) {
       try {
         await message.fetch();
