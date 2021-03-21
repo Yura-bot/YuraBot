@@ -21,6 +21,7 @@ module.exports = async(client, guild) => {
     `);
 
     await client.db.deleteGuild(guild.id)
+    await client.db.deleteReactionRoles(false, guild.id)
 
     let status = `yurabot.xyz | ?help | ${guildCount} guilds !`
     client.user.setActivity(status, {type: "PLAYING"})

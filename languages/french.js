@@ -532,6 +532,21 @@ const languageData = {
     TICKET_CLOSE_TITLE: "📥 | Ticket Fermé",
     TICKET_CLOSE_DESC: "Vous venez de fermer la demande !",
     TICKET_ERROR: "**<:X_:673212163837526064> Erreur :** Une erreur est survenu avec le système de ticket veuillez ressayer !",
+    /* Reaction Roles : */
+    RR_ROLE_ERROR_FETCH_MSG: "**<:X_:673212163837526064> Erreur Reaction Roles :** Le message est introuvable, veuillez re-setup le reaction rôle !",
+    RR_ROLE_NO_FOUND: "**<:X_:673212163837526064> Erreur Reaction Roles :** Le rôle est introuvable ou il est en dessous du rôle du Bot !",
+    RR_ROLE_MEMBER_ADMIN: "**<:X_:673212163837526064> Erreur Reaction Roles :** Vous êtes plus gradé que moi, je ne peux donc pas vous donner/supprimer un rôle !",
+    RR_MSG_NO_CHANNEL: "**<:X_:673212163837526064> Erreur :** Je n'arrive pas à trouver l'id du message, vérifiez qu'il est bien dans ce salon !",
+    RR_MSG_NO_ROLE: "**<:X_:673212163837526064> Erreur :** Je n'arrive pas à trouver le rôle, vérifiez que vous l'avez mentionné ou mis son id !",
+    RR_ERROR_EMOJI: "**<:X_:673212163837526064> Erreur :** Je n'arrive pas à trouver l'emoji, vérifiez que vous n'avez pas mis son id !",
+    SYNTAXE_RR: "reaction-roles [add/delete]```",
+    SYNTAXE_RR_ADD: "reaction-roles add [message id] [emoji] [role]```",
+    SYNTAXE_RR_DELETE: "reaction-roles delete [message id] (emoji)```",
+    RR_UPDATE_SUCESS: "Le système de role reactions à bien été mis à jour !",
+    RR_MSG_NO_FOUND: "**<:X_:673212163837526064> Erreur :** Le message est introuvable, mettre l'id du message valide.",
+    RR_DELETE_SUCESS: "Le système de réaction-rôles a été supprimé sur ce message !",
+    RR_DELETE_SUCESS_EMOJI: "Le système de réaction-rôles a été supprimé sur cet emoji !",
+    RR_LIMIT: "**<:X_:673212163837526064> Erreur : **Vous avez atteint votre limite, vous ne pouvez plus crée de reaction roles.**",
 };
 
 const translate = (key, ...args) => {

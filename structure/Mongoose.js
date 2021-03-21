@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { mongoKey } = require("../configs/config.json")
-const { Guild, User } = require("../models/index")
+const { Guild, User, Reaction_Roles } = require("../models/index")
 
 module.exports = {
     init: () => {
@@ -82,4 +82,41 @@ module.exports.createUser = async function (userID){
 
   await UserDB.save();
   return true;
+};
+
+module.exports.getReactionRoles = async function (messageID, guildID){
+  let reactRoles;
+  if (messageID) reactRoles = await Reaction_Roles.findOne( { messageId: messageID } );
+  else if (guildID) reactRoles = await Reaction_Roles.find( { guildId: guildID } );
+
+  if(reactRoles){
+    return reactRoles;
+  } else {
+    return false
+  }
+};
+
+module.exports.createReactionRoles = async function (messageID, guildID, pro, data){
+  reactRoles = new Reaction_Roles({
+    _id: mongoose.Types.ObjectId(),
+    messageId: messageID,
+    guildId: guildID,
+    pro: pro,
+    data: data
+  })
+
+  await reactRoles.save();
+  return true;
+};
+
+module.exports.deleteReactionRoles = async function (messageID, guildID){
+  let reactRoles;
+  if (messageID) reactRoles = await Reaction_Roles.deleteOne({ messageId: messageID });
+  else if (guildID) reactRoles = await Reaction_Roles.deleteMany({ guildId: guildID });
+
+  if(reactRoles){
+    return true;
+  } else {
+    return false;
+  }
 };

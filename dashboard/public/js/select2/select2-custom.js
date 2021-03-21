@@ -16,7 +16,7 @@ setTimeout(function(){
 
             //Limited Numbers
             $(".js-example-basic-multiple-limit").select2({
-                maximumSelectionLength: 2
+                maximumSelectionLength: 5
             });
 
             //RTL Suppoort

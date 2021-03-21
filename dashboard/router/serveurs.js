@@ -501,6 +501,14 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     let antilink = db.automod.antiLink
     let antibadworlds = db.automod.antiBadWords
 
+    let ignoredChannels = null
+    let ignoredRoles = null
+
+    if (db.automod.ignored) {
+        ignoredChannels = db.automod.ignored.channels
+        ignoredRoles = db.automod.ignored.roles
+    }
+
     res.render("items/auto-mod", {
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
         avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
@@ -518,6 +526,8 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         antipub: antipub,
         antilink: antilink,
         antibadworlds: antibadworlds,
+        ignoredChannels: ignoredChannels,
+        ignoredRoles: ignoredRoles,
         alert: false
     });   
 }).post("/:guildID/tools/auto-mod", CheckAuth, async function(req, res) {
@@ -543,34 +553,68 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
     let data  = req.body;
 
-    let statusAntiraid = data.statusAntiRaid;
-    let statusAntipub = data.statusAntiPub;
-    let statusAntilink = data.statusAntiLink;
-    let statusAntibadworlds = data.statusAntiBadWorlds;
+    if(Object.prototype.hasOwnProperty.call(data, "config")) {
+        if (data.channelsIgnored || data.rolesIgnored) {
+            let channels = data.channelsIgnored
+            let roles = data.rolesIgnored
+    
+            if (Array.isArray(channels)) {
+    
+                channelsCopie = [];
+                channels.forEach(element => channelsCopie.push(guild.channels.find((ch) => "#"+ch.name === element).id));
+                channels = channelsCopie
+    
+            } else {
+                if (channels) channels = guild.channels.find((ch) => "#"+ch.name === channels).id.split();
+                else channels = null
+            }
 
-    if (statusAntiraid != "on") statusAntiraid = false
-    else statusAntiraid = true
+            if (Array.isArray(roles)) {
+    
+                rolesCopie = [];
+                roles.forEach(element => rolesCopie.push(guild.roles.find((r) => "@"+r.name === element).id));
+                roles = rolesCopie
+    
+            } else {
+                if (roles) roles = guild.roles.find((r) => "@"+r.name === roles).id.split();
+                else roles = null
+            }
+    
+            db.automod.ignored = { channels: channels, roles: roles }
+        } else {
+            db.automod.ignored = { channels: null, roles: null }
+        }
 
-    if (statusAntipub != "on") statusAntipub = false
-    else statusAntipub = true
-
-    if (statusAntilink != "on") statusAntilink = false
-    else statusAntilink = true
-
-    if (statusAntibadworlds != "on") statusAntibadworlds = false
-    else statusAntibadworlds = true
-
-    const obj = {
-        antiRaid: statusAntiraid,
-        antiPub: statusAntipub,
-        antiLink: statusAntilink,
-        antiBadWords: statusAntibadworlds
+        db.markModified("automod");
+        await db.save();
     }
 
-    db.automod = obj
+    if(Object.prototype.hasOwnProperty.call(data, "basic")) {
+        let statusAntiraid = data.statusAntiRaid;
+        let statusAntipub = data.statusAntiPub;
+        let statusAntilink = data.statusAntiLink;
+        let statusAntibadworlds = data.statusAntiBadWorlds;
     
-    db.markModified("automod");
-    await db.save();
+        if (statusAntiraid != "on") statusAntiraid = false
+        else statusAntiraid = true
+    
+        if (statusAntipub != "on") statusAntipub = false
+        else statusAntipub = true
+    
+        if (statusAntilink != "on") statusAntilink = false
+        else statusAntilink = true
+    
+        if (statusAntibadworlds != "on") statusAntibadworlds = false
+        else statusAntibadworlds = true
+
+        db.automod.antiRaid = statusAntiraid
+        db.automod.antiPub = statusAntipub
+        db.automod.antiLink = statusAntilink
+        db.automod.antiBadWords = statusAntibadworlds
+        
+        db.markModified("automod");
+        await db.save();
+    }
 
     res.redirect(`/serveurs/${req.params.guildID}/tools/auto-mod`);
 })

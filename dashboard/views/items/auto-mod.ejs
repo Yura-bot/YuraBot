@@ -17,6 +17,8 @@
     <link rel="stylesheet" type="text/css" href="/css/page/profil.css">
     <link id="color" rel="stylesheet" href="/css/color-1.css" media="screen">
     <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/vendors/select2.css">
   </head>
   <body>
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
@@ -44,128 +46,184 @@
           </div>
           <!-- Page Start-->
           <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-12">
+            <div class="select2-drpdwn">
+              <div class="row">
 
-                <div class="xl-100 col-lg-12 box-col-12">
+                <div class="col-sm-12 col-xl-6 col-lg-12 col-md-6">
                   <div class="card">
-                    <div class="card-header">
-                      <h5 class="lang" key="autoMod">⚙ Configuration de l'auto modération :</h5>
-                    </div>
                     <form class="form theme-form" method="POST">
-                      <div class="card-body">
-  
-                        <div class="tabbed-card">
-                          <ul class="pull-right nav nav-pills nav-primary" id="pills-clrtab" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" id="pills-antiraid-tab" data-bs-toggle="pill" href="#pills-antiraid" role="tab" aria-controls="pills-antiraid" aria-selected="true"><i class="icofont icofont-shield"></i>Anti Raid</a></li>
-                            <li class="nav-item"><a class="nav-link" id="pills-antipub-tab" data-bs-toggle="pill" href="#pills-antipub" role="tab" aria-controls="pills-antipub" aria-selected="false"><i class="icofont icofont-safety"></i>Anti Pub</a></li>
-                            <li class="nav-item"><a class="nav-link" id="pills-antilink-tab" data-bs-toggle="pill" href="#pills-antilink" role="tab" aria-controls="pills-antilink" aria-selected="false"><i class="icofont icofont-link"></i>Anti Link</a></li>
-                            <li class="nav-item"><a class="nav-link" id="pills-antibadworlds-tab" data-bs-toggle="pill" href="#pills-antibadworlds" role="tab" aria-controls="pills-antibadworlds" aria-selected="false"><i class="icofont icofont-speech-comments"></i>Anti Bad Words</a></li>
-                          </ul>
-                          <div class="tab-content" id="pills-clrtabContent">
-                            <div class="tab-pane fade show active" id="pills-antiraid" role="tabpanel" aria-labelledby="pills-antiraid-tab">
-                              <h3><u class="lang" key="antiRaid">Anti raid :</u></h3>
-                              <br>
+
+                      <div class="card-header">
+                        <h5 class="card-title lang" key="autoMod">🔒 Configuration de l'auto modération :</h5>
+                      </div>
+                      <div class="card-body row switch-showcase height-equal">
+                        <div class="col-sm-">
+                          <div class="media mb-2">
+                            <label class="col-form-label m-r-10 lang" key="antiRaid">Anti raid :</label>
+                            <div class="media-body text-end">
+                              <div class="form-check form-switch">
                                 <% if(antiraid === false) { %>
-                                    <div class="media">
-                                      <label class="col-form-label m-r-10" class="lang" key="disabled">Désactivé !</label>
-                                      <div class="media-body icon-state switch-outline">
-                                        <label class="switch">
-                                          <input type="checkbox" name="statusAntiRaid"><span class="switch-state bg-success"></span>
-                                        </label>
-                                      </div>
+                                  <div class="media">
+                                    <div class="media-body icon-state switch-outline">
+                                      <label class="switch">
+                                        <input type="checkbox" name="statusAntiRaid"><span class="switch-state bg-success"></span>
+                                      </label>
                                     </div>
-                                  <% } else { %>
-                                    <div class="media">
-                                      <label class="col-form-label m-r-10" class="lang" key="enabled">Activé !</label>
-                                      <div class="media-body icon-state switch-outline">
-                                        <label class="switch">
-                                          <input type="checkbox" checked="" name="statusAntiRaid"><span class="switch-state bg-success"></span>
-                                        </label>
-                                      </div>
+                                  </div>
+                                <% } else { %>
+                                  <div class="media">
+                                    <div class="media-body icon-state switch-outline">
+                                      <label class="switch">
+                                        <input type="checkbox" checked="" name="statusAntiRaid"><span class="switch-state bg-success"></span>
+                                      </label>
                                     </div>
-                                  <% } %>
+                                  </div>
+                                <% } %>
+                              </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-antipub" role="tabpanel" aria-labelledby="pills-antipub-tab">
-                              <h3><u class="lang" key="antiPub">Anti Pub :</u></h3>
-                              <br>
+                          </div>
+                          <div class="media mb-2">
+                            <label class="col-form-label m-r-10 lang" key="antiPub">Anti Pub :</label>
+                            <div class="media-body text-end">
+                              <div class="form-check form-switch">
                                 <% if(antipub === false) { %>
-                                    <div class="media">
-                                      <label class="col-form-label m-r-10" class="lang" key="disabled">Désactivé !</label>
-                                      <div class="media-body icon-state switch-outline">
-                                        <label class="switch">
-                                          <input type="checkbox" name="statusAntiPub"><span class="switch-state bg-success"></span>
-                                        </label>
-                                      </div>
+                                  <div class="media">
+                                    <div class="media-body icon-state switch-outline">
+                                      <label class="switch">
+                                        <input type="checkbox" name="statusAntiPub"><span class="switch-state bg-success"></span>
+                                      </label>
                                     </div>
-                                  <% } else { %>
-                                    <div class="media">
-                                      <label class="col-form-label m-r-10" class="lang" key="enabled">Activé !</label>
-                                      <div class="media-body icon-state switch-outline">
-                                        <label class="switch">
-                                          <input type="checkbox" checked="" name="statusAntiPub"><span class="switch-state bg-success"></span>
-                                        </label>
-                                      </div>
+                                  </div>
+                                <% } else { %>
+                                  <div class="media">
+                                    <div class="media-body icon-state switch-outline">
+                                      <label class="switch">
+                                        <input type="checkbox" checked="" name="statusAntiPub"><span class="switch-state bg-success"></span>
+                                      </label>
                                     </div>
-                                  <% } %>
+                                  </div>
+                                <% } %>
+                              </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-antilink" role="tabpanel" aria-labelledby="pills-antilink-tab">
-                              <h3><u class="lang" key="antiLink">Anti Link :</u></h3>
-                              <br>
+                          </div>
+                          <div class="media mb-2">
+                            <label class="col-form-label m-r-10 lang" key="antiLink">Anti Link :</label>
+                            <div class="media-body text-end">
+                              <label class="switch">
                                 <% if(antilink === false) { %>
-                                    <div class="media">
-                                      <label class="col-form-label m-r-10" class="lang" key="disabled">Désactivé !</label>
-                                      <div class="media-body icon-state switch-outline">
-                                        <label class="switch">
-                                          <input type="checkbox" name="statusAntiLink"><span class="switch-state bg-success"></span>
-                                        </label>
-                                      </div>
+                                  <div class="media">
+                                    <div class="media-body icon-state switch-outline">
+                                      <label class="switch">
+                                        <input type="checkbox" name="statusAntiLink"><span class="switch-state bg-success"></span>
+                                      </label>
                                     </div>
-                                  <% } else { %>
-                                    <div class="media">
-                                      <label class="col-form-label m-r-10" class="lang" key="enabled">Activé !</label>
-                                      <div class="media-body icon-state switch-outline">
-                                        <label class="switch">
-                                          <input type="checkbox" checked="" name="statusAntiLink"><span class="switch-state bg-success"></span>
-                                        </label>
-                                      </div>
+                                  </div>
+                                <% } else { %>
+                                  <div class="media">
+                                    <div class="media-body icon-state switch-outline">
+                                      <label class="switch">
+                                        <input type="checkbox" checked="" name="statusAntiLink"><span class="switch-state bg-success"></span>
+                                      </label>
                                     </div>
-                                  <% } %>
+                                  </div>
+                                <% } %>
+                              </label>
                             </div>
-                            <div class="tab-pane fade" id="pills-antibadworlds" role="tabpanel" aria-labelledby="pills-antibadworlds-tab">
-                              <h3><u class="lang" key="antiBadWords">Anti Bad Words :</u></h3>
-                              <br>
+                          </div>
+                          <div class="media mb-2">
+                            <label class="col-form-label m-r-10 lang" key="antiBadWords">Anti Bad Words :</label>
+                            <div class="media-body text-end">
+                              <label class="switch">
                                 <% if(antibadworlds === false) { %>
-                                    <div class="media">
-                                      <label class="col-form-label m-r-10" class="lang" key="disabled">Désactivé !</label>
-                                      <div class="media-body icon-state switch-outline">
-                                        <label class="switch">
-                                          <input type="checkbox" name="statusAntiBadWorlds"><span class="switch-state bg-success"></span>
-                                        </label>
-                                      </div>
+                                  <div class="media">
+                                    <div class="media-body icon-state switch-outline">
+                                      <label class="switch">
+                                        <input type="checkbox" name="statusAntiBadWorlds"><span class="switch-state bg-success"></span>
+                                      </label>
                                     </div>
-                                  <% } else { %>
-                                    <div class="media">
-                                      <label class="col-form-label m-r-10" class="lang" key="enabled">Activé !</label>
-                                      <div class="media-body icon-state switch-outline">
-                                        <label class="switch">
-                                          <input type="checkbox" checked="" name="statusAntiBadWorlds"><span class="switch-state bg-success"></span>
-                                        </label>
-                                      </div>
+                                  </div>
+                                <% } else { %>
+                                  <div class="media">
+                                    <div class="media-body icon-state switch-outline">
+                                      <label class="switch">
+                                        <input type="checkbox" checked="" name="statusAntiBadWorlds"><span class="switch-state bg-success"></span>
+                                      </label>
                                     </div>
-                                  <% } %>
+                                  </div>
+                                <% } %>
+                              </label>
                             </div>
                           </div>
                         </div>
-  
                       </div>
-  
-                      <div class="card-footer">
-                        <button class="btn btn-primary" type="submit">Sauvegarder</button>
-                      </div>
-                    </form>
+
+                    <div class="card-footer">
+                      <button class="btn btn-primary lang" type="submit" name="basic" key="save">Sauvegarder</button>
+                    </div>
+                  </form>
+
                   </div>
                 </div>
+
+                <div class="col-sm-12 col-xl-6 col-lg-12 col-md-6">
+                  <div class="card">
+                    <form class="form theme-form" method="POST">
+                      <div class="card-header">
+                        <h5 class="card-title lang" key="configTitle">🧱 Configuration :</h5>
+                      </div>
+                      <div class="card-body o-hidden">
+  
+                        <div class="mb-2">
+                          <div class="col-form-label lang" key="ignoredChannels">Channels ignorées :</div>
+                          <select class="js-example-basic-multiple-limit col-sm-12" multiple="multiple" name="channelsIgnored">
+                            <% if(ignoredChannels){ %>
+
+                              <% ignoredChannels.forEach((ch) => { %>
+                                <option selected="selected">#<%= guild.channels.find((r) => r.id === ch).name %></option>
+                            <% }); %>
+
+                              <% guild.channels.filter((ch) => !ignoredChannels.includes(ch.id) && ch.type === "text").forEach((ch) => { %>
+                                  <option>#<%= ch.name %></option>
+
+                              <% }); } else { %>
+                              <% guild.channels.filter((ch) => ch.id !== guild.channels[0].id && ch.type === "text").forEach((ch) => { %>
+                                  <option>#<%= ch.name %></option>
+                              <% }); %>
+                          <% } %>
+                          </select>
+                        </div>
+  
+                        <div class="mb-2">
+                          <div class="col-form-label lang" key="ignoredRoles">Roles ignorées :</div>
+                          <select class="js-example-basic-multiple col-sm-12" multiple="multiple"  name="rolesIgnored">
+
+                            <% if(ignoredRoles){ %>
+
+                              <% ignoredRoles.forEach((ch) => { %>
+                                <option selected="selected">@<%= guild.roles.find((r) => r.id === ch).name %></option>
+                            <% }); %>
+
+                              <% guild.roles.filter((r) => !ignoredRoles.includes(r.id) && r.name !== "@everyone").forEach((r) => { %>
+                                  <option>@<%= r.name %></option>
+                              <% }); } else { %>
+                              <% guild.roles.filter((r) => r.id !== guild.roles.filter((r) => r.name !== "@everyone")[0].id && r.name !== "@everyone").forEach((r) => { %>
+                                  <option>@<%= r.name %></option>
+                              <% }); %>
+                          <% } %>
+
+                          </select>
+                        </div>
+  
+                      </div>
+
+                    <div class="card-footer">
+                      <button class="btn btn-primary lang" type="submit" name="config" key="save">Sauvegarder</button>
+                    </div>
+
+                  </form>
+                  </div>
+                </div>
+  
 
               </div>
             </div>
@@ -193,6 +251,9 @@
 
     <script src="/js/script.js"></script>
     <script src="/js/theme-customizer/customizer.js"></script>
+
+    <script src="/js/select2/select2.full.min.js"></script>
+    <script src="/js/select2/select2-custom.js"></script>
 
   </body>
 </html>

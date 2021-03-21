@@ -41,7 +41,11 @@ const GuildSchema = new mongoose.Schema({
         antiRaid: false,
         antiPub: false,
         antiLink: false,
-        antiBadWords: false
+        antiBadWords: false,
+        ignored: {
+            channels: null,
+            roles: null
+        }
     }},
     tickets: { type: Object, default: {
         enabled: false,

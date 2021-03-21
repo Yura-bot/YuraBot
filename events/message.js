@@ -19,9 +19,29 @@ module.exports = async(client, message) => {
         let antilink = db.automod.antiLink
         let antibadwords = db.automod.antiBadWords
 
-        if (antiraid) client.antiSpam.message(message, client, db)
+        let ignored = db.automod.ignored
+        let memberAuthorised = true
 
-        if (antilink) {
+        if (ignored) {
+            const ignoredRoles = ignored.roles
+            const ignoredChannels = ignored.channels
+            const memberRoles = message.member.roles.cache.map(value => value.id);
+
+            if (ignoredRoles) {
+                ignoredRoles.forEach(element => {
+                    let result = memberRoles.find(el => el === element)
+                    if (result) memberAuthorised = false
+                });
+            }
+
+            if (ignoredChannels) {
+                if (ignoredChannels.includes(message.channel.id)) memberAuthorised = false
+            }
+        }
+
+        if (antiraid && memberAuthorised) client.antiSpam.message(message, client, db)
+
+        if (antilink && memberAuthorised) {
             if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
 
                 const link = [
@@ -51,7 +71,7 @@ module.exports = async(client, message) => {
             }
         }
 
-        if (antipub) {
+        if (antipub && memberAuthorised) {
             if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
 
                 const pub = [
@@ -69,7 +89,7 @@ module.exports = async(client, message) => {
             }
         }
 
-        if (antibadwords) {
+        if (antibadwords && memberAuthorised) {
 
             if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
 
