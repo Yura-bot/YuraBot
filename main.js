@@ -8,8 +8,6 @@ const webhook = require('discord-webhook-node');
 const { GiveawaysManager } = require('discord-giveaways');
 
 const ameClient = require("amethyste-api")
-const { Client: Joke } = require("blague.xyz");
-
 const { Player } = require("discord-player");
 const AntiSpam = require('discord-anti-spam');
 
@@ -54,7 +52,6 @@ class Class extends Client {
         });
 
         this.ameApi = new ameClient(Config.ameToken)
-        this.joke = new Joke(Config.jokeToken, { defaultLang: "fr" });
 
         this.dash = require("./dashboard/dashboard.js");
         this.spawned = false;
