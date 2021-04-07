@@ -15,7 +15,7 @@ class BotInfo extends Command {
 
         const Discord = require("discord.js");
         const { version } = require("discord.js");
-        const moment = require("moment")
+        const prettyMsI18n = require("pretty-ms-i18n")
 
         let prefix = !db.prefix ? config.prefix : db.prefix;
         let guildLanguage = !db.lang ? "english": db.lang;
@@ -24,23 +24,8 @@ class BotInfo extends Command {
 
         let owner = client.users.cache.get(client.config.owner)
 
-        let uptimeArray = []
-        format(process.uptime()).replace(':', ' ').replace(':', ' ').replace(':', ' ').split(' ').forEach(element => uptimeArray.push(element));
-
-        function format(seconds){
-            function pad(s){
-              return (s < 10 ? '0' : '') + s;
-            }
-            var hours = Math.floor(seconds / (60*60));
-            var minutes = Math.floor(seconds % (60*60) / 60);
-            var seconds = Math.floor(seconds % 60);
-          
-            return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
-        }
-
-        let days = uptimeArray[0]
-        let hours = uptimeArray[1]
-        let minutes = uptimeArray[2]
+        let uptimeLang = !db.lang ? "en_US": "fr_FR";
+        let uptime = prettyMsI18n(client.uptime, { locale: uptimeLang })
       
         let cpuStat = require("cpu-stat");
         let os = require('os');
@@ -61,7 +46,7 @@ class BotInfo extends Command {
             .setAuthor(client.user.username, client.user.displayAvatarURL)
             .setDescription(language("BOTINFO_TITLE"))
             .addField(language("BOTINFO_CREATOR"), "- ``"+owner.tag+"``")
-            .addField(language("BOTINFO_UPTIME"), `__${days}__ j, __${hours}__ h, __${minutes}__ m`)
+            .addField(language("BOTINFO_UPTIME"), uptime)
             .addField(language("BOTINFO_INFOS"), `- \`ID\` → ${client.user.id}\n- \`Langage\` → ${language("LANGUAGE")} \n- \`Prefix\` → **${prefix}**`)
             .addField(language("BOTINFO_STATS"), language("BOTINFO_STATS_SERVERS")+guildCount.reduce(reducer)+"\n"+language("BOTINFO_STATS_USERS")+membersCount.reduce(reducer)+"\n"+language("BOTINFO_STATS_CHANNELS")+channelsCount.reduce(reducer)+"\n"+language("BOTINFO_STATS_PING")+Math.round(client.ws.ping)+" ms", true)
             .addField(language("BOTINFO_VERSION"), "NodeJS : " + "`v14.15.3`" + "\n" + "DiscordJS : " + "`" + `v${version}` + "`" + "")

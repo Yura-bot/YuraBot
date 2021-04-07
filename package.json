@@ -44,6 +44,7 @@
     "passport": "^0.4.1",
     "passport-discord": "^0.1.4",
     "path": "^0.12.7",
+    "pretty-ms-i18n": "^1.0.3",
     "socket.io-client": "^3.1.0",
     "sourcebin-api": "^1.0.6",
     "superagent": "^6.1.0",
