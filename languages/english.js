@@ -238,6 +238,13 @@ const languageData = {
     FILTER_ADDED: "<:check:673212026226737153> | I add the filter to the music, please wait... \nNote: the longer the music is, the longer it will take!",
     FILTER_REMOVE: "<:check:673212026226737153> | I **disable** the filter on the music, please wait... \nNote: the longer the music is, the longer it will take!",
     FILTER_LIST: "List of all filters enabled or disabled. \nUse \`{prefix}filter\` to add a filter to a song.",
+    /* Lyrics : */
+    SYNTAXE_LYRICS: "lyrics [Music]```",
+    LYRICS_TITLE: "🎼 Lyrics of the music : ${songName}",
+    LYRICS_AND_MORE: "\n**And more...**",
+    LYRICS_CLICK_HERE: "Click HERE !",
+    LYRICS_NO_FOUND: "<:X_:673212163837526064> | Error : No lyrics found for `{songName}` !",
+    LYRICS_ERROR: "<:X_:673212163837526064> | Error : An error has occurred, please check that your music exists!",
     /* Modération : */
     MOD_ACTION: "Action :",
     MOD_MEMBER: "Member :",

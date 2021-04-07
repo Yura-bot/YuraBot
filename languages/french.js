@@ -115,7 +115,7 @@ const languageData = {
     MESSAGE_AVATAR: "Voici l’avatar de ",
     AVATAR: "avatar",
     /* Joke : */
-    TITLE_JOKE: "**__🎭 Joke :__**",
+    TITLE_JOKE: "**__🎭 Blague :__**",
     JOKE: "blague",
     /* Lotterie : */
     LOTTERIE_WIN: " Toutes nos félicitations !",
@@ -238,6 +238,13 @@ const languageData = {
     FILTER_ADDED: "<:check:673212026226737153> | J'ajoute le filtre à la musique, attendez s'il vous plaît... \n Note : plus la musique est longue, plus cela prendra de temps !",
     FILTER_REMOVE: "<:check:673212026226737153> | Je **désactive** le filtre sur la musique, veuillez patienter... \n Note : plus la musique est longue, plus cela prendra de temps !",
     FILTER_LIST: "Liste de tous les filtres activés ou désactivés.\nUtilisez \`{prefix}filter\` pour ajouter un filtre à une chanson.",
+    /* Lyrics : */
+    SYNTAXE_LYRICS: "lyrics [Musique]```",
+    LYRICS_TITLE: "🎼 Paroles de la musique : ${songName}",
+    LYRICS_AND_MORE: "\n**Et plus...**",
+    LYRICS_CLICK_HERE: "Clique ICI !",
+    LYRICS_NO_FOUND: "<:X_:673212163837526064> | Erreur : Pas de paroles trouvées pour `{songName}` !",
+    LYRICS_ERROR: "<:X_:673212163837526064> | Erreur : Une erreur est survenue, vérifiez bien que votre musique existe !",
     /* Modération : */
     MOD_ACTION: "Action :",
     MOD_MEMBER: "Membre :",
