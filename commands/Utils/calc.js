@@ -27,7 +27,7 @@ class Calc extends Command {
         if(!calcul) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_CALC"));
 
         try {
-            evaluate(calcul);
+            let result = evaluate(calcul);
             return message.channel.send(language("CALC_SUCESS")+calcul+" = "+result+"```")
         } catch (error) {
            return message.channel.send(language("CALC_ERROR"));
