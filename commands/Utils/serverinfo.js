@@ -75,7 +75,7 @@ class ServerInfo extends Command {
         .addField(language("SERVERINFO_PROPRIETAIRE"), `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`)
         .addField(language("SERVERINFO_REGION"), [message.guild.region])
         .addField(language("SERVERINFO_USERS"), message.guild.memberCount)
-        .addField(language("SERVERINFO_STATS"), language("SERVERINFO_STATS_ONLINE")+on+language("SERVERINFO_STATS_STREAM")+streamer+language("SERVERINFO_STATS_AFK")+afk+language("SERVERINFO_STATS_DND")+dnd+language("SERVERINFO_STATS_OFFLINE")+offline)
+        //.addField(language("SERVERINFO_STATS"), language("SERVERINFO_STATS_ONLINE")+on+language("SERVERINFO_STATS_STREAM")+streamer+language("SERVERINFO_STATS_AFK")+afk+language("SERVERINFO_STATS_DND")+dnd+language("SERVERINFO_STATS_OFFLINE")+offline)  INTENT PRESENCE !!!!!!!!
         .addField(language("SERVERINFO_BOT"), message.guild.members.cache.filter(m => m.user.bot).size)
         .addField(language("SERVERINFO_AFK"), message.guild.afkTimeout / 60 + ' minutes')
         .addField(language("SERVERINFO_ROLES"), message.guild.roles.cache.size)

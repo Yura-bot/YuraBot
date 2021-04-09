@@ -31,7 +31,7 @@ class Mute extends Command {
             return message.channel.send(language("BOT_PERMISSION_MANAGE_ROLES"));
         }
 
-        const usermute = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[1]);
+        const usermute = message.guild.member(message.mentions.users.first()) || await message.guild.members.fetch(args[1]);
 
         if (!usermute) {
             return message.channel.send(

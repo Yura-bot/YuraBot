@@ -98,8 +98,8 @@ class UserInfo extends Command {
             .addField(language("USERINFO_ARIVATEDATE") + message.guild.name + " ➜**", date_join)
             .addField(language("USERINFO_CREATEDAT"), date_created)
             .addField(language("USERINFO_LASTMSG"), lastmsg + " ")
-            .addField(language("USERINFO_GAME"), jeu)
-            .addField(language("USERINFO_STATUS"), status)
+            //.addField(language("USERINFO_GAME"), jeu)               INTENT PRESENCE !!!!!!!!
+            //.addField(language("USERINFO_STATUS"), status)          INTENT PRESENCE !!!!!!!!
             .setFooter(client.footer)
             .setTimestamp();
     

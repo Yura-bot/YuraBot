@@ -28,7 +28,7 @@ class Kick extends Command {
         }
 
         let reason = args.slice(2).join(' ');
-        let user = message.guild.member(message.mentions.users.first()) || message.guild.members.cache.get(args[1]);
+        let user = message.guild.member(message.mentions.users.first()) || await message.guild.members.fetch(args[1]);
 
         if (!user) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_KICK"))
         if (user.id === message.author.id) return message.channel.send(language("AUTOKICK"));

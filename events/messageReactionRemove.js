@@ -25,7 +25,7 @@ async function removeRole(message, emoji, user, db, language) {
       }
     }
   
-    let member = message.guild.members.cache.get(user.id);
+    let member = await message.guild.members.fetch(user.id);
     let role = message.guild.roles.cache.get(db.data[emoji.name]);
 
     let emojiID = emoji.id

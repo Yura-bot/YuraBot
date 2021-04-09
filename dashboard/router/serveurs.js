@@ -14,11 +14,11 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
     const serv = results.find((g) => g);
     if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    const found = serv.members.find(element => element === req.user.id)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+     console.log(userPerm)
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
@@ -80,18 +80,17 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
     const serv = results.find((g) => g);
     if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    const found = serv.members.find(element => element === req.user.id)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+     console.log(userPerm)
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
 
      if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
-
     const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
@@ -137,18 +136,17 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
     const serv = results.find((g) => g);
     if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    const found = serv.members.find(element => element === req.user.id)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+     console.log(userPerm)
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
 
      if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
-
     const guildInfos = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(serv.id)
@@ -204,18 +202,17 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
     const serv = results.find((g) => g);
     if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    const found = serv.members.find(element => element === req.user.id)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+     console.log(userPerm)
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
 
      if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
-
     const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
@@ -268,18 +265,17 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
     const serv = results.find((g) => g);
     if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    const found = serv.members.find(element => element === req.user.id)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+     console.log(userPerm)
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
 
      if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
-
     const guildInfos = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
@@ -325,18 +321,17 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
     const serv = results.find((g) => g);
     if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    const found = serv.members.find(element => element === req.user.id)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+     console.log(userPerm)
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
 
      if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
-
     const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
@@ -398,18 +393,17 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
     const serv = results.find((g) => g);
     if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    const found = serv.members.find(element => element === req.user.id)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+     console.log(userPerm)
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
 
      if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
-
     const guildInfos = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
@@ -439,18 +433,17 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
     const serv = results.find((g) => g);
     if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    const found = serv.members.find(element => element === req.user.id)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+     console.log(userPerm)
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
 
      if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
-
     const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
@@ -480,18 +473,17 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
     const serv = results.find((g) => g);
     if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    const found = serv.members.find(element => element === req.user.id)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+     console.log(userPerm)
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
 
      if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
-
     const guildInfos = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
@@ -535,18 +527,17 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
     const serv = results.find((g) => g);
     if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
-    const found = serv.members.find(element => element === req.user.id)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID) || !found) return res.render("404");
+     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
+     console.log(userPerm)
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
 
      if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
     }
-
     const guild = await req.bot.fetchGuild(serv.id);
     
     let db = await bot.db.getGuild(req.params.guildID)

@@ -30,7 +30,7 @@ class UnBan extends Command {
         let user = args[1];
         if (!user) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_UNBAN"))
 
-        let bannedMember = client.users.cache.get(user)
+        let bannedMember = await client.users.fetch(user)
 
         if (!bannedMember) {
             return message.reply(language("UNBAN_INVALIDE_ID"));
