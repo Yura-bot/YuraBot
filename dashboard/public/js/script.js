@@ -201,6 +201,7 @@ $(document).ready(function () {
     if (lang === "fr") { document.getElementById('flag').className = "flag-icon flag-icon-fr";  }
     else if (lang === "en") document.getElementById('flag').className = "flag-icon flag-icon-us";
     else if (lang === "es") document.getElementById('flag').className = "flag-icon flag-icon-es"; 
+    else if (lang === "de") document.getElementById('flag').className = "flag-icon flag-icon-de"; 
 
     if (localStorage.getItem("primary") != null) {
         var primary_val = localStorage.getItem("primary");
