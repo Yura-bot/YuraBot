@@ -31,8 +31,9 @@ class CreateBackup extends Command {
                 maxMessagesPerChannel: 0,
                 jsonBeautify: true
             }).then((backupData) => {
-                // And send informations to the backup owner
-                message.author.send(language("BACKUP_COMMAND")+prefix+"load-backup "+backupData.id+"`!");
+                message.author.send(language("BACKUP_COMMAND")+prefix+"load-backup "+backupData.id+"`!").catch(e => {
+                    message.channel.send(language("BACKUP_COMMAND")+prefix+"load-backup "+backupData.id+"`!")
+                })
                 m.edit(language("BACKUP_SAVE")).catch(e => {
                     client.emit('error',e, "backup-create");
                 });
