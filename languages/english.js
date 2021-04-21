@@ -279,6 +279,8 @@ const languageData = {
     CLEAR_14DAYS: "<:X_:673212163837526064> **Error :** The bot can't delete 14 days old messages!",
     DELETE_MESSAGE: "deleted messages.**",
     CLEAR: "clear",
+    /* Commande Nuke : */
+    NUKE_SUCESS: "<:check:673212026226737153> Channel bien réinitialiser.",
     /* Commande Kick : */
     SYNTAXE_KICK: "kick [Member] (Reason)```",
     AUTOKICK: "<:X_:673212163837526064> **Error :** You can't kick yourself!",
