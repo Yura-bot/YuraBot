@@ -5,8 +5,6 @@ const Snippet = require('./configs/Snippet');
 const Handler = require('./structure/Handler');
 
 const webhook = require('discord-webhook-node');
-const { GiveawaysManager } = require('discord-giveaways');
-
 const ameClient = require("amethyste-api")
 const { Player } = require("discord-player");
 const AntiSpam = require('discord-anti-spam');
@@ -33,15 +31,11 @@ class Class extends Client {
 
         this.db = require("./structure/Mongoose.js");
 
-        const GiveawayManagerWithShardSupport = class extends GiveawaysManager {
-            async refreshStorage() {
-                return this.client.shard.broadcastEval(() => this.giveawaysManager.getAllGiveaways());
-            }
-        };
+        const YuraGiveaway = require('./structure/Giveaway.js');
 
-        this.giveawaysManager = new GiveawayManagerWithShardSupport(this, {
+        this.giveawaysManager = new YuraGiveaway(this, {
             hasGuildMembersIntent: true,
-            storage: "./giveaways.json",
+            storage: false,
             updateCountdownEvery: 5000,
             default: {
                 botsCanWin: false,

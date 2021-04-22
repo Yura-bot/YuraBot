@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { mongoKey } = require("../configs/config.json")
-const { Guild, User, Reaction_Roles } = require("../models/index")
+const { Guild, User, Reaction_Roles, Giveaway } = require("../models/index")
 
 module.exports = {
     init: () => {
@@ -119,4 +119,37 @@ module.exports.deleteReactionRoles = async function (messageID, guildID){
   } else {
     return false;
   }
+};
+
+module.exports.giveaway = async function (all, create, del, get, update) {
+
+  if (all) {
+    return await Giveaway.find({});
+  }
+
+  if (create) {
+
+    let NewDB = { _id: mongoose.Types.ObjectId() }
+    NewDB = Object.assign(create, NewDB);
+
+    let giveaway = new Giveaway(NewDB)
+    await giveaway.save();
+
+    return true;
+  }
+
+  if (del) {
+    await Giveaway.deleteOne({ messageID: del });
+    return true
+  }
+
+  if (get) {
+    return await Giveaway.findOne( { messageID: get } );
+  }
+
+  if (update) {
+    await Giveaway.updateOne({ messageID: update.messageID }, update);
+    return true
+  }
+  
 };

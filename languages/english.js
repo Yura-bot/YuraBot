@@ -134,7 +134,7 @@ const languageData = {
     GIVEAWAY_START_ENDED: "🎉🎉 **GIVEAWAY FINISHED** 🎉🎉",
     GIVEAWAY_START_TIME_REMAINING: "Remaining time : **{duration}**! ",
     GIVEAWAY_START_REACT: "React with 🎉 to participate!",
-    GIVEAWAY_START_WIN_MESSAGE: "ongratulations, {winners}! You have won **{prize}** !",
+    GIVEAWAY_START_WIN_MESSAGE: "Congratulations, {winners}! You have won **{prize}** !",
     GIVEAWAY_START_FOOTER: "Giveaways by Yura",
     GIVEAWAY_START_NO_WINER: "Contest cancelled, no valid participation.",
     GIVEAWAY_START_WINER: "Winner(s)",
@@ -279,6 +279,8 @@ const languageData = {
     CLEAR_14DAYS: "<:X_:673212163837526064> **Error :** The bot can't delete 14 days old messages!",
     DELETE_MESSAGE: "deleted messages.**",
     CLEAR: "clear",
+    /* Commande Nuke : */
+    NUKE_SUCESS: "<:check:673212026226737153> Channel bien réinitialiser.",
     /* Commande Kick : */
     SYNTAXE_KICK: "kick [Member] (Reason)```",
     AUTOKICK: "<:X_:673212163837526064> **Error :** You can't kick yourself!",
