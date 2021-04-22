@@ -30,23 +30,36 @@ class LoadBackup extends Command {
             return message.channel.send(language("BACKUP_IDVALIDE"));
         }
 
-        backup.fetch(backupID).then(async () => {
+        backup.fetch(backupID).then(() => {
 
             message.channel.send(language("BACKUP_LOAD_CONFIRM"));
-                await message.channel.awaitMessages(m => (m.author.id === message.author.id) && (m.content === "-confirm"), {
-                    max: 1,
-                    time: 20000,
-                    errors: ["time"]
-                }).catch((err) => {
+    
+            const collector = message.channel.createMessageCollector((m) => m.author.id === message.author.id && ['-confirm', 'cancel'].includes(m.content), {
+                time: 60000,
+                max: 1
+            });
+
+            collector.on('collect', (m) => {
+
+                const confirm = m.content === '-confirm';
+                collector.stop();
+
+                if (confirm) {     
+
+                    backup.load(backupID, message.guild).then(() => { backup.remove(backupID) }).catch((err) => {
+                        return message.author.send(language("BACKUP_ERROR"));
+                    });
+    
+                } else {
                     return message.channel.send(language("BACKUP_LOAD_CONFIRM_CANCEL"));
-                });
-
-                message.author.send(language("BACKUP_LOAD_SUCESS")).catch(e => {});
-
-                backup.load(backupID, message.guild).then(() => { backup.remove(backupID) }).catch((err) => {
-                    return message.author.send(language("BACKUP_ERROR"));
-                });
-
+                }
+            })
+    
+            collector.on('end', (collected, reason) => {
+                if (reason === 'time')
+                    return message.channel.send(language("BACKUP_LOAD_CONFIRM_CANCEL"));
+            })
+    
         }).catch((err) => {
             return message.channel.send(language("BACKUP_NO_FOUND")+backupID+"`!");
         });
