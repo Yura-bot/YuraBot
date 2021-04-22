@@ -1,9 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = async(client, guild) => {
-
-      console.log(guild.iconURL())
-
+      
       let guildCount = await client.shard.fetchClientValues('guilds.cache.size')
 
       let owner = await client.users.fetch(guild.ownerID)

@@ -19,7 +19,7 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
     if (req.user.id != config.owner) {
      if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-     console.log(userPerm)
+     
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
@@ -63,7 +63,7 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
     if (req.user.id != config.owner) {
      if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-     console.log(userPerm)
+     
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
@@ -144,7 +144,7 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
     if (req.user.id != config.owner) {
      if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
      let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-     console.log(userPerm)
+     
 
      let bits = new Discord.Permissions(userPerm);
      let perms = bits.toArray();
