@@ -59,4 +59,30 @@ module.exports = class {
         });
         console.log(`${'[Events Music]'} Chargé(s): ${count}/${files.length} évenement(s).`)
     }
+
+    giveawayEvents() {
+        console.log(`${'[Events Giveaways]'} Chargé(s): 1 évenement(s).`)
+        this.client.giveawaysManager.on('giveawayReactionAdded', (giveaway, member, reaction) => {
+
+            if (giveaway.manager.client.id === member) return
+
+            let rolesRequire = giveaway.extraData.roles;
+            let memberRoles = member.roles.cache
+            memberRoles = memberRoles.map(x => x.id);
+
+            if (rolesRequire[0]) {
+                let memberAuthorised = false
+
+                rolesRequire.forEach(element => {
+                    let result = memberRoles.find(el => el === element)
+                    if (result) memberAuthorised = true
+                });
+    
+                if (!memberAuthorised) {
+                    reaction.users.remove(member).then();
+                }
+            }
+       
+        });
+    }
 }

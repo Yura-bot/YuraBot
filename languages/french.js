@@ -127,7 +127,7 @@ const languageData = {
     FOX: "Renard",
     /* Giveaway : */
     /* Giveaway Start : */
-    SYNTAXE_GIVEAWAY_START: "start-giveaway [Channel] [Temps] [Nombre de gagnants] [Prix] ```",
+    SYNTAXE_GIVEAWAY_START: "start-giveaway [Channel] [Temps] [Nombre de gagnants] (condition [Role]) [Prix]```",
     GIVEAWAY_START: "start-giveaway",
     GIVEAWAY_GO: "Le Giveaway vient de commencer sur le salon ",
     GIVEAWAY_START_TITLE: "🎉🎉 **GIVEAWAY** 🎉🎉",
@@ -143,6 +143,14 @@ const languageData = {
     GIVEAWAY_START_MINUTES: "minutes",
     GIVEAWAY_START_HOURS: "heures",
     GIVEAWAY_START_DAYS: "jours",
+    /* Giveaway Config : */
+    GIVEAWAY_CONFIG_CHANNEL: "**<:horizontalsettingsmixer:675372744950677534> Veuillez envoyer dans le chat à la suite de ce message `le channel` dans lequel apparaîtra le giveaway.**",
+    GIVEAWAY_CONFIG_DURATION: "**<:horizontalsettingsmixer:675372744950677534> Veuillez envoyer dans le chat à la suite de ce message `le temps` pendant lequel les membres pourront participer.**",
+    GIVEAWAY_CONFIG_NW: "**<:horizontalsettingsmixer:675372744950677534> Veuillez envoyer dans le chat à la suite de ce message `le nombre de gagnants` qui recevront le lot.**",
+    GIVEAWAY_CONFIG_PRIZE: "**<:horizontalsettingsmixer:675372744950677534> Veuillez envoyer dans le chat à la suite de ce message `le prix` que (va)/vont gagner le(s) gagnant(s).**",
+    GIVEAWAY_CONFIG_ROLE: "**<:horizontalsettingsmixer:675372744950677534> Veuillez envoyer dans le chat à la suite de ce message `un rôle requis` pour participer au giveaway.**",
+    GIVEAWAY_CONFIG_RR_CANCEL: "Tapez `cancel` pour ignorer cette étape.",
+    GIVEAWAY_CONFIG_TIME: "<:X_:673212163837526064> Erreur : Temps écoulé, veuillez réessayer.",
     /* Giveaway End : */
     GIVEAWAY_END: "end-giveaway",
     GIVEAWAY_END_ID_INVALIDE: "Vous devez spécifier un ID de message valide",

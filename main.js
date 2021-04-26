@@ -97,7 +97,7 @@ class Class extends Client {
         this.commands = new Collection();
 
         const handlers = new Handler(this);
-        handlers.commands(); handlers.events(); handlers.musicEvents();
+        handlers.commands(); handlers.events(); handlers.musicEvents(); handlers.giveawayEvents();
     }
 }
 

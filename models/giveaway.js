@@ -17,13 +17,13 @@ const GiveawaySchema = new mongoose.Schema({
     hostedBy: String,
     embedColor: String,
     embedColorEnd: String,
-    botsCanWin: String,
-    exemptPermissions: String,
-    exemptMembers: String,
+    botsCanWin: Boolean,
+    exemptPermissions: Array,
+    exemptMembers: Array,
     reaction: String,
-    requirements: String,
+    requirements: Object,
     winnerIDs: Array,
-    extraData: String,
+    extraData: Object,
 });
 
 module.exports = mongoose.model('Giveaway', GiveawaySchema);
