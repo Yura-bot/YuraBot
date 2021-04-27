@@ -17,8 +17,17 @@ module.exports = async(client, error, message) => {
         case 'UnableToJoin':
             message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_3") }})
             break;
+        case 'ParseError':
+                message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_4") }})
+            break;
+        case 'LiveVideo':
+            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_5") }})
+            break;
+        case 'VideoUnavailable':
+            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_6") }})
+            break;
         default:
-            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_4").replace("{error}", error) }})
+            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_0").replace("{error}", error) }})
             return client.emit('error', error, "Music Error 4");
     };
 

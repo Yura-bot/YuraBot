@@ -211,7 +211,10 @@ const languageData = {
     MUSIC_ERROR_1: "<:X_:673212163837526064> | Aucune musique n'est diffusée sur ce serveur !",
     MUSIC_ERROR_2: "<:X_:673212163837526064> | Vous n'êtes connecté à aucun canal vocal !",
     MUSIC_ERROR_3: "<:X_:673212163837526064> | Je ne peux pas me joindre à votre canal vocal, veuillez vérifier mes autorisations !",
-    MUSIC_ERROR_4: "<:X_:673212163837526064> | Quelque chose a mal tourné ... Erreur : {error}",
+    MUSIC_ERROR_0: "<:X_:673212163837526064> | Quelque chose a mal tourné ... Erreur : {error}",
+    MUSIC_ERROR_4: "<:X_:673212163837526064> | Une erreur avec la vidéo est apparu veuillez réessayer.",
+    MUSIC_ERROR_5: "<:X_:673212163837526064> | Le live est indisponible pour le moment veuillez réessayer.",
+    MUSIC_ERROR_6: "<:X_:673212163837526064> | La vidéo est indisponible pour le moment veuillez réessayer.",
     /* Clear Queue : */
     CLEAR_QUEUE_CLEAR: "<:check:673212026226737153> | La file d'attente est dégagée !",
     /* Loop : */

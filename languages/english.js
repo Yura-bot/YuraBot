@@ -144,13 +144,13 @@ const languageData = {
     GIVEAWAY_START_HOURS: "hours",
     GIVEAWAY_START_DAYS: "days",
     /* Giveaway Config : */
-    GIVEAWAY_CONFIG_CHANNEL: "**:horizontalsettingsmixer: Veuillez envoyer dans le chat à la suite de ce message `le channel` dans lequel apparaîtra le giveaway.**",
-    GIVEAWAY_CONFIG_TIME: "**:horizontalsettingsmixer: Veuillez envoyer dans le chat à la suite de ce message `le temps` pendant lequel les membres pourront participer.**",
-    GIVEAWAY_CONFIG_NW: "**:horizontalsettingsmixer: Veuillez envoyer dans le chat à la suite de ce message `le nombre de gagnants` qui recevront le lot.**",
-    GIVEAWAY_CONFIG_PRIZE: "**:horizontalsettingsmixer: Veuillez envoyer dans le chat à la suite de ce message `le prix` que (va)/vont gagner le(s) gagnant(s).**",
-    GIVEAWAY_CONFIG_ROLE: "**:horizontalsettingsmixer: Veuillez envoyer dans le chat à la suite de ce message `un rôle requis` pour participer au giveaway.**",
-    GIVEAWAY_CONFIG_RR_CANCEL: "Tapez `cancel` pour ignorer cette étape.",
-    GIVEAWAY_CONFIG_TIME: "<:X_:673212163837526064> Erreur : Temps écoulé, veuillez réessayer.",
+    GIVEAWAY_CONFIG_CHANNEL: "**:horizontalsettingsmixer: Please send in the chat following this message `the channel` in which the giveaway will appear.**",
+    GIVEAWAY_CONFIG_TIME: "**:horizontalsettingsmixer: Please send in the chat following this message `the time` during which members will be able to participate.**",
+    GIVEAWAY_CONFIG_NW: "**:horizontalsettingsmixer: Please send in the chat following this message `the number of winners` who will receive the prize.**",
+    GIVEAWAY_CONFIG_PRIZE: "**:horizontalsettingsmixer: Please send in the chat following this message `the prize` that the winner(s) will win.**",
+    GIVEAWAY_CONFIG_ROLE: "**:horizontalsettingsmixer: Please send in the chat following this message `a required role` to participate in the giveaway.**",
+    GIVEAWAY_CONFIG_RR_CANCEL: "Type `cancel` to skip this step.",
+    GIVEAWAY_CONFIG_TIME: "<:X_:673212163837526064> Error: Time expired, please try again.",
     /* Giveaway End : */
     GIVEAWAY_END: "end-giveaway",
     GIVEAWAY_END_ID_INVALIDE: "You must specify a valid message ID",
@@ -211,7 +211,10 @@ const languageData = {
     MUSIC_ERROR_1: "<:X_:673212163837526064> | No music is played on this server!",
     MUSIC_ERROR_2: "<:X_:673212163837526064> | You are not connected to any voice channel!",
     MUSIC_ERROR_3: "<:X_:673212163837526064> | I can't join your voice channel, please check my permissions!",
-    MUSIC_ERROR_4: "<:X_:673212163837526064> | Something went wrong ... Error : {error}",
+    MUSIC_ERROR_0: "<:X_:673212163837526064> | Something went wrong ... Error : {error}",
+    MUSIC_ERROR_4: "<:X_:673212163837526064> | An error with the video appeared please try again.",
+    MUSIC_ERROR_5: "<:X_:673212163837526064> | The live stream is unavailable at the moment, please try again.",
+    MUSIC_ERROR_6: "<:X_:673212163837526064> | The video is unavailable at the moment please try again.",
     /* Clear Queue : */
     CLEAR_QUEUE_CLEAR: "<:check:673212026226737153> | The queue is clear!",
     /* Loop : */

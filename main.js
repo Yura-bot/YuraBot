@@ -26,7 +26,9 @@ class Class extends Client {
         this.player = new Player(this, {
             leaveOnEmpty: true,
             leaveOnStop: true,
-            leaveOnEnd: true
+            leaveOnEnd: true,
+            leaveOnEmptyCooldown: 300000,
+            enableLive: true
         });
 
         this.db = require("./structure/Mongoose.js");
