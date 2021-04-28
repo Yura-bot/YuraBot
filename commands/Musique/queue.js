@@ -34,15 +34,72 @@ class Queue extends Command {
 
         if (!queue) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
 
-        return message.channel.send({embed: {color: '0x00FF46', description: `🎞 Queue : \n\n ${language("QUEUE_QUEUE_IN_PROGRESS")} : ${queue.playing.title} | ${queue.playing.author} \n \n ` +
+        const pagination = require('discord.js-pagination');
 
-        queue.tracks.map((track, i) => {
-           return `**#${i+1}** - ${track.title} | ${track.author} (${language("QUEUE_REQUESTBY")} : ${track.requestedBy.username})`
-        }).join('\n')
+        if (queue.tracks.length >= 10) {
+            let res = queue.tracks.map((track, i) => {
+                return `**#${i+1}** - ${track.title} | ${track.author} (${language("QUEUE_REQUESTBY")} : ${track.requestedBy.username})`
+             }).join('\n').split('\n')
 
-       }}).catch(e => {
-        return message.channel.send(language("QUEUE_NOQUEUE"));
-    });
+             let Title = `🎞 Queue : \n\n ${language("QUEUE_QUEUE_IN_PROGRESS")} : ${queue.playing.title} | ${queue.playing.author} \n \n `
+
+             const page1 = new Discord.MessageEmbed()
+             .setTitle(Title)
+             .setDescription(res.slice(0, 10))
+
+             const page2 = new Discord.MessageEmbed()
+             .setTitle(Title)
+             .setDescription(res.slice(10, 20))
+
+             const page3 = new Discord.MessageEmbed()
+             .setTitle(Title)
+             .setDescription(res.slice(20, 30))
+
+             const page4 = new Discord.MessageEmbed()
+             .setTitle(Title)
+             .setDescription(res.slice(30, 40))
+
+             const page5 = new Discord.MessageEmbed()
+             .setTitle(Title)
+             .setDescription(res.slice(40, 50))
+
+             const page6 = new Discord.MessageEmbed()
+             .setTitle(Title)
+             .setDescription(res.slice(50, 60))
+
+             const page7 = new Discord.MessageEmbed()
+             .setTitle(Title)
+             .setDescription(res.slice(60, 70))
+
+             const page8 = new Discord.MessageEmbed()
+             .setTitle(Title)
+             .setDescription(res.slice(70, 80))
+
+             const page9 = new Discord.MessageEmbed()
+             .setTitle(Title)
+             .setDescription(res.slice(80, 90))
+
+             const page10 = new Discord.MessageEmbed()
+             .setTitle(Title)
+             .setDescription(res.slice(90, 100))
+         
+         
+             const pages = [ page1, page2, page3, page4, page5, page6, page7, page8, page9, page10 ]
+             const emoji = ["⏪", "⏩"]
+             const timeout = '900000'
+         
+             pagination(message, pages, emoji, timeout)
+        } else {
+            return message.channel.send({embed: {color: '0x00FF46', description: `🎞 Queue : \n\n ${language("QUEUE_QUEUE_IN_PROGRESS")} : ${queue.playing.title} | ${queue.playing.author} \n \n ` +
+
+            queue.tracks.map((track, i) => {
+               return `**#${i+1}** - ${track.title} | ${track.author} (${language("QUEUE_REQUESTBY")} : ${track.requestedBy.username})`
+            }).join('\n')
+    
+           }}).catch(e => {
+            return message.channel.send(language("QUEUE_NOQUEUE"));
+           });
+        }
 
     }
 }

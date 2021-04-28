@@ -27,7 +27,7 @@ class Class extends Client {
             leaveOnEmpty: true,
             leaveOnStop: true,
             leaveOnEnd: true,
-            leaveOnEmptyCooldown: 300000,
+            leaveOnEmptyCooldown: 60000,
             enableLive: true
         });
 
