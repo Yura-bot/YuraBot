@@ -137,6 +137,8 @@ const languageData = {
     GIVEAWAY_START_WIN_MESSAGE: "Félicitations, {winners} ! Vous avez gagné **{prize}** !",
     GIVEAWAY_START_FOOTER: "Giveaways by Yura",
     GIVEAWAY_START_NO_WINER: "Concours annulé, aucune participation valable.",
+    GIVEAWAY_START_BY: "Par : {user}",
+    GIVEAWAY_START_CONDITION_ROLE: "<:errorv1:675367507250380816> Pour participer vous devez avoir le rôle : ",
     GIVEAWAY_START_WINER: "Gagnant(s)",
     GIVEAWAY_START_ENDED_AT: "Terminé à",
     GIVEAWAY_START_SECONDS: "secondes",
@@ -150,7 +152,7 @@ const languageData = {
     GIVEAWAY_CONFIG_PRIZE: "**<:horizontalsettingsmixer:675372744950677534> Veuillez envoyer dans le chat à la suite de ce message `le prix` que (va)/vont gagner le(s) gagnant(s).**",
     GIVEAWAY_CONFIG_ROLE: "**<:horizontalsettingsmixer:675372744950677534> Veuillez envoyer dans le chat à la suite de ce message `un rôle requis` pour participer au giveaway.**",
     GIVEAWAY_CONFIG_RR_CANCEL: "Tapez `cancel` pour ignorer cette étape.",
-    GIVEAWAY_CONFIG_TIME: "<:X_:673212163837526064> Erreur : Temps écoulé, veuillez réessayer.",
+    GIVEAWAY_CONFIG_TIME: "<:X_:673212163837526064> Erreur : Temps écoulé ou un paramètre est invalide, veuillez réessayer.",
     /* Giveaway End : */
     GIVEAWAY_END: "end-giveaway",
     GIVEAWAY_END_ID_INVALIDE: "Vous devez spécifier un ID de message valide",

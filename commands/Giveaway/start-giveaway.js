@@ -26,8 +26,7 @@ class CreateGiveaway extends Command {
         }
 
         const CFilter = m => m.mentions.channels.first(),
-        MFilter = m => m.content,
-        RCFilter = m => m.mentions.roles.first() || m.content === "cancel"
+        MFilter = m => m.content;
 
         message.channel.send(language("GIVEAWAY_CONFIG_CHANNEL")).then(() => {
             message.channel.awaitMessages(CFilter, { max: 1, time: 30000, errors: ['time'] })
@@ -50,12 +49,13 @@ class CreateGiveaway extends Command {
                                                         let giveawayPrize = Pcollected.first().content
 
                                                         message.channel.send(language("GIVEAWAY_CONFIG_ROLE") + "\n" + language("GIVEAWAY_CONFIG_RR_CANCEL")).then(() => {
-                                                            message.channel.awaitMessages(RCFilter, { max: 1, time: 30000, errors: ['time'] })
+                                                            message.channel.awaitMessages(MFilter, { max: 1, time: 30000, errors: ['time'] })
                                                                 .then(RCcollected => {
 
-                                                                    let roleCondition = null
-                                                                    if (RCcollected.first().content != "cancel") {
-                                                                        roleCondition = RCcollected.first().mentions.roles.first()
+                                                                    let roleCondition = { id: null }
+                                                                    if (!RCcollected.first().content.includes("cancel")) {
+                                                                        roleCondition = RCcollected.first().mentions.roles.first();
+                                                                        if (!roleCondition) roleCondition = { id: null }
                                                                     }
 
                                                                     client.giveawaysManager.start(giveawayChannel, {
@@ -71,7 +71,8 @@ class CreateGiveaway extends Command {
                                                                             winMessage: language("GIVEAWAY_START_WIN_MESSAGE"),
                                                                             embedFooter: language("GIVEAWAY_START_FOOTER"),
                                                                             noWinner: language("GIVEAWAY_START_NO_WINER"),
-                                                                            hostedBy: "Par : {user}",
+                                                                            hostedBy: language("GIVEAWAY_START_BY"),
+                                                                            conditionRole: language("GIVEAWAY_START_CONDITION_ROLE"),
                                                                             winners: language("GIVEAWAY_START_WINER"),
                                                                             endedAt: language("GIVEAWAY_START_ENDED_AT"),
                                                                             units: {
@@ -90,7 +91,8 @@ class CreateGiveaway extends Command {
                                                                       });
                                                                 })
                                                                 .catch(RCcollected => {
-                                                                    message.channel.send(language("GIVEAWAY_CONFIG_TIME"));
+                                                                    console.log(RCcollected)
+                                                                    message.channel.send(language("GIVEAWAY_CONFIG_TIME") + "..");
                                                                 });
                                                         });
                                                     })

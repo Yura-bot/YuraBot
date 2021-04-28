@@ -61,7 +61,7 @@ module.exports = class {
     }
 
     giveawayEvents() {
-        console.log(`${'[Events Giveaways]'} Chargé(s): 1 évenement(s).`)
+        console.log(`${'[Events Giveaways]'} Chargé(s): 2 évenement(s).`)
         this.client.giveawaysManager.on('giveawayReactionAdded', (giveaway, member, reaction) => {
 
             if (giveaway.manager.client.id === member) return
@@ -84,5 +84,27 @@ module.exports = class {
             }
        
         });
+
+        this.client.giveawaysManager.on('giveawayEnded', (giveaway, winners) => {
+            winners.forEach((member) => {
+
+                let rolesRequire = giveaway.extraData.roles;
+                let memberRoles = member.roles.cache
+                memberRoles = memberRoles.map(x => x.id);
+    
+                if (rolesRequire[0]) {
+                    let memberAuthorised = false
+    
+                    rolesRequire.forEach(element => {
+                        let result = memberRoles.find(el => el === element)
+                        if (result) memberAuthorised = true
+                    });
+        
+                    if (!memberAuthorised) {
+                        this.client.giveawaysManager.reroll(giveaway.messageID)
+                    }
+                }
+            });
+       });
     }
 }
