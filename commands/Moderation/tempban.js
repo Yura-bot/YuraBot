@@ -77,7 +77,6 @@ class TempBan extends Command {
             message.guild.fetchBans().then(bans=> {
           
                 let banneduser = bans.find(b => b.user.id == user.id)
-                if(banneduser.size == 0) return ;
                 if(!banneduser) return;
           
                 message.guild.members.unban(user, "Auto Unban").catch(e =>{});
