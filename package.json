@@ -1,6 +1,6 @@
 {
   "name": "yurabot",
-  "version": "3.2.1",
+  "version": "3.2.3",
   "description": "Yura Discord'Bot",
   "main": "main.js",
   "scripts": {
