@@ -278,6 +278,9 @@ const languageData = {
     BAN_SUCESS_1: "<:X_:673212163837526064> Vous vous êtes fait bannir sur **",
     BAN_SUCESS_2: "** par __",
     BAN_SUCESS_3: "__ pour la raison **",
+    /* TempBan : */
+    SYNTAXE_TEMPBAN: "ban [Membre] [Temps] (Raison)```",
+    TEMPBAN_SUCESS: "<:X_:673212163837526064> Vous vous êtes fait temporairement bannir sur **${guild}** par __${user}__ pour la raison **${reason}** pendant ${time} !",
     /* Unban : */
     SYNTAXE_UNBAN: "unban [Membre] (Raison)```",
     UNBAN: "unban",
