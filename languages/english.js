@@ -258,6 +258,10 @@ const languageData = {
     LYRICS_CLICK_HERE: "Click HERE !",
     LYRICS_NO_FOUND: "<:X_:673212163837526064> | Error : No lyrics found for `{songName}` !",
     LYRICS_ERROR: "<:X_:673212163837526064> | Error : An error has occurred, please check that your music exists!",
+    /* MoveTo : */
+    SYNTAXE_MOVETO: "<:X_:673212163837526064> | Please put the id a valid voice room!",
+    MOVETO_ERROR: "<:X_:673212163837526064> | An error has occurred please try again.",
+    MOVETO_SUCESS: "<:check:673212026226737153> | The bot has been moved to the salon: {channel} !",
     /* Modération : */
     MOD_ACTION: "Action :",
     MOD_MEMBER: "Member :",

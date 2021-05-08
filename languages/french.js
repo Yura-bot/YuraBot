@@ -258,6 +258,10 @@ const languageData = {
     LYRICS_CLICK_HERE: "Clique ICI !",
     LYRICS_NO_FOUND: "<:X_:673212163837526064> | Erreur : Pas de paroles trouvées pour `{songName}` !",
     LYRICS_ERROR: "<:X_:673212163837526064> | Erreur : Une erreur est survenue, vérifiez bien que votre musique existe !",
+    /* MoveTo : */
+    SYNTAXE_MOVETO: "<:X_:673212163837526064> | Veuillez mettre l'id un salon vocal valide !",
+    MOVETO_ERROR: "<:X_:673212163837526064> | Une erreur est apparu veuillez réessayer.",
+    MOVETO_SUCESS: "<:check:673212026226737153> | Le bot à été déplacé dans le salon : {channel} !",
     /* Modération : */
     MOD_ACTION: "Action :",
     MOD_MEMBER: "Membre :",
