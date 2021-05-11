@@ -30,7 +30,7 @@ class Lock extends Command {
                 SEND_MESSAGES: false
             }).catch(error => {});
     
-            return message.channel.send(`${language("LOCK_MESSAGE_1")}${message.author.username}${language("LOCK_MESSAGE_2")}`);
+            return message.channel.send(language("LOCK_MESSAGE").replace("${mod}", message.author.username));
 
         } else {
             message.channel.send(language("LOCK_ALREADYLOCKED"));

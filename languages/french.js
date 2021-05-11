@@ -80,8 +80,6 @@ const languageData = {
     HELPCMD_NOALIASES: "Aucune aliases pour cette commande.",
     /* ADMIN : */
     /* Commande Backup : */
-    BACKUP_CREATE: "create-backup",
-    BACKUP_LOAD: "load-backup",
     LOADING: "**<a:loading:675233191870595082> Chargement...**",
     BACKUP_COMMAND: "<:check:673212026226737153> | La sauvegarde a été créée ! Pour la charger, tapez cette commande sur le serveur de votre choix : `",
     BACKUP_SAVE: "<:check:673212026226737153>  Création d'une sauvegarde réussie. L'ID de sauvegarde a été envoyé en dm !",
@@ -93,17 +91,14 @@ const languageData = {
     BACKUP_NO_FOUND: "<:X_:673212163837526064> | Aucune sauvegarde trouvée pour `",
     /* Commande Annonce : */
     SYNTAXE_ANNONCE: "annonce [Description]```",
-    ANNONCE: "annonce",
     ANNONCE_TITLE: "📌 __Annonce :__",
     /* Commande Sondage : */
     SYNTAXE_SONDAGE: "sondage [QUESTION]```",
-    SONDAGE: "sondage",
     SONDAGE_TITLE: "📊 __Sondage :__",
     SONDAGE_FIELD: "Répondez dès maintenant au sondage avec ✅ ou ❌ !",
     /* FUN : */
     /* 8ball : */
     SYNTAXE_8BALL: "8ball [Votre Question]````",
-    BALL: "8ball",
     QUESTION: "__**:interrobang: Question :**__",
     REPONSE: "Réponse :",
     YES: "Oui !",
@@ -113,22 +108,14 @@ const languageData = {
     PROB_No: "Probablement que non !",
     /* Avatar : */
     MESSAGE_AVATAR: "Voici l’avatar de ",
-    AVATAR: "avatar",
     /* Joke : */
     TITLE_JOKE: "**__🎭 Blague :__**",
-    JOKE: "blague",
-    /* Lotterie : */
-    LOTTERIE_WIN: " Toutes nos félicitations !",
-    LOTTERIE_LOSE: " plus de chance la prochaine fois.",
-    LOTTERIE: "lottery",
     /* Animaux : */
     CAT:"Chat",
     DOG:"Chien",
     FOX: "Renard",
     /* Giveaway : */
     /* Giveaway Start : */
-    SYNTAXE_GIVEAWAY_START: "start-giveaway [Channel] [Temps] [Nombre de gagnants] (condition [Role]) [Prix]```",
-    GIVEAWAY_START: "start-giveaway",
     GIVEAWAY_GO: "Le Giveaway vient de commencer sur le salon ",
     GIVEAWAY_START_TITLE: "🎉🎉 **GIVEAWAY** 🎉🎉",
     GIVEAWAY_START_ENDED: "🎉🎉 **GIVEAWAY FINI** 🎉🎉",
@@ -154,7 +141,6 @@ const languageData = {
     GIVEAWAY_CONFIG_RR_CANCEL: "Tapez `cancel` pour ignorer cette étape.",
     GIVEAWAY_CONFIG_TIME: "<:X_:673212163837526064> Erreur : Temps écoulé ou un paramètre est invalide, veuillez réessayer.",
     /* Giveaway End : */
-    GIVEAWAY_END: "end-giveaway",
     GIVEAWAY_END_ID_INVALIDE: "Vous devez spécifier un ID de message valide",
     GIVEAWAY_END_ERROR: "Impossible de trouver un Giveaway pour ",
     GIVEAWAY_END_SUCESS: "Le Giveaway se terminera dans moins de ",
@@ -163,7 +149,6 @@ const languageData = {
     GIVEAWAY_END_NO_TERMINER: "Ce giveaway n'est pas terminé !",
     GIVEAWAY_END_ERROR_OCCURED: "<:X_:673212163837526064> **Erreur :** Une erreur interne est survenue !",
     /* Giveaway Reroll : */
-    GIVEAWAY_REROLL: "reroll-giveaway",
     SYNTAXE_GIVEAWAY_REROLL: "reroll-giveaway [Message ID du Giveaway]```",
     GIVEAWAY_REROLL_NO_FOUND: "Le giveaway n’a pas été trouvé :( ",
     GIVEAWAY_REROLL_SUCESS: "Le Giveaway a été relancer !",
@@ -172,13 +157,11 @@ const languageData = {
     GIVEAWAY_REROLL_NO_END: "Ce giveaway n’est pas fini !",
     GIVEAWAY_REROLL_ERROR_OCCURED: "<:X_:673212163837526064> **Erreur :** Une erreur interne est survenue !",
     /* Giveaway Edit : */
-    GIVEAWAY_EDIT: "edit-giveaway",
     SYNTAXE_GIVEAWAY_EDIT: "edit-giveaway [ID] [Nombre de gagnants] [Nouveau Prix]```",
     GIVEAWAY_EDIT_NO_FOUND: "Impossible de trouver un Giveaway pour ",
     GIVEAWAY_EDIT_SUCESS: "Je suis en train de modifier le concours avec les nouveaux paramètres. Les modifications seront prises en compte dans 5 secondes.",
     GIVEAWAY_EDIT_ERROR_OCCURED: "<:X_:673212163837526064> **Erreur :** Une erreur interne est survenue !",
     /* Drop : */
-    DROP: "drop",
     SYNTAXE_DROP: "drop [Lot]```",
     DROP_DESC_1: "😃 \`Par\` ➔ {author}",
     DROP_DESC_2: "🥇 \`Lot\` ➔ {dropPrize} \n\n→ Le premier qui clique sur la réaction 🎊 remporte le lot mis en jeu !",
@@ -270,7 +253,6 @@ const languageData = {
     MOD_TIME: "Temps :",
     /* Ban : */
     SYNTAXE_BAN: "ban [Membre] (Raison)```",
-    BAN: "ban",
     AUTOBAN: "<:X_:673212163837526064> **Erreur :** Tu ne peux pas te ban !",
     BANYURA: "<:X_:673212163837526064> **Erreur :** Tu ne peux pas me ban !",
     BAN_NO_REASON: "Aucune raison fournie.",
@@ -279,26 +261,20 @@ const languageData = {
     BAN_ERROR_2: "<:X_:673212163837526064> **Erreur:** Je ne peux pas bannir ce membre parce qu'il a un rôle plus élevé ou égal au mien.",
     BAN_ERROR_INTERNE: "<:X_:673212163837526064> Je ne peux pas bannir ce membre. Mon rôle n'est peut-être pas assez élevé ou c'est une erreur interne.",
     BAN_SUCESS_MPCLOSE: "<:check:673212026226737153> Je l'ai bien bannis mais je n'ai pas pu le prévenir.",
-    BAN_SUCESS_1: "<:X_:673212163837526064> Vous vous êtes fait bannir sur **",
-    BAN_SUCESS_2: "** par __",
-    BAN_SUCESS_3: "__ pour la raison **",
+    BAN_SUCESS: "<:X_:673212163837526064> Vous avez été banni sur ** ${server}** par __${mod}__ pour la raison **${reason}** !",
     /* TempBan : */
     SYNTAXE_TEMPBAN: "ban [Membre] [Temps] (Raison)```",
     TEMPBAN_SUCESS: "<:X_:673212163837526064> Vous vous êtes fait temporairement bannir sur **${guild}** par __${user}__ pour la raison **${reason}** pendant ${time} !",
     /* Unban : */
     SYNTAXE_UNBAN: "unban [Membre] (Raison)```",
-    UNBAN: "unban",
     UNBAN_NOBAN: "<:X_:673212163837526064> | **{name}** n'est pas banni !",
     UNBAN_INVALIDE_ID: "<:X_:673212163837526064> | Impossible de trouver le membre ! Vérifiez que vous avez bien indiqué un id.",
-    UNBAN_SUCESS_1: "<:check:673212026226737153> Vous vous êtes fait unbannir sur **",
-    UNBAN_SUCESS_2: "** par __",
-    UNBAN_SUCESS_3: "__ pour la raison **",
+    UNBAN_SUCESS: "<:check:673212026226737153> Vous vous êtes fait unbannir sur **${server}** par __${mod}__ pour la raison **${reason}** !",
     UNBAN_SUCESS_MPCLOSE: "<:check:673212026226737153> Je l'ai bien unbannis mais je n'ai pas pu le prévenir.",
     /* Commande Clear : */
     CLEAR_LIMIT: "<:X_:673212163837526064> **Merci de donner un chiffre entre 1 et 100 pour effectuer cette commande.**",
     CLEAR_14DAYS: "<:X_:673212163837526064> **Erreur :** Le bot ne peux pas supprimer les messages vieux de 14 jours !",
     DELETE_MESSAGE: "messages supprimés.**",
-    CLEAR: "clear",
     /* Commande Nuke : */
     NUKE_SUCESS: "<:check:673212026226737153> Channel well reset.",
     /* Commande Kick : */
@@ -306,50 +282,29 @@ const languageData = {
     AUTOKICK: "<:X_:673212163837526064> **Erreur :** Tu ne peux pas te kick !",
     KICKYURA: "<:X_:673212163837526064> **Erreur :** Tu ne peux pas me kick !",
     KICK_DEV: "Vous ne pouvez pas kicker mon Developer !",
-    KICK: "kick",
     KICK_ERROR_1: "<:X_:673212163837526064> **Erreur:** Je ne peux pas expulser ce membre parce qu'il a un rôle supérieur ou égal au vôtre.",
     KICK_ERROR_2: "<:X_:673212163837526064> **Erreur:** Je ne peux pas expulser ce membre parce qu'il a un rôle plus élevé ou égal au mien.",
     KICK_ERROR_INTERNE: "<:X_:673212163837526064> Je ne peux pas expulser ce membre. Mon rôle n'est peut-être pas assez élevé ou c'est une erreur interne.",
     KICK_ERROR: "<:X_:673212163837526064> **Erreur :** Une erreur est survenue, je n'ai pas pu le kick !",
     KICK_SUCESS_MPCLOSE: "<:check:673212026226737153> Je l'ai bien expulser mais je n'ai pas pu le prévenir.",
-    KICK_SUCESS_1: "<:X_:673212163837526064> Vous vous êtes fait expuser sur **",
-    KICK_SUCESS_2: "** par __",
-    KICK_SUCESS_3: "__ pour la raison **",
+    KICK_SUCESS: "<:X_:673212163837526064> Vous avez été exclu de **${server}** par __${mod}__ pour la raison **${reason}** !",
     /* Commande Lock : */
-    LOCK: "lock",
-    LOCK_MESSAGE_1: "<:check:673212026226737153> **",
-    LOCK_MESSAGE_2: "** vient de verrouiller le canal. Ne vous inquiétez pas, l'administrateur va bientôt rouvrir la discussion, alors soyez patients.",
+    LOCK_MESSAGE: "<:check:673212026226737153> **${mod}** vient de verrouiller le canal. Ne vous inquiétez pas, l'administrateur va bientôt rouvrir la discussion, alors soyez patients.",
     LOCK_ALREADYLOCKED: "<:X_:673212163837526064> **Erreur :** Ce salon est déja locker !",
     /* Commande UnLock : */
-    UNLOCK: "unlock",
     UNLOCK_MESSAGE: "<:check:673212026226737153> Verrouillage levé, amusez-vous à parler tant que vous le pouvez !",
     UNLOCK_NOLOCKED: "<:X_:673212163837526064> **Erreur :** Ce salon n'est pas locker !",
     /* Commande TimeLock : */
-    TIMELOCK: "timelock",
     TIMELOCK_ERROR_TIME: "<:X_:673212163837526064> **Erreur :** Vous devez fixer une durée pour le verrouillage en heures, minutes ou secondes !",
-    /* Commande Warn : */
-    SYNTAXE_WARN: "warn [Membre] [Raison]```",
-    WARN: "warn",
-    WARN_MESSAGE_SUCESS_1: ":warning: | L'utilisateur **",
-    WARN_MESSAGE_SUCESS_2: "** viens de recevoir un avertissement par **",
-    WARN_MESSAGE_SUCESS_3: "** pour la raison suivante : **",
-    WARN_MESSAGE_USER_1: ":warning: | Vous avez reçu un avertissement dans le serveur **",
-    WARN_MESSAGE_USER_2: "** par ",
-    WARN_MESSAGE_USER_3: " pour la raison suivante : **",
     /* Commande Mute : */
     SYNTAXE_MUTE: "mute [Membre] (Raison)```",
-    MUTE: "mute",
     AUTOMUTE: "<:X_:673212163837526064> **Erreur:** Vous ne pouvez pas vous mute vous même !",
     USERMUTE: "<:X_:673212163837526064> **Erreur:** L'utilisateur donné est déjà mute !",
     MUTE_ERROR: "<:X_:673212163837526064> **Erreur :** Une erreur est survenue, je n'ai pas pu le mute !",
-    MUTE_SUCESS_MP_1: "🔇 Vous vous êtes fait mute sur **",
-    MUTE_SUCESS_MP_2: "** par __",
-    MUTE_SUCESS_MP_3: "__ pendant ",
-    MUTE_SUCESS_MP_4: "Pour la raison ",
+    MUTE_SUCESS_MP: "🔇 Vous vous êtes fait mute sur **${server}** par __${mod}__ ! Pour la raison `${reason}`.",
     MUTE_SUCESS_MPCLOSE: "<:check:673212026226737153> Je l'ai bien muter mais je n'ai pas pu le prévenir.",
     /* Commande UnMute : */
     SYNTAXE_UNMUTE: "unmute [Membre]```",
-    UNMUTE: "unmute",
     UNMUTE_NOMUTE: "<:X_:673212163837526064> **Erreur:** Ce membre n'est pas mute !",
     UNMUTE_SUCESS: "<:check:673212026226737153> | **{usermute}** est unmute !",
     UNMUTE_SUCESS_MPCLOSE: "<:check:673212026226737153> Je l'ai bien unmuter mais je n'ai pas pu le prévenir.",
@@ -357,19 +312,12 @@ const languageData = {
     UNMUTE_ERROR: "<:X_:673212163837526064> **Erreur:** Une erreur est survenue, je n'ai pas pu l'unmute !",
     /* Commande TempMute : */
     SYNTAXE_TEMPMUTE: "tempmute [Membre] [Temps] (Raison)```",
-    TEMPMUTE: "tempmute",
-    TEMPMUTE_SUCESS_MP_1: "🔇 Vous êtes fait mute sur **",
-    TEMPMUTE_SUCESS_MP_2: "** par __",
-    TEMPMUTE_SUCESS_MP_3: "__ pendant ",
-    TEMPMUTE_SUCESS_MP_4: "Pour la raison ",
+    TEMPMUTE_SUCESS_MP: "🔇 Vous vous êtes fait temporairement mute sur **${server}** par __${mod}__ pendant ${time} ! Pour la raison `${reason}`.",
     TEMPMUTE_SUCESS_MPCLOSE: "<:check:673212026226737153> Je l'ai bien unmuter mais je n'ai pas pu le prévenir.",
-    TEMPMUTE_UNMUTE_CHANNEL_1: "<:check:673212026226737153> Le membre <@",
-    TEMPMUTE_UNMUTE_CHANNEL_2: "> a été unmute !",
-    TEMPMUTE_UNMUTE_MP_1: "🔊 Vous êtes unmute sur **",
-    TEMPMUTE_UNMUTE_MP_2: "** ! Vous pouvez parler !",
+    TEMPMUTE_UNMUTE_CHANNEL: "<:check:673212026226737153> Le membre ${member} a été unmute !",
+    TEMPMUTE_UNMUTE_MP: "🔊 Vous êtes unmute sur **${guild}** ! Vous pouvez parler !",
     /* Commande Everyrole : */
     SYNTAXE_EVERYROLE: "everyrole [Role]```",
-    EVERYROLE: "everyrole",
     EVERYROLE_MENTION: "<:X_:673212163837526064> **Erreur :** Veuillez mentionner un role !",
     EVERYROLE_NO_ROLEFOUND: "<:X_:673212163837526064> | Aucun rôle trouvé pour **{role}**.",
     EVERYROLE_SUCESS: "<:check:673212026226737153> | J'ai ajouté le rôle **{role}** à **tout le monde**.",
@@ -380,33 +328,25 @@ const languageData = {
     IDLE: "",
     /* Commande ascii : */
     SYNTAXE_ASCII: "ascii [Message]```",
-    ASCII: "ascii",
     ASCII_ERROR: "Erreur:",
     ASCII_LIMIT_MESSAGE: "Seulement 20 caractères sont admis.",
     /* Commande Calc : */
     SYNTAXE_CALC: "calc [opération]```",
-    CALC: "calc",
     CALC_ERROR: "**<:X_:673212163837526064> Erreur :** Vérifiez votre opération !",
     CALC_SUCESS: "```Résultat :\n\n",
     /* Commande Cooldown : */
     SYNTAXE_COOLDOWN: "cooldown [temps]```",
-    COOLDOWN: "cooldown",
-    COOLDOWN_SUCESS: ":alarm_clock: | Cooldown activé sur **",
-    COOLDOWN_END: "** !",
-    COOLDOWN_STOP: ":alarm_clock: | Temps écoulé ! Il s'est passé **",
+    COOLDOWN_SUCESS: ":alarm_clock: | Cooldown activé sur **${time}** !",
+    COOLDOWN_STOP: ":alarm_clock: | Temps écoulé ! Il s'est passé **${time}** !",
     /* Commande Embed : */
     SYNTAXE_EMBED: "embed [couleur] | [Titre] | [Déscription] | [Footer]```",
-    EMBED: "embed",
     EMBED_SUCESS: "```Résultat :\n\n",
     /* Commande Emojis : */
     EMOJIS_TITLE: "__**<:smiling:675373017005686836> Les emojis sur le serveur :**__",
-    EMOJIS: "emojis",
     /* Commande Report-bug : */
     SYNTAXE_REPORT_BUG: "report-bug [Description]```",
-    REPORT_BUG: "report-bug",
     /* Commande web-ping : */
     SYNTAXE_WEB_PING: "web-ping [site]```",
-    WEB_PING: "web-ping",
     WEB_PING_NOSITEFOUND: "<:X_:673212163837526064> **Erreur : Site introuvable !**",
     WEB_PING_TITLE: "<:processor:675368071497515034> Informations pour {site}",
     WEB_PING_OWNER: ":bust_in_silhouette: Propriétaire :",
@@ -421,36 +361,29 @@ const languageData = {
     WEB_PING_HOSTING: "**Hébergeur :**",
     /* Commande Weather : */
     SYNTAXE_WEATHER: "weather [Ville/Région]```",
-    WEATHER: "weather",
     WEATHER_SUCESS: "🌦️ Météo pour : {city}",
     /* Commande Finduser : */
     SYNTAXE_FINDUSER: "finduser [id]```",
-    FINDUSER: "finduser",
     FINDUSER_ERROR: "**<:X_:673212163837526064> Erreur :** Vérifiez que c'est bien un id !",
     DISCRIMINATOR: "#️⃣ » Discriminateur : #",
     CREATED_AT: "📆 » Crée le : ",
     LAST_MSG: "#️⃣ » Dernier message : ",
     /* Commande Hastebin : */
     SYNTAXE_HASTEBIN: "hastebin [Votre Code]```",
-    HASTEBIN: "hastebin",
     HASTEBIN_SUCESS: "`Publié sur Hastebin à cette URL: `  ",
     HASTEBIN_ERROR: "**<:X_:673212163837526064> Erreur :** Hastebin est offline, veuillez réessayer plus tard.",
     /* Commande INVITE : */
-    INVITE: "invite",
     INVITE_TITLE: "🔧 Ajouter Yura sur votre serveur discord !",
     INVITE_ADMIN: "__**Lien d'invitation avec les permissions d'administrateurs :**__",
     INVITE_PERSO: "__**Lien d'invitation avec les permissions que vous pouvez personnaliser :**__",
     INVITE_CLICK_HERE: "**Cliquez ici**",
     /* Commande Shorten : */
     SYNTAXE_SHORTEN: "shorten [lien]```",
-    SHORTEN: "shorten",
     SHORTEN_SUCESS: "`Lien raccourcis à cette URL: `  ",
     /* Commande Morse : */
     SYNTAXE_MORSE: "morse [Texte]```",
-    MORSE: "morse",
     MORSE_SUCESS: "<:check:673212026226737153> **__Résultat :\n\n__**",
     /* Commande BotInfo : */
-    BOTINFO: "botinfo",
     BOTINFO_TITLE: "**• Informations du bot •**",
     BOTINFO_CREATOR: "👑 Créateur →",
     BOTINFO_UPTIME: "⏲ Uptime →",
@@ -467,11 +400,9 @@ const languageData = {
     BOTINFO_LINKS_SUPPORT: "Serveur Support",
     /* Commande QRCODE : */
     SYNTAXE_QRCODE: "qrcode [lien]```",
-    QRCODE: "qrcode",
     QRCODE_DESC: "Voici le qrcode pour : ",
     QRCODE_ERROR: "<:X_:673212163837526064> **Erreur :** Veuillez mettre un lien !",
     /* Commande SERVERINFO : */
-    SERVERINFO: "serverinfo",
     SERVERINFO_NO_ROLES: "Aucun",
     SERVERINFO_NAME: "🎟️ Nom ➜",
     SERVERINFO_CREATION: "🎂 Crée le ➜",
@@ -493,7 +424,6 @@ const languageData = {
     SERVERINFO_STATS_OFFLINE: "\n↳ <:offline:675371685792186409> Hors Ligne : ",
     /* Commande userinfo : */
     SYNTAXE_USERINFO: "userinfo <rien|@user|id>```",
-    USERINFO: "userinfo",
     USERINFO_USERS: "Statistiques du l'utilisateur **",
     USERINFO_PSEUDO: "**<:member:729291783602831410> Pseudo ➜**",
     USERINFO_TAG: "**<:channel:729291851601018961> Tag ➜**",
@@ -508,7 +438,6 @@ const languageData = {
     USERINFO_INFOS: "Informations de l'utilisateur ",
     /* Commande SUGGEST : */
     SYNTAXE_SUGGEST: "suggest : [Description]```",
-    SUGGEST: "suggest",
     SUGGEST_ERROR_NO_SYSTEM: "<:X_:673212163837526064> | Vous n'avez pas activé le système de suggestion votre serveur !",
     SUGGEST_ERROR_NO_CHANNEL: "<:X_:673212163837526064> | Le channel n'a pas été trouvé !",
     SUGGEST_ERROR: "<:X_:673212163837526064> **Erreur :** Une erreur est survenue la suggestion n'a pas été envoyé !",
@@ -517,11 +446,9 @@ const languageData = {
     SUGGEST_DESC: "📝 __Description :__",
     SUGGEST_SUCESS: "<:check:673212026226737153> Votre suggestion viens d'être envoyé !",
     /* Commande SUPPORT : */
-    SUPPORT: "support",
     SUPPORT_DESC: "🔧 Rejoignez le serveur support du Yura Bot",
     SUPPORT_FIELD: "**__Voici notre serveur discord de support pour vous aider ou proposer de nouvelles fonctionnalités :__**",
     /* Commande SYSTEMINFO : */
-    SYSTEMINFO: "systeminfo",
     SYSTEMINFO_SYSTEM: ":gear: • __Système__",
     SYSTEMINFO_PLATEFORM: "Plateforme : ",
     SYSTEMINFO_CPU: "💻 • __Processeur__",
@@ -532,17 +459,14 @@ const languageData = {
     ONLINE: "En ligne",
     OFFLINE: "Hors ligne",
     MC_SERVER_ONLINE_PLAYER: "<:minecraftsword:675369153833467930> » Joueurs en ligne : ",
-    MC_SERVER: "mc-server",
     MC_SERVER_NO_FOUND: "**<:X_:673212163837526064> Erreur :** Aucun serveur trouvé, veuillez réessayer.",
     /* Commande mc-achivements : */
     SYNTAXE_MC_ACHIVEMENT: "mc-achivements | [block] | [title] | [description1] | (description2)```",
-    MC_ACHIVEMENT: "mc-achivements",
     MC_ACHIVEMENT_ERROR: "**<:X_:673212163837526064> Erreur :** Veuillez vérifier que vos phrases ne sont pas trop longues et que le bloc est valide.",
     /* Commande mc-user : */
     SYNTAXE_MC_USER: "mc-user [Pseudo]```",
     MC_USER_NAME: "<:idverified:675370524825747486> » Nom : ",
     MC_USER_GET_HEAD: "<:smiling:675373017005686836> » Commande pour obtenir la tête : ",
-    MC_USER: "mc-user",
     MC_USER_NO_FOUND: "**<:X_:673212163837526064> Erreur :** Aucun utilisateur trouvé, veuillez réessayer.",
     /* Commande Rockstar Status : */
     RGS_TITLE: "<:rockstar:777553264882352188> Status des jeux rockstar : ",

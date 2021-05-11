@@ -62,7 +62,7 @@ class Kick extends Command {
           });
       
           if(user.bot) return;
-          user.send(`${language("KICK_SUCESS_1")}${message.guild.name}${language("KICK_SUCESS_2")}${message.author.username}${language("KICK_SUCESS_3")}` + reason + "** !").catch(e =>{
+          user.send(language("KICK_SUCESS").replace("${server}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e =>{
            message.channel.send(language("KICK_SUCESS_MPCLOSE"))
           });
         }

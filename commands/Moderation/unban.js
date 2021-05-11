@@ -59,7 +59,7 @@ class UnBan extends Command {
       message.channel.send(embed).catch(e =>{});
   
       if(bannedMember.bot) return;
-      bannedMember.send(`${language("UNBAN_SUCESS_1")}${message.guild.name}${language("UNBAN_SUCESS_2")}${message.author.username}${language("UNBAN_SUCESS_3")}` + reason + "** !").catch(e =>{
+      bannedMember.send(language("UNBAN_SUCESS").replace("${guild}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e =>{
        message.channel.send(language("UNBAN_SUCESS_MPCLOSE"))
       })
       

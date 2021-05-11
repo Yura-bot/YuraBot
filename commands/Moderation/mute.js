@@ -101,7 +101,7 @@ class Mute extends Command {
         db.muteRole = muterole.id,
         await db.save();
             
-        usermute.send(`${language("MUTE_SUCESS_MP_1")}${message.guild.name}${language("MUTE_SUCESS_MP_2")}${message.author.username}__ `+" ! " + `${language("MUTE_SUCESS_MP_4")}\`${reason}\``).catch(e =>{
+        usermute.send(language("MUTE_SUCESS_MP").replace("${server}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e =>{
             message.channel.send(language("MUTE_SUCESS_MPCLOSE"))
         });
     }

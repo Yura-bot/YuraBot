@@ -106,7 +106,7 @@ class TempMute extends Command {
         db.muteRole = muterole.id,
         await db.save();
             
-        usermute.send(`${language("TEMPMUTE_SUCESS_MP_1")}${message.guild.name}${language("TEMPMUTE_SUCESS_MP_2")}${message.author.username}${language("TEMPMUTE_SUCESS_MP_3")}` + ms(ms(mutetime)) + " ! " + `${language("TEMPMUTE_SUCESS_MP_4")}\`${reason}\``).catch(e =>{
+        usermute.send(language("TEMPMUTE_SUCESS_MP").replace("${server}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason).replace("${time}", ms(ms(mutetime)))).catch(e =>{
             message.channel.send(language("TEMPMUTE_SUCESS_MPCLOSE"))
         });
 
@@ -121,8 +121,8 @@ class TempMute extends Command {
                 return client.emit('error',e, "unmute");
             });
             
-            message.channel.send(`${language("TEMPMUTE_UNMUTE_CHANNEL_1")}${usermute.id}${language("TEMPMUTE_UNMUTE_CHANNEL_2")}`).catch(e => {});
-            message.mentions.users.first().send(`${language("TEMPMUTE_UNMUTE_MP_1")}${message.guild.name}${language("TEMPMUTE_UNMUTE_MP_2")}`).catch(e => {});
+            message.channel.send(language("TEMPMUTE_UNMUTE_CHANNEL").replace("${member}", `<@${usermute.id}>`)).catch(e => {});
+            message.mentions.users.first().send(language("TEMPMUTE_UNMUTE_MP").replace("${guild}", message.guild.name)).catch(e => {});
         
         }, ms(mutetime));
     }

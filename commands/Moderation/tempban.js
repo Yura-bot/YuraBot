@@ -82,7 +82,7 @@ class TempBan extends Command {
                 message.guild.members.unban(user, "Auto Unban").catch(e =>{});
             
                 if(user.bot) return;
-                user.send(`${language("UNBAN_SUCESS_1")}${message.guild.name}${language("UNBAN_SUCESS_2")}${message.author.username}__ !`).catch(e => {
+                user.send(language("BAN_SUCESS").replace("${server}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e => {
                  message.channel.send(language("UNBAN_SUCESS_MPCLOSE"))
                 });
                 

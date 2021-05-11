@@ -62,7 +62,7 @@ class Ban extends Command {
           });
       
           if(user.bot) return;
-          user.send(`${language("BAN_SUCESS_1")}${message.guild.name}${language("BAN_SUCESS_2")}${message.author.username}${language("BAN_SUCESS_3")}` + reason + "** !").catch(e =>{
+          user.send(language("BAN_SUCESS").replace("${server}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e =>{
            message.channel.send(language("BAN_SUCESS_MPCLOSE"))
           });
         }

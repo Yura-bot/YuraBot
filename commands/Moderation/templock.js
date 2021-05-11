@@ -34,7 +34,7 @@ class TempLock extends Command {
                 SEND_MESSAGES: false
             }).catch(error => {});
 
-            message.channel.send(`${language("LOCK_MESSAGE_1")}${message.author.username}${language("LOCK_MESSAGE_2")}`);
+            message.channel.send(language("LOCK_MESSAGE").replace("${mod}", message.author.username));
 
             setTimeout(() => {
                 message.channel.createOverwrite(message.guild.id, {
