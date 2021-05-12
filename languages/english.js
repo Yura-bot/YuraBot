@@ -96,6 +96,18 @@ const languageData = {
     SYNTAXE_SONDAGE: "sondage [QUESTION]```",
     SONDAGE_TITLE: "📊 __Survey :__",
     SONDAGE_FIELD: "Take the survey now with ✅ ou ❌ !",
+    /* Commande Config : */
+    CONFIG_EMBED_TITLE: "<:horizontalsettingsmixer:675372744950677534> Yura configuration menu : ",
+    CONFIG_EMBED_DESC_1: "__Here is the Yura configuration menu:__ \n **To change a parameter you have to press the associated reaction and then send a message which will be the new prefix for example.** \n\n",
+    CONFIG_EMBED_DESC_2: "**The prefix :** <:help:675367617250328598> \n",
+    CONFIG_EMBED_DESC_3: "**The language :** <:englishflag:788834570447487006>",
+    CONFIG_PREFIX: "📝 Please write the new prefix of the bot : ",
+    CONFIG_PREFIX_ERROR: "<:X_:673212163837526064> Error: The prefix must not exceed 3 characters!",
+    CONFIG_NEW_PREFIX: "<:check:673212026226737153> New prefix : `{prefix}` !",
+    CONFIG_LANG: "🚀 Please choose the language of the bot! Click on the reaction of your language below. ",
+    CONFIG_LANG_FR: "<:check:673212026226737153> New Language: `French` !",
+    CONFIG_LANG_EN: "<:check:673212026226737153> New Language: `English` !",
+    CONFIG_TIME: "<:X_:673212163837526064> Error: The time limit has expired, please try again.",
     /* FUN : */
     /* 8ball : */
     SYNTAXE_8BALL: "8ball [Your Question]````",

@@ -96,6 +96,18 @@ const languageData = {
     SYNTAXE_SONDAGE: "sondage [QUESTION]```",
     SONDAGE_TITLE: "📊 __Sondage :__",
     SONDAGE_FIELD: "Répondez dès maintenant au sondage avec ✅ ou ❌ !",
+    /* Commande Config : */
+    CONFIG_EMBED_TITLE: "<:horizontalsettingsmixer:675372744950677534> Menu de configuration de Yura : ",
+    CONFIG_EMBED_DESC_1: "__Voici le menu de configuration de Yura :__ \n **Pour modifier un paramètre il faut appuyer sur la réaction associé puis envoyer un message qui sera le nouveau prefix par exemple.** \n\n",
+    CONFIG_EMBED_DESC_2: "**Le prefix :** <:help:675367617250328598> \n",
+    CONFIG_EMBED_DESC_3: "**La langue :** <:englishflag:788834570447487006>",
+    CONFIG_PREFIX: "📝 Veuillez écrire le nouveau prefix du bot : ",
+    CONFIG_PREFIX_ERROR: "<:X_:673212163837526064> Erreur : Le préfix ne doit pas dépasser 3 caractères !",
+    CONFIG_NEW_PREFIX: "<:check:673212026226737153> Nouveau prefix : `{prefix}` !",
+    CONFIG_LANG: "🚀 Veuillez choisir la langue du bot ! Cliquez sur la réaction de votre langue ci dessous. ",
+    CONFIG_LANG_FR: "<:check:673212026226737153> Nouvelle Langue : `Français` !",
+    CONFIG_LANG_EN: "<:check:673212026226737153> Nouvelle Langue : `Anglais` !",
+    CONFIG_TIME: "<:X_:673212163837526064> Erreur : La limite de temps est écoulée, veuillez réessayer.",
     /* FUN : */
     /* 8ball : */
     SYNTAXE_8BALL: "8ball [Votre Question]````",
