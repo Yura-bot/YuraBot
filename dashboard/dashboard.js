@@ -13,7 +13,7 @@ const morgan = require('morgan')
 const config = require("../configs/config.json");
 
 module.exports.load = async(client) => {
-
+    
     const http = require('http').createServer(app);
 
     passport.serializeUser((user, done) => {
@@ -58,6 +58,7 @@ module.exports.load = async(client) => {
         .use("/profile", require("./router/profile"))
         .use("/serveurs", require("./router/serveurs"))
         .use("/extensions", require("./router/extensions"))
+        .use("/yt", client.yNotifier.listener())
         .get("*", function(req, res) {
             res.status(404).render("404");
         })

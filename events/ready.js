@@ -1,9 +1,8 @@
-const axios = require("axios")
-
 module.exports = async(client) => {
     console.log("» "+client.user.username+" est prêt, connécté en tant que "+client.user.tag+".");
 
     if (client.shard.ids.includes(0) && !client.spawned){
+        await client.YoutubeNotif.init(client);
         await client.dash.load(client);
     }
 

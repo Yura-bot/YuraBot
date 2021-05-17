@@ -1,5 +1,8 @@
 const { GiveawaysManager } = require('discord-giveaways');
 
+const mongoose = require("mongoose");
+const GiveawayModel = require("../models/giveaway.js")
+
 module.exports = class extends GiveawaysManager {
     /*
     constructor(client) {
@@ -12,21 +15,27 @@ module.exports = class extends GiveawaysManager {
     }
 
     async getAllGiveaways() {
-        return await this.client.db.giveaway(true, false, false, false, false)
+        return await GiveawayModel.find({});
     }
 
     async saveGiveaway(messageID, giveawayData) {
-        this.client.db.giveaway(false, giveawayData, false, false, false)
+
+        let NewDB = { _id: mongoose.Types.ObjectId() }
+        NewDB = Object.assign(giveawayData, NewDB);
+    
+        let giveaway = new GiveawayModel(NewDB)
+        await giveaway.save();
+
         return true;
     }
 
     async editGiveaway(messageID, giveawayData) {
-        await this.client.db.giveaway(false, false, false, false, giveawayData)
+        await GiveawayModel.updateOne({ messageID: messageID }, giveawayData);
         return true;
     }
 
     async deleteGiveaway(messageID) {
-        await this.client.db.giveaway(false, false, messageID, false, false)
+        await GiveawayModel.deleteOne({ messageID: messageID });
         return true;
     }
 }

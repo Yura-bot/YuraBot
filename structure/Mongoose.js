@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const { mongoKey } = require("../configs/config.json")
-const { Guild, User, Reaction_Roles, Giveaway } = require("../models/index")
+const { Guild, User, Reaction_Roles, Giveaway, Notif } = require("../models/index")
 
 module.exports = {
-    init: () => {
+    init: async () => {
         const mongOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 
         mongoose.connect(mongoKey, mongOptions).then(() => {
@@ -121,35 +121,44 @@ module.exports.deleteReactionRoles = async function (messageID, guildID){
   }
 };
 
-module.exports.giveaway = async function (all, create, del, get, update) {
+module.exports.notif = async function (options, client) {
+  if (options.AllChannels) {
 
-  if (all) {
-    return await Giveaway.find({});
-  }
+    let NotifsYT = await Notif.find({});
+    let AllChannels = []
+  
+    NotifsYT.forEach(el => {
+      AllChannels.push(el.id)
+    })
 
-  if (create) {
+    return AllChannels;
 
-    let NewDB = { _id: mongoose.Types.ObjectId() }
-    NewDB = Object.assign(create, NewDB);
+  } else if (options.add) {
 
-    let giveaway = new Giveaway(NewDB)
-    await giveaway.save();
-
+    NDB = new Notif({
+      _id: mongoose.Types.ObjectId(),
+      id: options.add,
+      data: []
+    })
+  
+    await NDB.save();
+    client.yNotifier.subscribe(options.add);
     return true;
-  }
 
-  if (del) {
-    await Giveaway.deleteOne({ messageID: del });
-    return true
-  }
+  } else if (options.remove) {
 
-  if (get) {
-    return await Giveaway.findOne( { messageID: get } );
-  }
+    await Notif.findOneAndDelete(options.remove);
+    client.yNotifier.unsubscribe(options.remove);
+    return true;
 
-  if (update) {
-    await Giveaway.updateOne({ messageID: update.messageID }, update);
-    return true
+  } else if (options.find) {
+    if (!options.update) {
+      return await Notif.findOne({ id: options.find })
+    }
   }
   
+  if (options.update) {
+    return await Notif.findOneAndReplace({ id: options.find }, options.update)
+  }
+
 };

@@ -3,4 +3,5 @@ module.exports = {
     User: require("./user"),
     Reaction_Roles: require("./reaction_roles"),
     Giveaway: require("./giveaway"),
+    Notif: require("./notif"),
 };

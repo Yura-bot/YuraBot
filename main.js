@@ -8,6 +8,7 @@ const webhook = require('discord-webhook-node');
 const ameClient = require("amethyste-api")
 const { Player } = require("discord-player");
 const AntiSpam = require('discord-anti-spam');
+const YouTubeNotifier = require('youtube-notification');
 
 class Class extends Client {
     constructor() {
@@ -48,6 +49,13 @@ class Class extends Client {
         });
 
         this.ameApi = new ameClient(Config.ameToken)
+
+        this.yNotifier = new YouTubeNotifier({
+            hubCallback: `${Config.panel_url}/yt`,
+            secret: 'pJsNheXEpEgmmfcEtmnTesETH'
+        });
+
+        this.YoutubeNotif = require("./structure/Youtube.js");
 
         this.dash = require("./dashboard/dashboard.js");
         this.spawned = false;
