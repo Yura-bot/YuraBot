@@ -64,6 +64,8 @@ class ServerInfo extends Command {
     
         let on = message.guild.memberCount - offline
 
+        let owner = await client.users.fetch(message.guild.ownerID)
+        
         const embed = new Discord.MessageEmbed()
         .setURL(client.url)
         .setAuthor(message.guild.name, message.guild.iconURL() ? message.guild.iconURL() : client.user.displayAvatarURL())
@@ -72,11 +74,11 @@ class ServerInfo extends Command {
         .addField(language("SERVERINFO_NAME"), message.guild.name)
         .addField(language("SERVERINFO_CREATION"), `${message.guild.createdAt.toString().substr(0, 15)},\n(${checkDays(message.guild.createdAt)})`)
         .addField(language("SERVERINFO_ID"), message.guild.id)
-        .addField(language("SERVERINFO_PROPRIETAIRE"), `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`)
+        .addField(language("SERVERINFO_PROPRIETAIRE"), owner.tag)
         .addField(language("SERVERINFO_REGION"), [message.guild.region])
         .addField(language("SERVERINFO_USERS"), message.guild.memberCount)
         //.addField(language("SERVERINFO_STATS"), language("SERVERINFO_STATS_ONLINE")+on+language("SERVERINFO_STATS_STREAM")+streamer+language("SERVERINFO_STATS_AFK")+afk+language("SERVERINFO_STATS_DND")+dnd+language("SERVERINFO_STATS_OFFLINE")+offline)  INTENT PRESENCE !!!!!!!!
-        .addField(language("SERVERINFO_BOT"), message.guild.members.cache.filter(m => m.user.bot).size)
+        //.addField(language("SERVERINFO_BOT"), message.guild.members.cache.filter(m => m.user.bot).size)
         .addField(language("SERVERINFO_AFK"), message.guild.afkTimeout / 60 + ' minutes')
         .addField(language("SERVERINFO_ROLES"), message.guild.roles.cache.size)
         .addField(language("SERVERINFO_CHANNELS"), message.guild.channels.cache.size)
