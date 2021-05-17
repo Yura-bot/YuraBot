@@ -9,6 +9,17 @@ module.exports = async(client, member) => {
     let welcomeMpEnabled = db.welcomeMp
     let autoroleEnabled = db.autorole.enabled
 
+    let UserBanCheck = false
+
+    if (UserBanCheck) {
+        let userban = await client.getUserBan(member.id)
+
+        if (userban) {
+            member.send("Vous avez été bannis du serveur automatiquement car vous appartenez à la blacklist du bot ! \n Veuillez vous renseignez ici : https://discord.gg/etQ3uJN")
+            member.ban({ days: 7, reason: 'This member was found in our blacklist.' });
+        }
+    }
+
     if (welcomeEnabled) {
 
         let welcomeChannel = db.welcome.channel
