@@ -53,6 +53,7 @@
     "superagent": "^6.1.0",
     "vhost": "^3.0.2",
     "weather-js": "^2.0.0",
+    "youtube-notification": "^1.1.0",
     "ytdl-core": "^4.4.5"
   }
 }
