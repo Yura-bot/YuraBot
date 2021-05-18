@@ -20,7 +20,7 @@ router.get('/', CheckAuth, async(req, res) => {
     res.render("profile", {
         guilds: req.user.guilds.filter(u => (u.permissions & 2146958591) === 2146958591),
         name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
+        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://i.goopics.net/kG5ry.png`),
         status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
         botclient: req.client.user,
         bot: bot,
