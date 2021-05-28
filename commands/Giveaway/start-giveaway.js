@@ -41,7 +41,8 @@ class CreateGiveaway extends Command {
                                 message.channel.send(language("GIVEAWAY_CONFIG_NW")).then(() => {
                                     message.channel.awaitMessages(MFilter, { max: 1, time: 30000, errors: ['time'] })
                                         .then(NWcollected => {
-                                            let giveawayNumberWinners = NWcollected.first().content.slice(0).trim().split(/ +/g)[0]
+                                            let giveawayNumberWinners = NWcollected.first().content
+                                            let Num =  parseInt(giveawayNumberWinners)
 
                                             message.channel.send(language("GIVEAWAY_CONFIG_PRIZE")).then(() => {
                                                 message.channel.awaitMessages(MFilter, { max: 1, time: 30000, errors: ['time'] })
@@ -61,7 +62,7 @@ class CreateGiveaway extends Command {
                                                                     client.giveawaysManager.start(giveawayChannel, {
                                                                         time: ms(giveawayDuration),
                                                                         prize: giveawayPrize,
-                                                                        winnerCount: giveawayNumberWinners,
+                                                                        winnerCount: Num,
                                                                         hostedBy: true ? message.author : null,
                                                                         messages: {
                                                                             giveaway: language("GIVEAWAY_START_TITLE"),
