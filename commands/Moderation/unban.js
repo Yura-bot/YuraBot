@@ -20,7 +20,7 @@ class UnBan extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("BAN_MEMBERS")) {
+        if (!message.member.permissions.has("BAN_MEMBERS")) {
             var error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_BAN_MEMBERS"))
                 .setColor("#F43436")
@@ -56,7 +56,7 @@ class UnBan extends Command {
 
       message.guild.members.unban(bannedMember, reason).catch(e =>{});
 
-      message.channel.send(embed).catch(e =>{});
+      message.channel.send({ embeds: [embed] }).catch(e =>{});
   
       if(bannedMember.bot) return;
       bannedMember.send(language("UNBAN_SUCESS").replace("${guild}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e =>{

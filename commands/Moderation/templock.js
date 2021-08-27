@@ -21,7 +21,7 @@ class TempLock extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
+        if (!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
 
         let ifChannelLock = message.channel.permissionsFor(message.guild.roles.everyone).toArray().includes('SEND_MESSAGES')
 

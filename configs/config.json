@@ -1,16 +1,16 @@
 {
     "BOTNAME": "Yura",
-    "token": "NjYyNzc1ODkwMTk0OTg5MDY2.Xg-4Jg.9eLc4R1nnknuuQAyAzRZEfsKz4Y",
-    "secret": "RV_eafH16_wfQmbRmVpGSsm07_vamjw_",
+    "token": "NTk1NTg4MzQyMzE4MzY2NzM0.XRtK3g.dEwRs-jkIUkpX3UP_LIMlpT8Bc4",
+    "secret": "7riZtuPB3RD8I8GzsfuV4KhtsOJXAUfF",
     "owner": "477582590329749504",
     
     "ameToken": "65af5d54e943b52df5558f14b288e3338bf40f64dc5207c878c99c56b855ae62bb1598ebbd314f1bd5cf57c04259bad221ae875aa8105bee4882c63417b1699f",
     "jokeToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNDc3NTgyNTkwMzI5NzQ5NTA0IiwibGltaXQiOjEwMCwia2V5IjoibmJJeDI0dUpqWXV3RzRnem1HZWthVGVwWHRuUmE2ZW10TWhUZFRaMWJ0S1RaTzZNUHkiLCJjcmVhdGVkX2F0IjoiMjAyMS0wNC0wNVQxMTowNzozMiswMDowMCIsImlhdCI6MTYxNzYyMDg1Mn0.MQcJYq19I-q85qkzWWMgdJE9vhR_MVuNJJ--YnApqiI",
     "dblApi": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Mjc3NTg5MDE5NDk4OTA2NiIsImJvdCI6dHJ1ZSwiaWF0IjoxNTg4ODY2NDIwfQ.dejA1-dSCKAxsOZWyWEc51c84ho2WjFuJ1GCwpBR70E",
 
-    "panel_url": "http://185.248.33.6:81",
-    "password": "RV_eafH16_wfQmbRmVpGSsm07_vamjw_",
-    "port": "81",
+    "panel_url": "http://localhost:3000",
+    "password": "7riZtuPB3RD8I8GzsfuV4KhtsOJXAUfF",
+    "port": "3000",
 
     "prefix": "?",
     "url": "https://yurabot.xyz",

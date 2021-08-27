@@ -21,7 +21,7 @@ class TempMute extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("MANAGE_ROLES")) {
+        if (!message.member.permissions.has("MANAGE_ROLES")) {
             var error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_MANAGE_ROLES"))
                 .setColor("#F43436")
@@ -101,7 +101,7 @@ class TempMute extends Command {
         .addField(language("MOD_TIME"), ms(ms(mutetime)))
         .setFooter(client.footer);
 
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
 
         db.muteRole = muterole.id,
         await db.save();

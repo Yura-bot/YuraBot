@@ -81,7 +81,7 @@ router.get("/:guildID", CheckAuth, (req, res) => {
         .setColor("#36393f")
         .setDescription(language("TICKET_DESC"));
 
-        bot.channels.cache.get(guild.channels.cache.find((ch) => "#"+ch.name === data.channel).id).send(embed)
+        bot.channels.cache.get(guild.channels.cache.find((ch) => "#"+ch.name === data.channel).id).send({ embeds: [embed] })
         .then(m => {
           m.react('🎟');
 

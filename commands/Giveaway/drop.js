@@ -21,7 +21,7 @@ class Drop extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if(!message.member.hasPermission('MANAGE_MESSAGES')){
+        if(!message.member.permissions.has('MANAGE_MESSAGES')){
             return message.channel.send(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
         }
 

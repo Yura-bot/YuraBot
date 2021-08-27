@@ -36,7 +36,7 @@ class WebPing extends Command {
                     .addField(language("WEB_PING_OWNER"), `${language("WEB_PING_ORGANISATION")} ${response.data.org} \n${language("WEB_PING_INTERNET")} ${response.data.isp} (${response.data.as})`)
                     .addField(language("WEB_PING_LOCATION"), `${language("WEB_PING_COUNTRY")} ${response.data.country} \n${language("WEB_PING_CITY")} ${response.data.city}`)
                     .addField(language("WEB_PING_OTHER"), `${language("WEB_PING_MOBILE")} ${response.data.mobile} \n${language("WEB_PING_PROXY")} ${response.data.proxy}\n${language("WEB_PING_HOSTING")} ${response.data.hosting}`)
-                message.channel.send(embed);
+                message.channel.send({ embeds: [embed] });
             }
         })
         .catch(e => {

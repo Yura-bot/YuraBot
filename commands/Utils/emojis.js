@@ -27,7 +27,7 @@ class Emojis extends Command {
         .setTimestamp()
         .setFooter(client.footer);
     
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }
 

@@ -1,8 +1,7 @@
 const Command = require("../../structure/Command.js");
 
-const Discord = require("discord.js"),
- { post } = require("node-superfetch");
- const SourceBin = require("sourcebin-api");
+const Discord = require("discord.js");
+const SourceBin = require("sourcebin-api");
 
 class Eval extends Command {
     constructor() {
@@ -46,7 +45,7 @@ class Eval extends Command {
       embed.addField("Output", "```js\n" + output + "```").setColor(0x7289DA)
     }
     
-    message.channel.send(embed);
+    message.channel.send({ embeds: [embed] });
     
   } catch (error) {
     let err = clean(error);
@@ -61,7 +60,7 @@ class Eval extends Command {
       embed.addField("Output", "```js\n" + err + "```").setColor("RED");
     }
     
-    message.channel.send(embed);
+    message.channel.send({ embeds: [embed] });
   }
 
 

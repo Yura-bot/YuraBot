@@ -22,7 +22,7 @@ class ReactionRoles extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if(!message.member.hasPermission("ADMINISTRATOR")) {
+        if(!message.member.permissions.has("ADMINISTRATOR")) {
             const error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_ADMINISTRATOR"))
                 .setColor("#F43436")
@@ -123,7 +123,7 @@ class ReactionRoles extends Command {
                 Embed.addField('N°(num)', "")
             });
         
-            message.channel.send(Embed);
+            message.channel.send({ embeds: [embed] });
             //.catch(e => {});
 
         }

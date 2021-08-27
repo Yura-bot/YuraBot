@@ -108,7 +108,7 @@ router.get("/:guildID/ticket", CheckAuth, async(req, res) => {
         */
 
         async function sM(Channel) {
-            let m = await Channel.send(embed)
+            let m = await Channel.send({ embeds: [embed] })
             m.react('🎟');
         }
         `);

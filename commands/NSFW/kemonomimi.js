@@ -30,7 +30,7 @@ class Kemonomimi extends Command {
                     .setDescription(language("NSFW_LOADING"))
                     .setTimestamp()
 
-        message.channel.send(lo).then(m => {
+        message.channel.send({ embeds: [lo] }).then(m => {
 
             superagent.get('https://nekobot.xyz/api/image').query({ type: 'kemonomimi'}).end((err, response) => {
 
@@ -39,7 +39,7 @@ class Kemonomimi extends Command {
                     .setTimestamp()
                     .setImage(response.body.message)
             
-                m.edit(embed_nsfw).catch(e => {
+                m.edit({ embeds: [embed_nsfw] }).catch(e => {
                     return client.emit('error',e);
                 });
             });

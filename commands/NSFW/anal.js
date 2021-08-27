@@ -30,7 +30,7 @@ class Anal extends Command {
                     .setDescription(language("NSFW_LOADING"))
                     .setTimestamp()
 
-        message.channel.send(lo).then(m => {
+        message.channel.send({ embeds: [lo] }).then(m => {
 
             superagent.get('https://nekobot.xyz/api/image').query({ type: 'anal'}).end((err, response) => {
 
@@ -39,7 +39,7 @@ class Anal extends Command {
                     .setTimestamp()
                     .setImage(response.body.message)
             
-                m.edit(embed_nsfw).catch(e => {
+                m.edit({ embeds: [embed_nsfw] }).catch(e => {
                     return client.emit('error',e);
                 });
             });

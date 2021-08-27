@@ -3,9 +3,7 @@ const Config = require('../configs/config.json');
 module.exports = async(client, message) => {
 
     if(message.author.bot || !message.channel.guild) return;
-
-    if (message.guild.member(client.user).hasPermission("SEND_MESSAGES") === false)  { return; }
-    if (message.guild.id === "110373943822540800") return;
+    if (message.guild.me.permissions.has("SEND_MESSAGES") === false)  { return; }
 
     let db = await client.db.getGuild(message.guild.id)
 
@@ -42,7 +40,7 @@ module.exports = async(client, message) => {
         if (antiraid && memberAuthorised) client.antiSpam.message(message, client, db)
 
         if (antilink && memberAuthorised) {
-            if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
+            if (message.member.permissions.has("MANAGE_MESSAGES") === false) {
 
                 const link = [
                     "www.",
@@ -72,7 +70,7 @@ module.exports = async(client, message) => {
         }
 
         if (antipub && memberAuthorised) {
-            if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
+            if (message.member.permissions.has("MANAGE_MESSAGES") === false) {
 
                 const pub = [
                     "discord.me",
@@ -91,7 +89,7 @@ module.exports = async(client, message) => {
 
         if (antibadwords && memberAuthorised) {
 
-            if (message.member.hasPermission("MANAGE_MESSAGES") === false) {
+            if (message.member.permissions.has("MANAGE_MESSAGES") === false) {
 
                 const banni = require('../configs/badworld.json');
                 if (banni.some(x => message.content.toLowerCase().split(/\s+/).includes(x))) {
@@ -116,7 +114,7 @@ module.exports = async(client, message) => {
     if(!command) return;
 
     if(command.permission !== 'everyone') {
-        if(!message.member.hasPermission(command.permission)) {
+        if(!message.member.permissions.has(command.permission)) {
             return message.channel.send(client.snippet.insufficientPermissions(message.author));
         }
     }

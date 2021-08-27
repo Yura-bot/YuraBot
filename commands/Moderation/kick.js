@@ -20,7 +20,7 @@ class Kick extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("KICK_MEMBERS")) {
+        if (!message.member.permissions.has("KICK_MEMBERS")) {
             var error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_KICK_MEMBERS"))
                 .setColor("#F43436")
@@ -54,7 +54,7 @@ class Kick extends Command {
           .addField(language("MOD_MODERATOR"), `${message.author.username}#${message.author.discriminator}`)
           .addField(language("MOD_REASON"), reason)
           .setFooter(client.footer);
-          message.channel.send(embed);
+          message.channel.send({ embeds: [embed] });
 
           user.kick(reason).catch(e =>{
             message.channel.send(language("KICK_ERROR"))

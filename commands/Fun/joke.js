@@ -37,7 +37,7 @@ class Joke extends Command {
 			.setDescription(`${joke.data.joke} \n ||${joke.data.answer}||`)
 			.setFooter(client.footer);
 
-		message.channel.send(embed).catch(e => {
+		message.channel.send({ embeds: [embed] }).catch(e => {
             return client.emit('error',e, "joke");
         });
     }

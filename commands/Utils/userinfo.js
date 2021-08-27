@@ -103,7 +103,7 @@ class UserInfo extends Command {
             .setFooter(client.footer)
             .setTimestamp();
     
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }
 

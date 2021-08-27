@@ -30,7 +30,7 @@ class ReportBug extends Command {
           .addField("📝 __Description :__", contenu, true)
           .setColor("#FFD97C")
       
-          client.channels.cache.get("665849951904989197").send(embed);
+          client.channels.cache.get("665849951904989197").send({ embeds: [embed] });
     }
 }
 

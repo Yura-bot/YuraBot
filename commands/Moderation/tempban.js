@@ -21,7 +21,7 @@ class TempBan extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("BAN_MEMBERS")) {
+        if (!message.member.permissions.has("BAN_MEMBERS")) {
             var error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_BAN_MEMBERS"))
                 .setColor("#F43436")
@@ -59,7 +59,7 @@ class TempBan extends Command {
           .addField(language("MOD_REASON"), reason)
           .addField(language("MOD_TIME"), ms(ms(bantime)))
           .setFooter(client.footer);
-          message.channel.send(embed);
+          message.channel.send({ embeds: [embed] });
 
           message.guild.members.ban(user.id, {days:7, reason: reason}).catch(e =>{
             message.channel.send(language("BAN_ERROR"))

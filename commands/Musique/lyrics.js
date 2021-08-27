@@ -56,7 +56,7 @@ class Lyrics extends Command {
 			}
 
 			embed.setDescription(lyrics);
-			message.channel.send(embed);
+			message.channel.send({ embeds: [embed] });
 
 		} catch(e){
 			message.channel.send(language("LYRICS_ERROR"));

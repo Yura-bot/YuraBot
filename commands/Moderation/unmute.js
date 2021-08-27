@@ -20,7 +20,7 @@ class UnMute extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("MANAGE_ROLES")) {
+        if (!message.member.permissions.has("MANAGE_ROLES")) {
             var error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_MANAGE_ROLES"))
                 .setColor("#F43436")
