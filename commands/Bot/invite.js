@@ -27,7 +27,7 @@ class Invite extends Command {
         .addField(language("INVITE_ADMIN"), `[${language("INVITE_CLICK_HERE")}](https://discordapp.com/oauth2/authorize?client_id=662775890194989066&scope=bot&permissions=2016570495)`)
         .addField(language("INVITE_PERSO"), `[${language("INVITE_CLICK_HERE")}](https://discordapp.com/oauth2/authorize?client_id=%20662775890194989066&scope=bot&permissions=1342319703)`)
         .setColor(client.color)
-        return message.channel.send(invite);
+        return message.channel.send({ embeds: [invite] })
     }
 }
 

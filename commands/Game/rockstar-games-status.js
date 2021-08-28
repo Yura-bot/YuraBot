@@ -41,38 +41,32 @@ class RockstarGameStatus extends Command {
             if (statusRockStarLauncher === "Actif") statusRockStarLauncher = client.config.emojis.online+language("RGS_ONLINE")
             else statusRockStarLauncher =  client.config.emojis.dnd+language("RGS_OFFLINE")
 
-            message.channel.send({
-                embed: {
-                    title: language("RGS_TITLE"),
-                    fields: [
-                        {
-                            name: "1 » Red Dead Online : ",
-                            value: statusDedReadOnline
-                        },
-                        {
-                            name: "1 » Grand Theft Auto Online: ",
-                            value: statusGrandTheftAuto
-                        },
-                        {
-                            name: "1 » Social Club : ",
-                            value: statusSocialClub
-                        },
-                        {
-                            name: "1 » Rockstar Games Launcher : ",
-                            value: statusRockStarLauncher
-                        },
-                    ],
-                    url: client.url,
-                    color: client.color,
-                    timestamp: response.data.updated,
-                    footer: {
-                        text: client.footer,
-                        icon_url: client.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })
-                    }
-                }
-            }).catch(e => {
-                return client.emit('error',e, "rockstar-gamestatus");
-            });
+            const Embed = new Discord.MessageEmbed()
+            .setColor(client.color)
+            .setTitle(language("RGS_TITLE"))
+            .setURL(client.url)
+            .addFields(                        
+                {
+                    name: "Red Dead Online : ",
+                    value: statusDedReadOnline
+                },
+                {
+                    name: "Grand Theft Auto Online: ",
+                    value: statusGrandTheftAuto
+                },
+                {
+                    name: "Social Club : ",
+                    value: statusSocialClub
+                },
+                {
+                    name: "Rockstar Games Launcher : ",
+                    value: statusRockStarLauncher
+                },
+            )
+            .setTimestamp(response.data.updated)
+            .setFooter(client.footer,  client.user.displayAvatarURL({format: 'png'}));
+
+            return message.channel.send({ embeds: [Embed] })
             
           } else {
               message.channel.send("Error")

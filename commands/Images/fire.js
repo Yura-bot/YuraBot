@@ -35,13 +35,13 @@ class Fire extends Command {
             color: Math.floor(Math.random()*16777215),
             //The bot displays the name of the user
             title: `🖼 Fire :`,
-            //Attachment
+            //a
             image: {
                 url: 'attachment://fire.png',
             },
         };
 
-        message.channel.send(({ files: [attachment], embed: embed })) && msg.delete().catch(e => {
+        message.channel.send(({ files: [attachment], embeds: [embed] })) && msg.delete().catch(e => {
             return client.emit('error',e);
         });
     }

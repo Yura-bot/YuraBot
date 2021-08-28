@@ -27,15 +27,15 @@ class Avatar extends Command {
             .setColor(client.color)
             .setTitle(`${language("MESSAGE_AVATAR")}${message.mentions.users.first().username} :`)
             .setImage(`${avatar}`)
-            .setFooter(client.footer);
-            message.channel.send({embed});
+            .setFooter(client.footer,  client.user.displayAvatarURL({format: 'png'}));
+            message.channel.send(({ embeds: [embed] }))
         } else {
           const embed = new Discord.MessageEmbed()
           .setColor(client.color)
           .setTitle(`${language("MESSAGE_AVATAR")}${message.author.username} :`)
           .setImage(`${avatar + "?size=2048"}`)
-          .setFooter(client.footer);
-          message.channel.send({embed});
+          .setFooter(client.footer,  client.user.displayAvatarURL({format: 'png'}));
+          message.channel.send(({ embeds: [embed] }))
         }
     }
 }

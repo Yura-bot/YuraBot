@@ -55,7 +55,7 @@ class BotInfo extends Command {
             .addField(language("BOTINFO_LINKS"), `[${language("HELP_WEBSITE")}](https://yurabot.xyz) | [${language("HELP_INVITEBOT")}](https://discordapp.com/oauth2/authorize?client_id=662775890194989066&scope=bot&permissions=2146958847) | [${language("HELP_SERVSUPPORT")}](https://discord.gg/etQ3uJN) | [Dashboard](https://dash.yurabot.xyz) | [Status](https://yurabot.xyz/status)`)
             .setFooter(client.footer, client.user.displayAvatarURL)
             .setTimestamp();
-            message.channel.send(botinfo);
+            message.channel.send({ embeds: [botinfo] })
     }
 }
 

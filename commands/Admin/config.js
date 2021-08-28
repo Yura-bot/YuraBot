@@ -78,10 +78,12 @@ class Config extends Command {
                         .addOptions([
                             {
                                 label: 'Français',
+                                emoji: '<:frenchflag:788834553002983455>',
                                 value: 'french',
                             },
                             {
                                 label: 'English',
+                                emoji: '<:englishflag:788834570447487006>',
                                 value: 'english',
                             },
                         ]),

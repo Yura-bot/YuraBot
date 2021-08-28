@@ -25,23 +25,14 @@ class Dog extends Command {
         .then((response) => {
           if (response.status === 200) {
 
-            message.channel.send({
-                embed: {
-                    title: "Dog :",
-                    image: {
-                        url: response.data.url,
-                    },
-                    url: client.url,
-                    color: client.color,
-                    timestamp: new Date(),
-                    footer: {
-                        text: client.footer,
-                        icon_url: client.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })
-                    }
-                }
-            }).catch(e => {
-                return client.emit('error',e, "dog");
-            });
+            const Embed = new Discord.MessageEmbed()
+            .setURL(client.url)
+            .setImage(response.data.url)
+            .setColor(client.color)
+            .setTimestamp()
+            .setFooter(client.footer,  client.user.displayAvatarURL({format: 'png'}));
+            return message.channel.send({ embeds: [Embed] })
+
         } else {
             client.emit('error',e, "dog");
         }
