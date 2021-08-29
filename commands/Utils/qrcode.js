@@ -32,7 +32,7 @@ class Qrcode extends Command {
             .setTimestamp()
             .setFooter(client.footer);
 
-        message.channel.send(qrcode).catch(e => {
+        message.channel.send({embeds: [qrcode]}).catch(e => {
             return message.channel.send(language("QRCODE_ERROR"));
         });
     }

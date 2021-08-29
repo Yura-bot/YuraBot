@@ -377,6 +377,9 @@ const languageData = {
     /* Commande Finduser : */
     SYNTAXE_FINDUSER: "finduser [User ID]```",
     FINDUSER_ERROR: "**<:X_:673212163837526064> Error :** Verify that it is an id !",
+    FINDUSER_USER: ":pushpin: User : ",
+    FINDUSER_ID: "🔧 » ID : ",
+    FINDUSER_PSEUDO: "🧐 » Pseudo :  ",
     DISCRIMINATOR: "#️⃣ » Discriminator : #",
     CREATED_AT: "📆 » Created on : ",
     LAST_MSG: "#️⃣ » last message : ",
@@ -447,7 +450,7 @@ const languageData = {
     USERINFO_GAME: "**🕹 Game ➜**",
     USERINFO_NO_GAME: "No game",
     USERINFO_STATUS: "**🔆 Status ➜**",
-    USERINFO_INFOS: "User Information ",
+    USERINFO_INFOS: "Information on ",
     /* Commande SUGGEST : */
     SYNTAXE_SUGGEST: "suggest [Description]```",
     SUGGEST_ERROR_NO_SYSTEM: "<:X_:673212163837526064> | You have not activated the suggestion system on your server!",

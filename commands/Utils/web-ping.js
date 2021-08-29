@@ -24,7 +24,6 @@ class WebPing extends Command {
         let site = args[1]
         if (!site) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_WEB_PING"));
 
-
         axios.get(`http://ip-api.com/json/${site}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,mobile,proxy,hosting,query`)
         .then((response) => {
             if (response.data.status == "fail") {

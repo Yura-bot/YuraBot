@@ -27,7 +27,7 @@ class Weather extends Command {
         let lang = !db.lang ? "en": "fr";
         let link = `https://wttr.in/${txtFormated}_lang=${lang}.png`
 
-        const exampleEmbed = new Discord.MessageEmbed()
+        const Embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setTitle(language("WEATHER_SUCESS").replace("{city}", city))
         .setURL(client.url)
@@ -35,7 +35,7 @@ class Weather extends Command {
         .setTimestamp()
         .setFooter(client.footer, client.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }));
     
-        message.channel.send(exampleEmbed).catch(e => {});
+        message.channel.send({embeds: [Embed]}).catch(e => {});
     }
 }
 
