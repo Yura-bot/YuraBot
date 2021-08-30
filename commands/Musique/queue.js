@@ -21,18 +21,18 @@ class Queue extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         if (!message.member.voice.channel) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }]})
         }
 
-        if (!client.player.getQueue(message)) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
+        if (!client.player.getQueue(message)) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
       
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
         const queue = client.player.getQueue(message);
 
-        if (!queue) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
+        if (!queue) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
 
         const pagination = require('discord.js-pagination');
 

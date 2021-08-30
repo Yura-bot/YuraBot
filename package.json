@@ -21,7 +21,7 @@
     "discord-anti-spam": "^2.4.1",
     "discord-backup": "^3.0.1",
     "discord-canvas": "^1.4.1",
-    "discord-giveaways": "^4.4.3",
+    "discord-giveaways": "^5.0.0",
     "discord-player": "^5.1.0",
     "discord-webhook-node": "^1.1.8",
     "discord.js": "^13.1.0",

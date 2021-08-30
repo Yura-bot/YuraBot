@@ -21,19 +21,21 @@ class Stop extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         if (!message.member.voice.channel) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }]})
         }
 
-        if (!client.player.getQueue(message)) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
+        const queue = client.player.getQueue(message.guild.id);
+
+        if (!queue || !queue.playing) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
       
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
-        client.player.setRepeatMode(message, false);
-        client.player.stop(message);
+        queue.setRepeatMode(1);
+        queue.destroy();
 
-        return message.channel.send({embed: {color: '0x00FF46', description: language("STOP_STOP") }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: language("STOP_STOP") }]})
     }
 }
 

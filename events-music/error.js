@@ -1,6 +1,6 @@
-module.exports = async(client, error, message) => {
+module.exports = async(client, queue, error) => {
 
-    let db = await client.db.getGuild(message.guild.id)
+    let db = await client.db.getGuild(queue.guild.id)
 
     let prefix = !db.prefix ? config.prefix : db.prefix;
     let guildLanguage = !db.lang ? "english": db.lang;
@@ -9,25 +9,25 @@ module.exports = async(client, error, message) => {
 
     switch (error) {
         case 'NotPlaying':
-            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
+            queue.metadata.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
             break;
         case 'NotConnected':
-            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_2") }})
+            queue.metadata.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_2") }]})
             break;
         case 'UnableToJoin':
-            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_3") }})
+            queue.metadata.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_3") }]})
             break;
         case 'ParseError':
-                message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_4") }})
+                queue.metadata.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_4") }]})
             break;
         case 'LiveVideo':
-            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_5") }})
+            queue.metadata.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_5") }]})
             break;
         case 'VideoUnavailable':
-            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_6") }})
+            queue.metadata.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_6") }]})
             break;
         default:
-            message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_0").replace("{error}", error) }})
+            queue.metadata.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_0").replace("{error}", error) }]})
             return client.emit('error', error, "Music Error 4");
     };
 

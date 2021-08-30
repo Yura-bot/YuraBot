@@ -37,8 +37,8 @@ class Drop extends Command {
         .setTitle("🎁 » __**DROP**__")
         .setDescription(`${language("DROP_DESC_1").replace("{author}", message.author)} ⋄ **${message.author.tag}** \n${language("DROP_DESC_2").replace("{dropPrize}", dropPrize)}`)
 
-        message.channel.send({ embed }).then(async msg => {
-            msg.react("🎊");
+        message.channel.send({ embeds: [embed] }).then(async msg => {
+            await msg.react("🎊");
     
             const filter = (reaction, user) => {
                 if(user.bot) return;
@@ -47,7 +47,7 @@ class Drop extends Command {
     
             const collector = msg.createReactionCollector(filter, { max: 1 });
     
-            collector.on("collect", async () => {
+            collector.on("collect", async (collected) => {
                 const winEmbed = new Discord.MessageEmbed()
                     .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                     .setColor("#D8FF00")
