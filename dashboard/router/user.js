@@ -12,7 +12,7 @@ router
     let db = await req.bot.db.getUserTag(tag)
     let points = db ? db.points : 0
 
-    res.status(200).json({ points: points });
+    res.status(200).json({ status: 200, points: points });
 });
 
 module.exports = router;
