@@ -24,15 +24,17 @@ class ClearQueue extends Command {
          return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }]})
         }
 
-        if (!client.player.getQueue(message)) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
+        const queue = client.player.getQueue(message.guild.id);
+
+        if (!queue || !queue.playing) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
       
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
          return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
-        client.player.clearQueue(message);
+        queue.clear();
 
-        return message.channel.send({embed: {color: '0x00FF46', description: language("CLEAR_QUEUE_CLEAR") }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: language("CLEAR_QUEUE_CLEAR") }]})
     }
 }
 

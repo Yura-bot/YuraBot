@@ -23,22 +23,20 @@ class Queue extends Command {
         if (!message.member.voice.channel) {
          return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }]})
         }
-
-        if (!client.player.getQueue(message)) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
       
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
          return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
-        const queue = client.player.getQueue(message);
+        const queue = client.player.getQueue(message.guild.id);
 
-        if (!queue) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
+        if (!queue || !queue.playing) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
 
         const pagination = require('discord.js-pagination');
 
         if (queue.tracks.length >= 10) {
             let res = queue.tracks.map((track, i) => {
-                return `**#${i+1}** - ${track.title} | ${track.author} (${language("QUEUE_REQUESTBY")} : ${track.requestedBy.username})`
+                return `**#${i+1}** - ${track.title} | ${track.author}`
              }).join('\n').split('\n')
 
              let Title = `🎞 Queue : \n\n ${language("QUEUE_QUEUE_IN_PROGRESS")} : ${queue.playing.title} | ${queue.playing.author} \n \n `
@@ -90,13 +88,13 @@ class Queue extends Command {
          
              pagination(message, pages, emoji, timeout)
         } else {
-            return message.channel.send({embed: {color: '0x00FF46', description: `🎞 Queue : \n\n ${language("QUEUE_QUEUE_IN_PROGRESS")} : ${queue.playing.title} | ${queue.playing.author} \n \n ` +
+            return message.channel.send({embeds: [{color: '0x00FF46', description: `🎞 Queue : \n\n ${language("QUEUE_QUEUE_IN_PROGRESS")} : ${queue.current.title} | ${queue.current.author} \n \n ` +
 
             queue.tracks.map((track, i) => {
-               return `**#${i+1}** - ${track.title} | ${track.author} (${language("QUEUE_REQUESTBY")} : ${track.requestedBy.username})`
+               return `**#${i+1}** - ${track.title} | ${track.author}`
             }).join('\n')
     
-           }}).catch(e => {
+           }]}).catch(e => {
             return message.channel.send(language("QUEUE_NOQUEUE"));
            });
         }

@@ -32,7 +32,7 @@ class Stop extends Command {
          return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
-        queue.setRepeatMode(1);
+        queue.setRepeatMode(0);
         queue.destroy();
 
         return message.channel.send({embeds: [{color: '0x00FF46', description: language("STOP_STOP") }]})
