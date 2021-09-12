@@ -32,22 +32,23 @@ class NowPlaying extends Command {
          return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
-        const track = await client.player.nowPlaying(message);
+        const track = await queue.current
+        const progress = queue.createProgressBar();
+        const perc = queue.getPlayerTimestamp();
 
         return message.channel.send({
-            embed: {
+            embeds: [{
                 color: client.color,
                 author: { name: track.title },
                 footer: { text: client.footer },
                 fields: [
-                    { name: language("NOW_PLAYING_CHANNEL"), value: track.author, inline: true },
-                    { name: language("QUEUE_REQUESTBY"), value: track.requestedBy.username, inline: true },
-                    { name: language("NOW_FORMPLAYLIST"), value: track.fromPlaylist ? 'Yes' : 'No', inline: true },
-                    { name: language("NOW_PROGRESSBAR"), value: client.player.createProgressBar(message, { timecodes: true }), inline: true }
+                    { name: language("NOW_PLAYING_CHANNEL"), value: track.author },
+                    { name: language("NOW_FORMPLAYLIST"), value: track.fromPlaylist ? 'Yes' : 'No' },
+                    { name: language("NOW_PROGRESSBAR"), value: progress }
                 ],
                 thumbnail: { url: track.thumbnail },
                 timestamp: new Date(),
-            },
+            }],
         });
     }
 }

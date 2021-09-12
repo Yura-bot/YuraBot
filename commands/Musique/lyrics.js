@@ -14,8 +14,6 @@ class Lyrics extends Command {
     async run(client, message, args, db) {
 
         const Discord = require("discord.js");
-        const fetch = require("node-fetch");
-        const cheerio = require("cheerio");
 
         let prefix = !db.prefix ? config.prefix : db.prefix;
         let guildLanguage = !db.lang ? "english": db.lang;
@@ -24,39 +22,21 @@ class Lyrics extends Command {
 
         const songName = args.slice(1).join(' ');
         if(!songName) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_LYRICS"));
-		
-		const embed = new Discord.MessageEmbed()
-			.setAuthor(language("LYRICS_TITLE").replace("{songName}", songName))
-			.setColor(client.color)
-            .setFooter(client.footer, client.user.displayAvatarURL)
-            .setTimestamp();
 
 		try {
-
-			const songNameFormated = songName
-				.toLowerCase()
-				.replace(/\(lyrics|lyric|official music video|audio|official|official video|official video hd|clip officiel|clip|extended|hq\)/g, "")
-				.split(" ").join("%20");
-
-			let res = await fetch(`https://www.musixmatch.com/search/${songNameFormated}`);
-			res = await res.text();
-			let $ = await cheerio.load(res);
-			const songLink = `https://musixmatch.com${$("h2[class=\"media-card-title\"]").find("a").attr("href")}`;
-
-			res = await fetch(songLink);
-			res = await res.text();
-			$ = await cheerio.load(res);
-
-			let lyrics = await $("p[class=\"mxm-lyrics__content \"]").text();
-
-			if(lyrics.length > 2048) {
-				lyrics = lyrics.substr(0, 2031) + language("LYRICS_AND_MORE") + " ["+language("LYRICS_CLICK_HERE")+"]"+`https://www.musixmatch.com/search/${songName}`;
-			} else if(!lyrics.length) {
-				return message.channel.send(language("LYRICS_NO_FOUND").replace("{songName}", songName));
-			}
-
-			embed.setDescription(lyrics);
-			message.channel.send({ embeds: [embed] });
+			
+			await client.lyricsClient.search(songName).then(info => {
+				const embed = new Discord.MessageEmbed()
+				.setAuthor(language("LYRICS_TITLE").replace("${songName}", info.title))
+				.setURL(info.url)
+				.setDescription(info.lyrics)
+				.setThumbnail(info.thumbnail)
+				.setColor(client.color)
+				.setFooter(client.footer, client.user.displayAvatarURL)
+				.setTimestamp()
+	
+				message.channel.send({ embeds: [embed] });
+			})
 
 		} catch(e){
 			message.channel.send(language("LYRICS_ERROR"));

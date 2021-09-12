@@ -32,9 +32,9 @@ class Resume extends Command {
          return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
-        client.player.resume(message);
+        queue.setPaused(false);
 
-        return message.channel.send({embed: {color: '0x00FF46', description: language("RESUME_RESUME") }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: language("RESUME_RESUME") }]})
     }
 }
 

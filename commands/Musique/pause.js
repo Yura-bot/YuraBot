@@ -32,9 +32,9 @@ class Pause extends Command {
          return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
-        client.player.pause(message);
+        queue.setPaused(true);
 
-        return message.channel.send({embed: {color: '0x00FF46', description: language("PAUSE_PAUSE") }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: language("PAUSE_PAUSE") }]})
     }
 }
 

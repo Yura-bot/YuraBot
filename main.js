@@ -6,8 +6,11 @@ const Handler = require('./structure/Handler');
 
 const webhook = require('discord-webhook-node');
 const ameClient = require("amethyste-api")
-const { Player } = require("discord-player");
 const AntiSpam = require('discord-anti-spam');
+
+const { Player } = require("discord-player");
+const { Lyrics } = require("@discord-player/extractor");
+
 
 class Class extends Client {
     constructor() {
@@ -30,6 +33,7 @@ class Class extends Client {
             leaveOnEmptyCooldown: 60000,
             enableLive: true
         });
+        this.lyricsClient = Lyrics.init("");
 
         this.db = require("./structure/Mongoose.js");
 
