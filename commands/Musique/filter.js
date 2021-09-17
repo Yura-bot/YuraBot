@@ -36,19 +36,20 @@ class Filter extends Command {
         const filter = args[1];
         if (!filter) return message.channel.send({embeds: [{color: '0xFF0000', description: language("FILTER_NO") }]})
 
-        // Ne merge pas les filtres + L'enleve pas !!!!!!
-        let filters = {}
-
         let disabledFilters = queue.getFiltersDisabled();
         let enabledFilters = queue.getFiltersEnabled();
 
-        let isDisabled = disabledFilters.find(el => el = filter) ? true : false
+        let filters = {}
+
+        enabledFilters.forEach(el => {
+            Object.assign(filters, { [el]: true })
+        })
+
+        let isDisabled = disabledFilters.find(el => el === filter) ? true : false
 
         Object.assign(filters, { [filter]: isDisabled });
 
-        queue.setFilters(filters).catch(e => {
-            return client.emit('error',e, "Filtre");
-        });
+        queue.setFilters(filters)
     
         if (isDisabled) message.channel.send({embeds: [{color: '0x00FF46', description: language("FILTER_ADDED") }]})
         else message.channel.send({embeds: [{color: '0x00FF46', description: language("FILTER_REMOVE") }]})
