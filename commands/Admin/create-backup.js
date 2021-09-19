@@ -29,7 +29,7 @@ class CreateBackup extends Command {
 
             backup.create(message.guild, {
                 maxMessagesPerChannel: 0,
-                jsonBeautify: true
+                jsonBeautify: false
             }).then((backupData) => {
                 message.author.send(language("BACKUP_COMMAND")+prefix+"load-backup "+backupData.id+"`!").catch(e => {
                     message.channel.send(language("BACKUP_COMMAND")+prefix+"load-backup "+backupData.id+"`!")
