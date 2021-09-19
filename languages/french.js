@@ -128,15 +128,16 @@ const languageData = {
     FOX: "Renard",
     /* Giveaway : */
     /* Giveaway Start : */
+    SYNTAXE_GIVEAWAY_START: "start-giveaway [Channel] [Temps] [Nombre de gagnants] (role condition) [Prix]```",
     GIVEAWAY_GO: "Le Giveaway vient de commencer sur le salon ",
     GIVEAWAY_START_TITLE: "🎉🎉 **GIVEAWAY** 🎉🎉",
     GIVEAWAY_START_ENDED: "🎉🎉 **GIVEAWAY FINI** 🎉🎉",
-    GIVEAWAY_START_TIME_REMAINING: "Temps restant : **{duration}**! ",
+    GIVEAWAY_START_TIME_REMAINING: "Temps restant : **{timestamp}**! ",
     GIVEAWAY_START_REACT: "Réagissez avec 🎉 pour participer !",
-    GIVEAWAY_START_WIN_MESSAGE: "Félicitations, {winners} ! Vous avez gagné **{prize}** !",
+    GIVEAWAY_START_WIN_MESSAGE: "Félicitations, {winners} ! Vous avez gagné **{this.prize}** !",
     GIVEAWAY_START_FOOTER: "Giveaways by Yura",
     GIVEAWAY_START_NO_WINER: "Concours annulé, aucune participation valable.",
-    GIVEAWAY_START_BY: "Par : {user}",
+    GIVEAWAY_START_BY: "Par : {this.hostedBy}",
     GIVEAWAY_START_CONDITION_ROLE: "<:errorv1:675367507250380816> Pour participer vous devez avoir le rôle : ",
     GIVEAWAY_START_WINER: "Gagnant(s)",
     GIVEAWAY_START_ENDED_AT: "Terminé à",
@@ -160,6 +161,7 @@ const languageData = {
     GIVEAWAY_END_ID_NO_TERMINER_2: " n'est pas terminée.",
     GIVEAWAY_END_NO_TERMINER: "Ce giveaway n'est pas terminé !",
     GIVEAWAY_END_ERROR_OCCURED: "<:X_:673212163837526064> **Erreur :** Une erreur interne est survenue !",
+    GIVEAWAY_END_ALREADY_END: "<:X_:673212163837526064> **Erreur :** Ce giveaway est déja terminé !",
     /* Giveaway Reroll : */
     SYNTAXE_GIVEAWAY_REROLL: "reroll-giveaway [Message ID du Giveaway]```",
     GIVEAWAY_REROLL_NO_FOUND: "Le giveaway n’a pas été trouvé :( ",

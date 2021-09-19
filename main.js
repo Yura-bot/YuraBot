@@ -11,6 +11,7 @@ const AntiSpam = require('discord-anti-spam');
 const { Player } = require("discord-player");
 const { Lyrics } = require("@discord-player/extractor");
 
+const ms = require('ms');
 
 class Class extends Client {
     constructor() {
@@ -40,13 +41,12 @@ class Class extends Client {
         const YuraGiveaway = require('./structure/Giveaway.js');
 
         this.giveawaysManager = new YuraGiveaway(this, {
-            hasGuildMembersIntent: true,
             storage: false,
-            updateCountdownEvery: 5000,
+            endedGiveawaysLifetime: ms("7d"),
             default: {
                 botsCanWin: false,
                 exemptPermissions: [ "MANAGE_MESSAGES", "ADMINISTRATOR" ],
-                embedColor: "#0049FF",
+                embedColor: "RANDOM",
                 reaction: "🎉"
             }
         });

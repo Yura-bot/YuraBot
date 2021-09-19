@@ -29,22 +29,18 @@ class RerollGiveaway extends Command {
             return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_GIVEAWAY_REROLL"));
         }
 
-        let giveaway = 
-
-        client.giveawaysManager.giveaways.find((g) => g.prize === args.join(' ')) ||
-
-        client.giveawaysManager.giveaways.find((g) => g.messageID === args[1]);
+        let giveaway = client.giveawaysManager.giveaways.find((g) => g.messageId === args[1]);
 
         if(!giveaway){
             return message.channel.send(language("GIVEAWAY_REROLL_NO_FOUND")+'`'+args.slice(1).join(' ')+'`');
         }
 
-        client.giveawaysManager.reroll(giveaway.messageID)
+        client.giveawaysManager.reroll(giveaway.messageId)
         .then(() => {
-            return message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("GIVEAWAY_REROLL_SUCESS")}` }})
+            return message.channel.send({embeds: [{color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("GIVEAWAY_REROLL_SUCESS")}` }]})
         })
         .catch((e) => {
-            if(e.startsWith(`${language("GIVEAWAY_REROLL_NO_END_1")}${giveaway.messageID}${language("GIVEAWAY_REROLL_NO_END_2")}`)){
+            if(e.startsWith(`${language("GIVEAWAY_REROLL_NO_END_1")}${giveaway.messageId}${language("GIVEAWAY_REROLL_NO_END_2")}`)){
                 message.channel.send(language("GIVEAWAY_REROLL_NO_END"));
             } else {
                 client.emit('error',e, "reroll-giveaway");
