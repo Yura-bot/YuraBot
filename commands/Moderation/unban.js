@@ -42,28 +42,26 @@ class UnBan extends Command {
         let embed = new Discord.MessageEmbed()
         .setColor(0xFF0000)
         .setTimestamp()
+        .setThumbnail(bannedMember.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }))
         .addField(language("MOD_ACTION"), 'Unban')
         .addField(language("MOD_MEMBER"), `${bannedMember} (${bannedMember.id})`)
         .addField(language("MOD_MODERATOR"), `${message.author.username}#${message.author.discriminator}`)
         .addField(language("MOD_REASON"), reason)
         .setFooter(client.footer);
 
-      message.guild.fetchBans().then(bans=> {
-          
-      let banneduser = bans.find(b => b.user.id == user)
-      //if(banneduser.size == 0) return 
-      if(!banneduser) return message.channel.send(language("UNBAN_NOBAN").replace("{name}", bannedMember.username) );
+        const BanMember = await message.guild.bans.fetch(bannedMember.id).catch(e => {})
 
-      message.guild.members.unban(bannedMember, reason).catch(e =>{});
+        if(!BanMember) return message.channel.send(language("UNBAN_NOBAN").replace("{name}", bannedMember.username) );
 
-      message.channel.send({ embeds: [embed] }).catch(e =>{});
-  
-      if(bannedMember.bot) return;
-      bannedMember.send(language("UNBAN_SUCESS").replace("${guild}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e =>{
-       message.channel.send(language("UNBAN_SUCESS_MPCLOSE"))
-      })
-      
-      });
+        message.guild.members.unban(bannedMember.id, reason).catch(e =>{});
+
+        message.channel.send({ embeds: [embed] }).catch(e =>{});
+
+        if(bannedMember.bot) return;
+
+        bannedMember.send(language("UNBAN_SUCESS").replace("${server}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e =>{
+          message.channel.send(language("UNBAN_SUCESS_MPCLOSE"))
+        })
         
     }
 }

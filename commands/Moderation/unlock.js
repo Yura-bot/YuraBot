@@ -26,7 +26,7 @@ class UnLock extends Command {
 
         if (ifChannelLock === false) {
 
-            message.channel.updateOverwrite(message.guild.id, { SEND_MESSAGES: true }).catch(error => {});
+            message.channel.permissionOverwrites.edit(message.guild.id, { SEND_MESSAGES: true }).catch(error => {});
             return message.channel.send(language("UNLOCK_MESSAGE"));
 
         } else {

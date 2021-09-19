@@ -26,7 +26,7 @@ class Lock extends Command {
 
         if (ifChannelLock) {
 
-            message.channel.createOverwrite(message.guild.id, {
+            message.channel.permissionOverwrites.create(message.guild.id, {
                 SEND_MESSAGES: false
             }).catch(error => {});
     

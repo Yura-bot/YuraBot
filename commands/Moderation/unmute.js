@@ -27,13 +27,14 @@ class UnMute extends Command {
             return message.channel.send(error_permissions)
         }
 
-        if (!message.guild.me.hasPermission("MANAGE_ROLES")) {
+        if (!message.guild.me.permissions.has("MANAGE_ROLES")) {
             return message.channel.send(language("BOT_PERMISSION_MANAGE_ROLES"));
         }
 
-        const usermute = message.guild.member(message.mentions.users.first()) || await message.guild.members.fetch(args[1]);
+        const usermute = message.mentions.users.first() || await message.guild.members.fetch(args[1]);
+        const guildMember = await message.guild.members.fetch(usermute)
 
-        if (!usermute) {
+        if (!guildMember) {
             return message.channel.send(
               language("SYNTAXE") + prefix + language("SYNTAXE_UNMUTE")
             );
@@ -71,11 +72,11 @@ class UnMute extends Command {
             }
         }
 
-        if(usermute.roles.cache.has(muterole.id) === false) {
+        if(guildMember.roles.cache.has(muterole.id) === false) {
             return message.channel.send(language("UNMUTE_NOMUTE"))
         }
 
-        usermute.roles.remove(muterole).catch(e =>{
+        guildMember.roles.remove(muterole).catch(e =>{
             message.channel.send(language("UNMUTE_ERROR"))
             return client.emit('error',e, "unmute");
         });

@@ -30,17 +30,16 @@ class TempLock extends Command {
             let time = args[1];
             if (!time && isNaN(time)) return message.reply(language("TIMELOCK_ERROR_TIME"));
 
-            message.channel.createOverwrite(message.guild.id, {
+            message.channel.permissionOverwrites.create(message.guild.id, {
                 SEND_MESSAGES: false
             }).catch(error => {});
 
             message.channel.send(language("LOCK_MESSAGE").replace("${mod}", message.author.username));
 
             setTimeout(() => {
-                message.channel.createOverwrite(message.guild.id, {
-                  SEND_MESSAGES: null
-                }).then(message.channel.send(language("UNLOCK_MESSAGE"))).catch(error => {});
-                client.mod.delete(`${message.channel.id}-lock`);
+                message.channel.permissionOverwrites.edit(message.guild.id, { SEND_MESSAGES: true })
+                  .catch(error => {})
+                  .then(message.channel.send(language("UNLOCK_MESSAGE"))).catch(error => {});
             }, ms(time));
 
 

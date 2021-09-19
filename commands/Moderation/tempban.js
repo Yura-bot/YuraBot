@@ -29,67 +29,61 @@ class TempBan extends Command {
         }
 
         let reason = args.slice(3).join(' ');
-        let user = message.guild.member(message.mentions.users.first()) || await message.guild.members.fetch(args[1]);
 
-        if (!user) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_TEMPBAN"))
-        if (user.id === message.author.id) return message.channel.send(language("AUTOBAN"));
-        if (user.id === client.user.id) return message.channel.send(language("BANYURA"));
+        let user = message.mentions.users.first();
+        let userID = null
+
+        if(!user) {
+            if(args[1]) {
+                user = await message.guild.members.fetch(args[1])
+                .then(member => { userID = member.id })
+                .catch(e => {return})
+                if(!userID) userID = args[1]
+            } else return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_BAN"))
+        } else userID = user.id
+        
+        if (userID === message.author.id) return message.channel.send(language("AUTOBAN"));
+        if (userID === client.user.id) return message.channel.send(language("BANYURA"));
+
+        user = await client.users.fetch(userID)
 
         let bantime = args[2];
         if(!bantime) return message.reply(language("SYNTAXE") + prefix + language("SYNTAXE_TEMPBAN"));
 
         if (reason.length < 1) reason = language("BAN_NO_REASON");
-
-        let botRolePossition = message.guild.member(client.user).roles.highest.position;
-        let rolePosition = message.guild.member(user).roles.highest.position;
-        let userRolePossition = message.member.roles.highest.position;
-
-        if (userRolePossition <= rolePosition) return message.channel.send(language("BAN_ERROR_1"))
-        if (botRolePossition <= rolePosition) return message.channel.send(language("BAN_ERROR_2"))
         
-        if (!message.guild.member(user).bannable) {
-            message.channel.send(language("BAN_ERROR_INTERNE"));
-        } else {
-          const embed = new Discord.MessageEmbed()
-          .setColor(0xFF0000)
-          .setTimestamp()
-          .addField(language("MOD_ACTION"), 'TempBan')
-          .addField(language("MOD_MEMBER"), `${user} (${user.id})`)
-          .addField(language("MOD_MODERATOR"), `${message.author.username}#${message.author.discriminator}`)
-          .addField(language("MOD_REASON"), reason)
-          .addField(language("MOD_TIME"), ms(ms(bantime)))
-          .setFooter(client.footer);
-          message.channel.send({ embeds: [embed] });
+        const embed = new Discord.MessageEmbed()
+        .setColor(0xFF0000)
+        .setTimestamp()
+        .addField(language("MOD_ACTION"), 'TempBan')
+        .addField(language("MOD_MEMBER"), `${user} (${user.id})`)
+        .addField(language("MOD_MODERATOR"), `${message.author.username}#${message.author.discriminator}`)
+        .addField(language("MOD_REASON"), reason)
+        .addField(language("MOD_TIME"), ms(ms(bantime)))
+        .setFooter(client.footer);
+        message.channel.send({ embeds: [embed] });
 
-          message.guild.members.ban(user.id, {days:7, reason: reason}).catch(e =>{
+        message.guild.members.ban(user.id, {days:7, reason: reason}).catch(e =>{
             message.channel.send(language("BAN_ERROR"))
             return client.emit('error',e, "tempban");
-          });
-      
-          if(user.bot) return;
+        });
+    
+        if(user.bot) return;
+        user.send(language("TEMPBAN_SUCESS").replace("${guild}", message.guild.name).replace("${user}", message.author.username).replace("${reason}", reason).replace("${time}", ms(ms(bantime)))).catch(e =>{
+            message.channel.send(language("BAN_SUCESS_MPCLOSE"))
+        });
 
-          user.send(language("TEMPBAN_SUCESS").replace("${guild}", message.guild.name).replace("${user}", message.author.username).replace("${reason}", reason).replace("${time}", ms(ms(bantime)))).catch(e =>{
-           message.channel.send(language("BAN_SUCESS_MPCLOSE"))
-          });
+        setTimeout(async function(){
 
-          setTimeout(function(){
+            const BanMember = await message.guild.bans.fetch(user.id).catch(e => {})
+            if(!BanMember) return
 
-            message.guild.fetchBans().then(bans=> {
-          
-                let banneduser = bans.find(b => b.user.id == user.id)
-                if(!banneduser) return;
-          
-                message.guild.members.unban(user, "Auto Unban").catch(e =>{});
-            
-                if(user.bot) return;
-                user.send(language("BAN_SUCESS").replace("${server}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e => {
-                 message.channel.send(language("UNBAN_SUCESS_MPCLOSE"))
-                });
-                
-            });
-        
+            message.guild.members.unban(user.id, "Auto Unban").catch(e =>{});
+
+            if(user.bot) return;
+            user.send(language("UNBAN_SUCESS").replace("${server}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e => {});
+    
         }, ms(bantime));
-        }
     }
 }
 
