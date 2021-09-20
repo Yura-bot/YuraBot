@@ -57,20 +57,26 @@ class Class extends Client {
         this.spawned = false;
 
         this.antiSpam = new AntiSpam({
+            muteThreshold: 3,
+            banThreshold: 7,
             warnThreshold: 2,
             kickThreshold: 4,
             banThreshold: 6,
             maxInterval: 2000,
             warnMessage: true,
             kickMessage: true,
+            muteMessage: true,
             banMessage: true,
             maxDuplicatesWarning: 7,
             maxDuplicatesKick: 10,
+            maxDuplicatesMute: 6,
             maxDuplicatesBan: 12,
             exemptPermissions: [ 'ADMINISTRATOR', "MANAGE_GUILD"],
             ignoreBots: false,
             verbose: false,
-            ignoredUsers: [],
+            ignoredMembers: [],
+            muteRoleName: "Muted",
+            removeMessages: true,
         });
 
         require("./structure/Fonctions")(this);

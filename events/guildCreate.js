@@ -21,7 +21,7 @@ module.exports = async(client, guild) => {
 
       if (guild.banner) joinembed.setImage(guild.banner)
 
-      client.channels.cache.get('665849169717624848').send(joinembed);
+      client.channels.cache.get('665849169717624848').send({embeds: [joinembed]});
 
       let db = await client.db.getGuild(guild.id)
 

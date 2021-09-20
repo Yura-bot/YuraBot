@@ -7,6 +7,14 @@ module.exports = async(client, message) => {
 
     let db = await client.db.getGuild(message.guild.id)
 
+    db.automod = {
+        antiRaid: true,
+        antiPub: true,
+        antiLink: true,
+        antiBadWords: true,
+        ignored: { channels: null, roles: null }
+    }
+
     let prefix = !db.prefix ? config.prefix : db.prefix;
     let guildLanguage = !db.lang ? "english": db.lang;
     let language = require(`../languages/${guildLanguage}`);
@@ -64,7 +72,10 @@ module.exports = async(client, message) => {
                      .addField(language("ANTILINK_ACTION"), language("ANTILINK_DELETED"))
                      .setColor("#FFCC4D")
                  */
-                 message.reply(language("ANTILINK_SUCESS")).then(msg => msg.delete({timeout: 5000})).catch(e => {});
+                 message.channel.send(language("ANTILINK_SUCESS")).then(async msg => {
+                    await new Promise(r => setTimeout(r, 5000));
+                    msg.delete();
+                 }).catch(e => {});
              }
             }
         }
@@ -82,7 +93,10 @@ module.exports = async(client, message) => {
            
                 if (pub.some(word => message.content.includes(word))) {
                     message.delete().catch(e => {});
-                    message.reply(language("ANTIPUB_SUCESS")).then(msg => msg.delete({timeout: 5000})).catch(e => {});
+                    message.channel.send(language("ANTIPUB_SUCESS")).then(async msg => {
+                        await new Promise(r => setTimeout(r, 5000));
+                        msg.delete();
+                    }).catch(e => {});
                 }
             }
         }
@@ -94,7 +108,10 @@ module.exports = async(client, message) => {
                 const banni = require('../configs/badworld.json');
                 if (banni.some(x => message.content.toLowerCase().split(/\s+/).includes(x))) {
                  message.delete(message.author).catch(e => {});
-                 message.reply(language("ANTIBADWORLDS_SUCESS")).then(msg => msg.delete({timeout: 5000})).catch(e => {});
+                 message.channel.send(language("ANTIBADWORLDS_SUCESS")).then(async msg => {
+                    await new Promise(r => setTimeout(r, 5000));
+                    msg.delete();
+                 }).catch(e => {});
                 }
             }
         }

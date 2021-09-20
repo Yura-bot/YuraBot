@@ -79,7 +79,7 @@ module.exports = async(client, member) => {
                     },
                 };
 
-                client.channels.cache.get(goodbyeChannel).send(({ files: [attachment], embed: embed })).catch(e => {});
+                client.channels.cache.get(goodbyeChannel).send(({ files: [attachment], embeds: [embed] })).catch(e => {});
             } else {
                 const embed = {
                     color: "NONE",
@@ -91,7 +91,7 @@ module.exports = async(client, member) => {
                     },
                 };
 
-                client.channels.cache.get(goodbyeChannel).send(({ embed: embed }))
+                client.channels.cache.get(goodbyeChannel).send(({ embeds: [embed] }))
             }
         } else {
             client.channels.cache.get(goodbyeChannel).send(messageSend).catch(e => { return member.guild.owner.send(language("EVENTS_GUILDMEMBERREMOVE_GOODBYE_ERROR")) });

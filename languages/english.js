@@ -29,6 +29,7 @@ const languageData = {
     /* Message : */
     EVENTS_MESSAGE_ANTIRAID_WARN: "**<:X_:673212163837526064> {@user}, Stop spamming !**",
     EVENTS_MESSAGE_ANTIRAID_KICK: "**<:X_:673212163837526064> {user_tag}, Has been kicked out for spam !**",
+    EVENTS_MESSAGE_ANTIRAID_MUTE: "**<:X_:673212163837526064> {user_tag}, Has been muted for spam !**",
     EVENTS_MESSAGE_ANTIRAID_BAN: "**<:X_:673212163837526064> {user_tag}, Has been banned for spam !**",
     ANTILINK_TITLE: "⚠️ It is forbidden to post links here!",
     ANTILINK_USER: "⚡__User__ :",
