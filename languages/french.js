@@ -347,6 +347,10 @@ const languageData = {
     ASCII_LIMIT_MESSAGE: "Seulement 20 caractères sont admis.",
     /* Commande Calc : */
     SYNTAXE_CALC: "calc [opération]```",
+    CLAC_TITLE: "Yura Calculatrice",
+    CLAC_DISABLED: "La calculatrice est désactivée !",
+    CLAC_INVALID: "L'équation fournie n'est pas valide !",
+    CLAC_OTHER: "Seul <@{{author}}> peut utiliser les boutons !",
     CALC_ERROR: "**<:X_:673212163837526064> Erreur :** Vérifiez votre opération !",
     CALC_SUCESS: "```Résultat :\n\n",
     /* Commande Cooldown : */

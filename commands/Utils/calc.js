@@ -14,12 +14,28 @@ class Calc extends Command {
     async run(client, message, args, db) {
 
         const Discord = require("discord.js");
+        const { Calculator } = require('weky');
         const { evaluate } = require("mathjs")
 
         let prefix = !db.prefix ? config.prefix : db.prefix;
         let guildLanguage = !db.lang ? "english": db.lang;
 
         const language = require(`../../languages/${guildLanguage}`);
+
+        await Calculator({
+			message: message,
+			embed: {
+				title: language("CLAC_TITLE"),
+				color: '#5865F2',
+				footer: client.footer,
+				timestamp: true,
+			},
+			disabledQuery: language("CLAC_DISABLED"),
+			invalidQuery: language("CLAC_INVALID"),
+			othersMessage: language("CLAC_OTHER"),
+		});
+
+        return;
 
         let calcul = args.slice(1).join(' ');
         calcul = calcul.replace(/['x'_]/g,'*')
