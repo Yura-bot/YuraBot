@@ -7,14 +7,6 @@ module.exports = async(client, message) => {
 
     let db = await client.db.getGuild(message.guild.id)
 
-    db.automod = {
-        antiRaid: true,
-        antiPub: true,
-        antiLink: true,
-        antiBadWords: true,
-        ignored: { channels: null, roles: null }
-    }
-
     let prefix = !db.prefix ? config.prefix : db.prefix;
     let guildLanguage = !db.lang ? "english": db.lang;
     let language = require(`../languages/${guildLanguage}`);
