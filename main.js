@@ -6,6 +6,7 @@ const Handler = require('./structure/Handler');
 
 const webhook = require('discord-webhook-node');
 const ameClient = require("amethyste-api")
+const { DiscordTogether } = require('discord-together');
 const AntiSpam = require('discord-anti-spam');
 
 const { Player } = require("discord-player");
@@ -52,6 +53,8 @@ class Class extends Client {
         });
 
         this.ameApi = new ameClient(Config.ameToken)
+
+        this.discordTogether = new DiscordTogether(this);
 
         this.dash = require("./dashboard/dashboard.js");
         this.spawned = false;

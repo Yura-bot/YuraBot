@@ -476,6 +476,8 @@ const languageData = {
     SYSTEMINFO_CPU: "💻 • __Processor__",
     SYSTEMINFO_PING: "MB` | Latency with API : ",
     /* Games : */
+    NOT_CONNECTED: "<:X_:673212163837526064> | You must be in a voice channel to start the activity!",
+    LAUNCHED: "<:check:673212026226737153> Launch of the activity! Click on the link to join.",
     /* Commande mc-server : */
     SYNTAXE_MC_SERVER: "mc-server [server]```",
     ONLINE: "Online",
