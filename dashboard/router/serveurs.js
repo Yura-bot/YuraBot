@@ -11,86 +11,70 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     //req.params.guildID
     //req.user.id
 
-    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
-    const serv = results.find((g) => g);
-    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const guild = req.bot.guilds.cache.get(req.params.guildID)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
-     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-
-     let bits = new Discord.Permissions(userPerm);
-     let perms = bits.toArray();
-
-     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
+        if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.json("404");
+        let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID)
+   
+        let bits = new Discord.Permissions(userPerm.permissions_new);
+        let perms = bits.toArray();
+   
+        if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.json("404");
     }
 
-    const guildInfos = await req.bot.fetchGuild(serv.id);
+    const guildChannels = {}
+    const guildRoles = {}
+
+    await guild.channels.cache.each(r => {
+        if(r.type != "GUILD_TEXT") return
+        Object.assign(guildChannels, { [r.id]: r.name });
+    })
+
+    await guild.roles.cache.each(r => {
+        Object.assign(guildRoles, { [r.id]: r.name });
+    })
 
     let db = await bot.db.getGuild(req.params.guildID)
 
     let prefix = !db.prefix ? config.prefix : db.prefix;
     let guildLanguage = !db.lang ? "english": db.lang;
-    let language2;
 
-    let suggestionEnabled = db.suggestions
+    let suggestionEnabled = db.suggestions? true : false
     let suggestionChannel = db.suggestions
 
     if (suggestionEnabled && suggestionEnabled != null) {
         suggestionChannel = db.suggestions
     } else {
-        suggestionEnabled = false
-        suggestionChannel = false
+        suggestionChannel = null
     }
 
-    if (guildLanguage === "english") { 
-        guildLanguage = "Anglais"
-        language2 = "Français" 
-    } else  { 
-        guildLanguage = "Français"
-        language2 = "Anglais" 
-    }
+    if (guildLanguage === "english") {  guildLanguage = "en" } else {  guildLanguage = "fr" }
 
     let muteRole = db.muteRole
 
     res.json({
-        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
-        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-        botclient: req.client.user,
-        bot: bot,
-        user: req.user,
-        login: "oui",
-        guild: guildInfos,
-        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
-        message: "",
-        messageType: "success",
+        channels: guildChannels,
+        roles: guildRoles,
         prefix: prefix,
         guildLanguage: guildLanguage,
-        language2: language2,
         suggestionEnabled: suggestionEnabled,
         suggestionChannel: suggestionChannel,
-        muteRole: muteRole,
-        alert: false
+        muteRole: muteRole
     });
 }).post("/:guildID", CheckAuth, async function(req, res) {
 
-    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
-    const serv = results.find((g) => g);
-    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const guild = req.bot.guilds.cache.get(req.params.guildID)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
-     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-     
-
-     let bits = new Discord.Permissions(userPerm);
-     let perms = bits.toArray();
-
-     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
+        if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.json("404");
+        let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID)
+   
+        let bits = new Discord.Permissions(userPerm.permissions_new);
+        let perms = bits.toArray();
+   
+        if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.json("404");
     }
-    const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
@@ -103,11 +87,11 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     db.prefix = data.prefix;
 
     // Lang : 
-    let language = data.language.toLowerCase();
+    let language = data.guildLanguage.toLowerCase();
 
-    if (language === "anglais") {
+    if (language === "en") {
         language = "english"
-    } else if (language === "français") {
+    } else if (language === "fr") {
         language = "french"
     } else {
         return;
@@ -115,20 +99,16 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     db.lang = language;
     
     //Suggestion System :
-    let suggestionEnabled = data.suggestionStatus === "on";
-    let suggestionChannel = guild.channels.find((ch) => "#"+ch.name === data.suggestionChannelID).id;
-
-    if (suggestionEnabled) {
-        db.suggestions = suggestionChannel
+    if (data.suggestionEnabled) {
+        db.suggestions = data.suggestionChannel
     } else {
         db.suggestions = null;
     }
 
-    if (data.muteRole != "Desactivate") db.muteRole = guild.roles.find((r) => "@"+r.name === data.muteRole).id
+    if (data.muteRole != "null") db.muteRole = data.muteRole
+    else db.muteRole = null
 
     await db.save();
-
-    res.redirect(`/serveurs/${req.params.guildID}`);
 
 }).get("/:guildID/tools/welcome", CheckAuth, async(req, res) => {
 

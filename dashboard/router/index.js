@@ -38,7 +38,7 @@ router
 })
 .get("/login", passport.authenticate("discord", { failureRedirect: "/" }),
     function(req, res) {
-        res.redirect("/user");
+        res.redirect("https://dash.yurabot.xyz");
     })
 .get("/logout", async function(req, res) {
     await req.logout();
