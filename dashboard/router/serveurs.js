@@ -443,23 +443,31 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
 }).get("/:guildID/tools/auto-mod", CheckAuth, async(req, res) => {
 
-    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
-    const serv = results.find((g) => g);
-    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const guild = req.bot.guilds.cache.get(req.params.guildID)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
-     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-     
-
-     let bits = new Discord.Permissions(userPerm);
-     let perms = bits.toArray();
-
-     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
+        if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.json("404");
+        let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID)
+   
+        let bits = new Discord.Permissions(userPerm.permissions_new);
+        let perms = bits.toArray();
+   
+        if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.json("404");
     }
-    const guildInfos = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
+
+    const guildChannels = {}
+    const guildRoles = {}
+
+    await guild.channels.cache.each(r => {
+        if(r.type != "GUILD_TEXT") return
+        Object.assign(guildChannels, { [r.id]: r.name });
+    })
+
+    await guild.roles.cache.each(r => {
+        Object.assign(guildRoles, { [r.id]: r.name });
+    })
 
     let antiraid = db.automod.antiRaid
     let antipub = db.automod.antiPub
@@ -474,111 +482,51 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         ignoredRoles = db.automod.ignored.roles
     }
 
-    res.render("items/auto-mod", {
-        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
-        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-        botclient: req.client.user,
-        bot: bot,
-        user: req.user,
-        login: "oui",
-        guild: guildInfos,
-        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
-        message: "",
-        messageType: "success",
+    res.json({
+        channels: guildChannels,
+        roles: guildRoles,
         antiraid: antiraid,
         antipub: antipub,
         antilink: antilink,
         antibadworlds: antibadworlds,
         ignoredChannels: ignoredChannels,
-        ignoredRoles: ignoredRoles,
-        alert: false
+        ignoredRoles: ignoredRoles
     });   
 }).post("/:guildID/tools/auto-mod", CheckAuth, async function(req, res) {
 
-    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
-    const serv = results.find((g) => g);
-    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const guild = req.bot.guilds.cache.get(req.params.guildID)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
-     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-     
-
-     let bits = new Discord.Permissions(userPerm);
-     let perms = bits.toArray();
-
-     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
+        if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.json("404");
+        let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID)
+   
+        let bits = new Discord.Permissions(userPerm.permissions_new);
+        let perms = bits.toArray();
+   
+        if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.json("404");
     }
-    const guild = await req.bot.fetchGuild(serv.id);
     
     let db = await bot.db.getGuild(req.params.guildID)
 
     let data  = req.body;
 
-    if(Object.prototype.hasOwnProperty.call(data, "config")) {
-        if (data.channelsIgnored || data.rolesIgnored) {
-            let channels = data.channelsIgnored
-            let roles = data.rolesIgnored
-    
-            if (Array.isArray(channels)) {
-    
-                channelsCopie = [];
-                channels.forEach(element => channelsCopie.push(guild.channels.find((ch) => "#"+ch.name === element).id));
-                channels = channelsCopie
-    
-            } else {
-                if (channels) channels = guild.channels.find((ch) => "#"+ch.name === channels).id.split();
-                else channels = null
-            }
-
-            if (Array.isArray(roles)) {
-    
-                rolesCopie = [];
-                roles.forEach(element => rolesCopie.push(guild.roles.find((r) => "@"+r.name === element).id));
-                roles = rolesCopie
-    
-            } else {
-                if (roles) roles = guild.roles.find((r) => "@"+r.name === roles).id.split();
-                else roles = null
-            }
-    
-            db.automod.ignored = { channels: channels, roles: roles }
-        } else {
-            db.automod.ignored = { channels: null, roles: null }
+    const obj = {
+        antiRaid: data.antiraid,
+        antiPub: data.antipub,
+        antiLink: data.antilink,
+        antiBadWords: data.antibadworlds,
+        ignored: {
+            channels: data.ignored_channels,
+            roles: data.ignored_roles
         }
-
-        db.markModified("automod");
-        await db.save();
     }
 
-    if(Object.prototype.hasOwnProperty.call(data, "basic")) {
-        let statusAntiraid = data.statusAntiRaid;
-        let statusAntipub = data.statusAntiPub;
-        let statusAntilink = data.statusAntiLink;
-        let statusAntibadworlds = data.statusAntiBadWorlds;
-    
-        if (statusAntiraid != "on") statusAntiraid = false
-        else statusAntiraid = true
-    
-        if (statusAntipub != "on") statusAntipub = false
-        else statusAntipub = true
-    
-        if (statusAntilink != "on") statusAntilink = false
-        else statusAntilink = true
-    
-        if (statusAntibadworlds != "on") statusAntibadworlds = false
-        else statusAntibadworlds = true
+    console.log(obj)
 
-        db.automod.antiRaid = statusAntiraid
-        db.automod.antiPub = statusAntipub
-        db.automod.antiLink = statusAntilink
-        db.automod.antiBadWords = statusAntibadworlds
-        
-        db.markModified("automod");
-        await db.save();
-    }
+    db.automod = obj
+
+    db.markModified("automod");
+    await db.save();
 
     res.redirect(`/serveurs/${req.params.guildID}/tools/auto-mod`);
 })
