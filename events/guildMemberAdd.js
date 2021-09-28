@@ -118,12 +118,20 @@ module.exports = async(client, member) => {
 
         let autoroleRole = db.autorole.role
 
-        if(member.guild.roles.cache.has(autoroleRole) === false){
-            return member.guild.owner.send(language("EVENTS_GUILDMEMBERADD_AUTOROLE_ERROR")).catch(e => {});
+        if (typeof autoroleRole === 'string') {
+            if(member.guild.roles.cache.has(autoroleRole) === false){
+                return member.guild.owner.send(language("EVENTS_GUILDMEMBERADD_AUTOROLE_ERROR")).catch(e => {});
+            }
+            member.roles.add(autoroleRole, "Autorole").catch(e =>{
+                return member.guild.owner.send(language("EVENTS_GUILDMEMBERADD_AUTOROLE_ERROR")).catch(e => {});
+            });
+        } else if (autoroleRole) {
+            autoroleRole.forEach(el => {
+                member.roles.add(el, "Autorole").catch(e =>{
+                    return member.guild.owner.send(language("EVENTS_GUILDMEMBERADD_AUTOROLE_ERROR")).catch(e => {});
+                });
+            })
         }
-        member.roles.add(autoroleRole, "Autorole").catch(e =>{
-            return member.guild.owner.send(language("EVENTS_GUILDMEMBERADD_AUTOROLE_ERROR")).catch(e => {});
-        });
     }
 
     return;

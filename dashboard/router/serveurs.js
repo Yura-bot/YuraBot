@@ -369,76 +369,70 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
 }).get("/:guildID/tools/autorole", CheckAuth, async(req, res) => {
 
-    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
-    const serv = results.find((g) => g);
-    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const guild = req.bot.guilds.cache.get(req.params.guildID)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
-     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-     
-
-     let bits = new Discord.Permissions(userPerm);
-     let perms = bits.toArray();
-
-     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
+        if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.json("404");
+        let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID)
+   
+        let bits = new Discord.Permissions(userPerm.permissions_new);
+        let perms = bits.toArray();
+   
+        if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.json("404");
     }
-    const guildInfos = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
     let autoroleEnabled = db.autorole.enabled
     let autoroleRole = db.autorole.role
 
-    res.render("items/autorole", {
-        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
-        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-        botclient: req.client.user,
-        bot: bot,
-        user: req.user,
-        login: "oui",
-        guild: guildInfos,
-        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
-        message: "",
-        messageType: "success",
+    const guildRoles = {}
+
+    await guild.roles.cache.each(r => {
+        Object.assign(guildRoles, { [r.id]: r.name });
+    })
+
+    let arrayRoles = [];
+
+    if (typeof autoroleRole === 'string') {
+        arrayRoles.push(autoroleRole)
+    } else if (autoroleRole) {
+        await autoroleRole.forEach(async el => {
+            arrayRoles.push(el)
+        })
+    }
+
+    res.json({
         autoroleEnabled: autoroleEnabled,
-        autoroleRole: autoroleRole,
-        alert: false
+        autoroleRole: arrayRoles,
+        guildRoles: guildRoles
     });   
 }).post("/:guildID/tools/autorole", CheckAuth, async function(req, res) {
 
-    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
-    const serv = results.find((g) => g);
-    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const guild = req.bot.guilds.cache.get(req.params.guildID)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
-     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-     
-
-     let bits = new Discord.Permissions(userPerm);
-     let perms = bits.toArray();
-
-     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
+        if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.json("404");
+        let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID)
+   
+        let bits = new Discord.Permissions(userPerm.permissions_new);
+        let perms = bits.toArray();
+   
+        if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.json("404");
     }
-    const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
     let data  = req.body;
 
-    if(Object.prototype.hasOwnProperty.call(data, "enable") || Object.prototype.hasOwnProperty.call(data, "update")) {
+    if(data[0] && data.length <= 6) {
         const obj = {
             enabled: true,
-            role: guild.roles.find((r) => "@"+r.name === data.roleID).id
+            role: data
         }
     
         db.autorole = obj
-    }
-
-    if(Object.prototype.hasOwnProperty.call(data, "disable")) {    
+    } else {    
         db.autorole.enabled = false
     }
     
