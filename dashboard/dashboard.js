@@ -78,7 +78,7 @@ module.exports.load = async(client) => {
         .use("/", require("./router/index"))
         .use("/user", require("./router/user"))
         .use("/serveurs", require("./router/serveurs"))
-        //.use("/extensions", require("./router/extensions"))
+        .use("/extensions", require("./router/extensions"))
 
         .get("*", function(req, res) {
             res.status(404).send("404");
