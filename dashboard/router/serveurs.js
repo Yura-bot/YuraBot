@@ -112,23 +112,26 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
 
 }).get("/:guildID/tools/welcome", CheckAuth, async(req, res) => {
 
-    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
-    const serv = results.find((g) => g);
-    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const guild = req.bot.guilds.cache.get(req.params.guildID)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
-     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-     
-
-     let bits = new Discord.Permissions(userPerm);
-     let perms = bits.toArray();
-
-     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
+        if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.json("404");
+        let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID)
+   
+        let bits = new Discord.Permissions(userPerm.permissions_new);
+        let perms = bits.toArray();
+   
+        if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.json("404");
     }
-    const guildInfos = await req.bot.fetchGuild(serv.id);
 
-    let db = await bot.db.getGuild(serv.id)
+    const guildChannels = {}
+
+    await guild.channels.cache.each(r => {
+        if(r.type != "GUILD_TEXT") return
+        Object.assign(guildChannels, { [r.id]: r.name });
+    })
+
+    let db = await bot.db.getGuild(guild.id)
 
     let welcomeEnabled = db.welcome.enabled
     let welcomeMpEnabled = db.welcomeMp
@@ -151,19 +154,8 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         welcomeMpEnabled = false
     }
 
-    res.render("items/welcome", {
-        name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-        avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
-        status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-        botclient: req.client.user,
-        bot: bot,
-        user: req.user,
-        login: "oui",
-        guild: guildInfos,
-        avatarURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-        iconURL: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png?size=32`,
-        message: "",
-        messageType: "success",
+    res.json({
+        guildChannels: guildChannels,
         welcomeChannel: welcomeChannel,
         welcomeMessage: welcomeMessage,
         welcomeEnabled: welcomeEnabled,
@@ -173,66 +165,56 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
         colorImage: colorImage,
         colorImageTitle: colorImageTitle,
         welcomeMpEnabled: welcomeMpEnabled,
-        welcomeMpMessage: welcomeMpMessage,
-        alert: false
+        welcomeMpMessage: welcomeMpMessage
     });
 }).post("/:guildID/tools/welcome", CheckAuth, async function(req, res) {
 
-    const results = await req.bot.shard.broadcastEval(` let guild = this.guilds.cache.get('${req.params.guildID}'); if(guild) guild.toJSON() `);
-    const serv = results.find((g) => g);
-    if (!serv || !serv.members) return res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1&guild_id=${req.params.guildID}`);
+    const guild = req.bot.guilds.cache.get(req.params.guildID)
 
     if (req.user.id != config.owner) {
-     if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.render("404");
-     let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID).permissions
-     
-
-     let bits = new Discord.Permissions(userPerm);
-     let perms = bits.toArray();
-
-     if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.render("404");
+        if (!req.user.guilds.find((g) => g.id === req.params.guildID)) return res.json("404");
+        let userPerm = req.user.guilds.find((g) => g.id === req.params.guildID)
+   
+        let bits = new Discord.Permissions(userPerm.permissions_new);
+        let perms = bits.toArray();
+   
+        if (!perms.includes("ADMINISTRATOR") || !perms.includes("MANAGE_GUILD")) return res.json("404");
     }
-    const guild = await req.bot.fetchGuild(serv.id);
 
     let db = await bot.db.getGuild(req.params.guildID)
 
     let data  = req.body;
+    console.log(data)
 
-    if(Object.prototype.hasOwnProperty.call(data, "enable") || Object.prototype.hasOwnProperty.call(data, "update")) {
-        db.welcome.enabled = true
-        // Channel : 
-        db.welcome.channel = guild.channels.find((ch) => "#"+ch.name === data.channelID).id;
-        //Message
-        db.welcome.message = data.welcomeMessage;
-        //Embed ?
-        let welcomeEmbedConfig = data.withEmbed === "on"
-        //Image ?
-        let welcomeImageConfig = data.withImage === "on"
-        
-        if (welcomeEmbedConfig) {
-            db.welcome.withEmbed = true
-            if (welcomeImageConfig) {
-                db.welcome.withImage = true
-                db.welcome.config.colorTitle = data.imgColorTitle
-                db.welcome.config.colorBackground = data.imgColor
-                if (data.imageURL) {
-                    db.welcome.config.img = data.imageURL
-                } else db.welcome.config.img = null
-            } else db.welcome.withImage = false
-        } else db.welcome.withEmbed = false
+    if(data.welcomeEnabled) {
+        const obj = {
+            enabled: true,
+            message: data.welcomeMessage,
+            channel: data.welcomeChannel,
+            withEmbed: data.welcomeEnabled,
+            withImage: data.welcomeImage,
+            config: {
+                colorTitle: data.colorImageTitle,
+                colorBackground: data.colorImage,
+                img: data.imageURL,
+            }
+        }
+        db.welcome = obj
     }
     
-    if(Object.prototype.hasOwnProperty.call(data, "disable")) {
+    if(!data.welcomeEnabled) {
         db.welcome.enabled = false
     }
 
-    if(Object.prototype.hasOwnProperty.call(data, "enableMp") || Object.prototype.hasOwnProperty.call(data, "updateMp")) {
+    if(data.welcomeMpEnabled) {
         db.welcomeMp = data.welcomeMpMessage
     }
 
-    if(Object.prototype.hasOwnProperty.call(data, "disableMp")) {
+    if(!data.welcomeMpEnabled) {
         db.welcomeMp = null
     }
+
+    console.log(db.welcome)
 
     db.markModified("welcome");
     await db.save();
