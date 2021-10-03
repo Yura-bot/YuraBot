@@ -281,6 +281,7 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
     let db = await bot.db.getGuild(req.params.guildID)
 
     let data  = req.body;
+    console.log(data)
 
     if (data.goodbyeEnabled) {
         const obj = {
@@ -295,9 +296,9 @@ router.get("/:guildID", CheckAuth, async(req, res) => {
                 img : data.imageURL
             }
         }
-    }
 
-    db.goodbye = obj
+        db.goodbye = obj
+    }
     
     db.markModified("goodbye");
     await db.save();
