@@ -20,7 +20,7 @@ class FortniteShop extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        const exampleEmbed = new Discord.MessageEmbed()
+        const embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setTitle('<:calendar2:675368550571048971> Fortnite shop :')
         .setURL(client.url)
@@ -28,7 +28,7 @@ class FortniteShop extends Command {
         .setTimestamp()
         .setFooter(client.footer, client.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }));
     
-        message.channel.send(exampleEmbed);
+        message.channel.send({ embeds: [embed] })
 
     }
 }

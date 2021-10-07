@@ -37,15 +37,15 @@ class McAchivements extends Command {
 
         let url = `https://minecraft-api.com/api/achivements/${block}/${title}/${string}/${string2}`;
 
-        const embed = {
-            color: Math.floor(Math.random()*16777215),
-            title: `🖼 Achivement :`,
-            image: {
-                url: url,
-            },
-        }
+        const embed = new Discord.MessageEmbed()
+        .setColor(client.color)
+        .setTitle('🖼 Achivement :')
+        .setURL(client.url)
+        .setImage(url)
+        .setTimestamp()
+        .setFooter(client.footer, client.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }));
     
-        return message.channel.send(({ embed: embed })).catch(e => {
+        return message.channel.send({ embeds: [embed] }).catch(e => {
             message.channel.send(language("MC_ACHIVEMENT_ERROR"))
             return client.emit('error',e, "mc-achivement");
         });

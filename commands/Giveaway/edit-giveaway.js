@@ -21,20 +21,16 @@ class EditGiveaway extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if(!message.member.hasPermission('MANAGE_MESSAGES')){
+        if(!message.member.permissions.has('MANAGE_MESSAGES')){
             return message.channel.send(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
         }
 
         if(!args[1]) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_GIVEAWAY_EDIT"));
 
-        let giveaway = 
-
-        client.giveawaysManager.giveaways.find((g) => g.prize === args.join(' ')) ||
-
-        client.giveawaysManager.giveaways.find((g) => g.messageID === args[1]);
+        let giveaway = client.giveawaysManager.giveaways.find((g) => g.messageId === args[1]);
 
         if(!giveaway){
-            return message.channel.send({embed: {color: '0xFF0000', description: `${client.config.emojis.no} | ${language("GIVEAWAY_EDIT_NO_FOUND")}`+'`'+args.slice(1).join(' ')+'`' }})
+            return message.channel.send({embeds: [{color: '0xFF0000', description: `${client.config.emojis.no} | ${language("GIVEAWAY_EDIT_NO_FOUND")}`+'`'+args.slice(1).join(' ')+'`' }]})
         }    
 
         let giveawayNumberWinners = args[2];
@@ -49,9 +45,9 @@ class EditGiveaway extends Command {
             newPrize: giveawayPrize,
             addTime: 5000
         }).then(() => {
-            message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("GIVEAWAY_EDIT_SUCESS")}` }})
+            message.channel.send({embeds: [{color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("GIVEAWAY_EDIT_SUCESS")}` }]})
         }).catch((err) => {
-            client.emit('error',e, "edit-giveaway");
+            client.emit('error',err, "edit-giveaway");
             message.channel.send(language("GIVEAWAY_EDIT_ERROR_OCCURED"));
         });
     }

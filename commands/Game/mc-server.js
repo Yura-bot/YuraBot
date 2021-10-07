@@ -41,55 +41,48 @@ class McServer extends Command {
                 color = "RED"
             }
 
-            message.channel.send({
-                embed: {
-                    title: "<a:grassblock:775037113536217099> Serveur Minecraft : "+response.data.hostname,
-                    thumbnail: {
-                        url: `https://eu.mc-api.net/v3/server/favicon/${response.data.hostname}`
-                    },
-                    fields: [
-                        {
-                            name: "🔧 » IP : ",
-                            value: response.data.ip
-                        },
-                        {
-                            name: "<:rootserver:675371134710972429> » Port : ",
-                            value: response.data.port 
-                        },
-                        {
-                            name: iconStatus + " » Status : ",
-                            value: status
-                        },
-                        {
-                            name: "<:horizontalsettingsmixer:675372744950677534> » Version : ",
-                            value: response.data.version
-                        },
-                        {
-                            name: language("MC_SERVER_ONLINE_PLAYER"),
-                            value: response.data.players.online
-                        },
-                        {
-                            name: "<:editproperty:675370831127248906> » Motd : ",
-                            value: response.data.motd.clean
-                        },
-                    ],
-                    url: client.url,
-                    color: color,
-                    timestamp: new Date(),
-                    footer: {
-                        text: client.footer,
-                        icon_url: client.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })
-                    }
-                }
-            }).catch(e => {
-                return client.emit('error',e, "mc-achivement");
-            });
+            const Embed = new Discord.MessageEmbed()
+            .setColor(color)
+            .setTitle("<a:grassblock:775037113536217099> Server Minecraft : "+response.data.hostname)
+            .setURL(client.url)
+            .addFields(                        
+                {
+                    name: "🔧 » IP : ",
+                    value: response.data.ip
+                },
+                {
+                    name: "<:rootserver:675371134710972429> » Port : ",
+                    value: response.data.port.toString()
+                },
+                {
+                    name: iconStatus + " » Status : ",
+                    value: status
+                },
+                {
+                    name: "<:horizontalsettingsmixer:675372744950677534> » Version : ",
+                    value: response.data.version
+                },
+                {
+                    name: language("MC_SERVER_ONLINE_PLAYER"),
+                    value: response.data.players.online.toString()
+                },
+                {
+                    name: "<:editproperty:675370831127248906> » Motd : ",
+                    value: response.data.motd.clean[0]
+                },
+            )
+            .setThumbnail(`https://eu.mc-api.net/v3/server/favicon/${response.data.hostname}`)
+            .setTimestamp()
+            .setFooter(client.footer,  client.user.displayAvatarURL({format: 'png'}));
+
+            message.channel.send({ embeds: [Embed] })
             
           } else {
               message.channel.send(language("MC_SERVER_NO_FOUND"))
           }
         })
         .catch(e => {
+            console.log(e)
             return message.channel.send(language("MC_SERVER_NO_FOUND"))
         });
 

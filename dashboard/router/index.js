@@ -5,38 +5,45 @@ const CheckAuth = require('../auth/CheckAuth');
 
 let bot = require("../../main.js")
 
-router.get("/", async function(req, res) {
+router
+.get("/", async function(req, res) {
+    res.status(200).json({
+        status: 200
+    });
+})
+.get("/infos", async function(req, res) {
 
     let guildCount = await bot.shard.fetchClientValues('guilds.cache.size')
     let membersCount = await bot.shard.fetchClientValues("users.cache.size");
     let channelsCount = await bot.shard.fetchClientValues("channels.cache.size");
-    const reducer = (p, count) => p + count
 
-        res.render("index.ejs", {
-            username: (req.isAuthenticated() ? `${req.user.username}` : `User`),
-            name: (req.isAuthenticated() ? `${req.user.username}` : `Profil`),
-            avatar: (req.isAuthenticated() ? `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png` : `https://image.noelshack.com/fichiers/2020/36/1/1598862029-disc.png`),
-            status: (req.isAuthenticated() ? `${req.user.username}#${req.user.discriminator}` : "Se connecter"),
-            botclient: req.client.user,
-            bot: bot,
-            user: req.user,
-            login: (req.isAuthenticated() ? "oui" : "non"),
-            invite: `https://discordapp.com/oauth2/authorize?client_id=${req.bot.user.id}&scope=bot&permissions=-1`,
-            message: "",
-            messageType: "success",
-            guildCount: guildCount.reduce(reducer),
-            membersCount: membersCount.reduce(reducer),
-            channelsCount: channelsCount.reduce(reducer),
-        });
-    })
-    .get("/login", passport.authenticate("discord", { failureRedirect: "/" }),
-        function(req, res) {
-            res.redirect("/profile");
-        })
-    .get("/logout", async function(req, res) {
-        await req.logout();
-        await res.redirect("/");
+    let RAM = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)
+
+    const osu = require('node-os-utils')
+    
+    const cpuPercentage = osu.cpu.usage()
+
+    res.status(200).json({
+        status: 200,
+        system: {
+            ram: RAM
+        },
+        stats: {
+            guildCount: guildCount[0],
+            membersCount: membersCount[0],
+            channelsCount: channelsCount[0],
+            commands: req.bot.commands.size
+        }
     });
+})
+.get("/login", passport.authenticate("discord", { failureRedirect: "/" }),
+    function(req, res) {
+        res.redirect("https://dash.yurabot.xyz");
+    })
+.get("/logout", async function(req, res) {
+    await req.logout();
+    await res.redirect("/");
+});
 
 
 module.exports = router;

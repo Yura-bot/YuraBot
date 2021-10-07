@@ -13,7 +13,7 @@ class Drop extends Command {
 
     async run(client, message, args, db) {
 
-        const Discord = require("discord.js");
+        const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
         const ms = require('ms');
 
         let prefix = !db.prefix ? config.prefix : db.prefix;
@@ -21,7 +21,7 @@ class Drop extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if(!message.member.hasPermission('MANAGE_MESSAGES')){
+        if(!message.member.permissions.has('MANAGE_MESSAGES')){
             return message.channel.send(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
         }
 
@@ -31,31 +31,32 @@ class Drop extends Command {
             return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_DROP"));
         }
         
-        const embed = new Discord.MessageEmbed()
+        const embed = new MessageEmbed()
         .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
         .setColor("#D8FF00")
         .setTitle("🎁 » __**DROP**__")
         .setDescription(`${language("DROP_DESC_1").replace("{author}", message.author)} ⋄ **${message.author.tag}** \n${language("DROP_DESC_2").replace("{dropPrize}", dropPrize)}`)
 
-        message.channel.send({ embed }).then(async msg => {
-            msg.react("🎊");
-    
-            const filter = (reaction, user) => {
-                if(user.bot) return;
-                return reaction.emoji.name === "🎊" && user.id !== message.author.id;
-            };
-    
-            const collector = msg.createReactionCollector(filter, { max: 1 });
-    
-            collector.on("collect", async () => {
-                const winEmbed = new Discord.MessageEmbed()
-                    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-                    .setColor("#D8FF00")
-                    .setTitle("🎁 » __**DROP**__")
-                    .setDescription(`${language("DROP_WIN_DESC_1").replace("{dropPrize}", dropPrize)}${language("DROP_WIN_DESC_2").replace("{winner}", msg.reactions.cache.first().users.cache.filter(u => !u.bot && u.id !== message.author.id).first().id)} ⋄ **${msg.reactions.cache.first().users.cache.filter(u => !u.bot && u.id !== message.author.id).first().tag}**`)
-    
-                msg.edit({ embed: winEmbed });
-            });
+        const row = new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId('primary')
+                .setStyle('PRIMARY')
+                .setEmoji('🎊'),
+        );
+
+        const msg = await message.channel.send({ embeds: [embed], components: [row] })
+
+        const collector = message.channel.createMessageComponentCollector({ time: 600000 });
+        //const collector = message.createMessageComponentCollector({ componentType: 'BUTTON', max: 1, maxUsers: 1, time: 600000 });
+
+        collector.on('collect', async i => {
+            const winEmbed = new MessageEmbed()
+            .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+            .setColor("#D8FF00")
+            .setTitle("🎁 » __**DROP**__")
+            .setDescription(`${language("DROP_WIN_DESC_1").replace("{dropPrize}", dropPrize)}${language("DROP_WIN_DESC_2").replace("{winner}", i.member.id)} ⋄ **${i.member.user.tag}**`)
+            await msg.edit({ embeds: [ winEmbed ] });
         });
     }
 }

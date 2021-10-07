@@ -26,7 +26,7 @@ class Suggest extends Command {
             let contenu = args.slice(1).join(" ")
 
             let suggestionChannel = db.suggestions
-            if (client.channels.cache.has(suggestionChannel) === false ) return message.channel.send({embed: {color: '0xFF0000', description: language("SUGGEST_ERROR_NO_CHANNEL") }})
+            if (client.channels.cache.has(suggestionChannel) === false ) return message.channel.send({embeds: [{color: '0xFF0000', description: language("SUGGEST_ERROR_NO_CHANNEL") }]})
 
             if(!args[1]) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_SUGGEST"));
 
@@ -36,7 +36,7 @@ class Suggest extends Command {
             .addField(language("SUGGEST_DESC"), contenu, true)
             .setColor("#FFD97C")
 
-            client.channels.cache.get(suggestionChannel).send(suggest)
+            client.channels.cache.get(suggestionChannel).send({embeds: [suggest]})
             .then(m => {
                 m.react('✅')
                 m.react('➖')
@@ -49,7 +49,7 @@ class Suggest extends Command {
             message.author.send(language("SUGGEST_SUCESS")).catch(e => {});
 
         } else {
-            return message.channel.send({embed: {color: '0xFF0000', description: language("SUGGEST_ERROR_NO_SYSTEM") }})
+            return message.channel.send({embeds: [{color: '0xFF0000', description: language("SUGGEST_ERROR_NO_SYSTEM") }]})
         }
     }
 }

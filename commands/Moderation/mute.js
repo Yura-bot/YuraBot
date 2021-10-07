@@ -20,26 +20,27 @@ class Mute extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("MANAGE_ROLES")) {
+        if (!message.member.permissions.has("MUTE_MEMBERS")) {
             var error_permissions = new Discord.MessageEmbed()
-                .setDescription(language("MISSING_PERMISSION_MANAGE_ROLES"))
+                .setDescription(language("MISSING_PERMISSION_MUTE_MEMBERS"))
                 .setColor("#F43436")
             return message.channel.send(error_permissions)
         }
 
-        if (!message.guild.me.hasPermission("MANAGE_ROLES")) {
+        if (!message.guild.me.permissions.has("MANAGE_ROLES")) {
             return message.channel.send(language("BOT_PERMISSION_MANAGE_ROLES"));
         }
 
-        const usermute = message.guild.member(message.mentions.users.first()) || await message.guild.members.fetch(args[1]);
+        const usermute = message.mentions.users.first() || await message.guild.members.fetch(args[1]);
+        const guildMember = await message.guild.members.fetch(usermute)
 
-        if (!usermute) {
+        if (!guildMember) {
             return message.channel.send(
               language("SYNTAXE") + prefix + language("SYNTAXE_MUTE")
             );
         }
 
-        if(usermute.id === message.author.id) {
+        if(guildMember.id === message.author.id) {
             return message.channel.send(language("AUTOMUTE"));
         }
 
@@ -78,11 +79,11 @@ class Mute extends Command {
             }
         }
 
-        if(usermute.roles.cache.has(muterole.id)) {
+        if(guildMember.roles.cache.has(muterole.id)) {
             return message.channel.send(language("USERMUTE"))
         }
 
-        usermute.roles.add(muterole).catch(e =>{
+        guildMember.roles.add(muterole).catch(e =>{
             message.channel.send(language("MUTE_ERROR"))
             return client.emit('error',e, "mute");
         });
@@ -96,7 +97,7 @@ class Mute extends Command {
         .addField(language("MOD_REASON"), reason)
         .setFooter(client.footer);
 
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
 
         db.muteRole = muterole.id,
         await db.save();

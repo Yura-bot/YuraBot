@@ -25,9 +25,9 @@ class Emojis extends Command {
         .setTitle(language("EMOJIS_TITLE"))
         .setDescription(message.guild.emojis.cache.map(emoji =>`${emoji}` ).join(" ").slice(0,2000))
         .setTimestamp()
-        .setFooter(client.footer);
+        .setFooter(client.footer,  client.user.displayAvatarURL({format: 'png'}));
     
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }
 

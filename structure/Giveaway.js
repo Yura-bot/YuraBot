@@ -1,4 +1,5 @@
 const { GiveawaysManager } = require('discord-giveaways');
+const { Giveaway } = require("../models/index")
 
 module.exports = class extends GiveawaysManager {
     /*
@@ -12,21 +13,21 @@ module.exports = class extends GiveawaysManager {
     }
 
     async getAllGiveaways() {
-        return await this.client.db.giveaway(true, false, false, false, false)
+        return await Giveaway.find().lean().exec();
     }
 
-    async saveGiveaway(messageID, giveawayData) {
-        this.client.db.giveaway(false, giveawayData, false, false, false)
+    async saveGiveaway(messageId, giveawayData) {
+        await Giveaway.create(giveawayData);
         return true;
     }
 
-    async editGiveaway(messageID, giveawayData) {
-        await this.client.db.giveaway(false, false, false, false, giveawayData)
+    async editGiveaway(messageId, giveawayData) {
+        await Giveaway.updateOne({ messageId }, giveawayData, { omitUndefined: true }).exec();
         return true;
     }
 
-    async deleteGiveaway(messageID) {
-        await this.client.db.giveaway(false, false, messageID, false, false)
+    async deleteGiveaway(messageId) {
+        await Giveaway.deleteOne({ messageId }).exec();
         return true;
     }
 }

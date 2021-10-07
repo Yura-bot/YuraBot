@@ -20,22 +20,22 @@ class EveryRole extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("MANAGE_ROLES")) {
+        if (!message.member.permissions.has("MANAGE_ROLES")) {
             var error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_MANAGE_ROLES"))
                 .setColor("#F43436")
             return message.channel.send(error_permissions)
         }
 
-        if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply(language("BOT_PERMISSION_MANAGE_ROLES"));
+        if (!message.guild.me.permissions.has("MANAGE_ROLES")) return message.reply(language("BOT_PERMISSION_MANAGE_ROLES"));
 
-        if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply(language("BOT_PERMISSION_MANAGE_ROLES"));
+        if (!message.guild.me.permissions.has("MANAGE_ROLES")) return message.reply(language("BOT_PERMISSION_MANAGE_ROLES"));
     
         var role = message.mentions.roles.first();
         if(!role && !args[1]) return message.reply(language("EVERYROLE_MENTION"));
         else {
             if(role){
-                message.channel.send(language("EVERYROLE_SUCESS", role));
+                message.channel.send(language("EVERYROLE_SUCESS").replace("{role}", role));
                 message.guild.members.cache.forEach(element => {
                     element.roles.add(role);
                 });

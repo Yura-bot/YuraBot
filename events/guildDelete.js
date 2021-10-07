@@ -20,7 +20,7 @@ module.exports = async(client, guild) => {
 
     if (guild.banner) leaveembed.setImage(guild.banner)
 
-    client.channels.cache.get('665849169717624848').send(leaveembed);
+    client.channels.cache.get('665849169717624848').send({embeds: [leaveembed]});
 
     await client.db.deleteGuild(guild.id)
     await client.db.deleteReactionRoles(false, guild.id)

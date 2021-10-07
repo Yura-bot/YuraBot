@@ -3,27 +3,57 @@ const Schema = mongoose.Schema;
 const config = require("../configs/config.json");
 
 const GiveawaySchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    messageID: String,
-    channelID: String,
-    guildID: String,
+    messageId: String,
+    channelId: String,
+    guildId: String,
     startAt: Number,
     endAt: Number,
     ended: Boolean,
-    winnerCount: String,
-    winners: Array,
+    winnerCount: Number,
     prize: String,
-    messages: Object,
+    messages: {
+        giveaway: String,
+        giveawayEnded: String,
+        inviteToParticipate: String,
+        drawing: String,
+        dropMessage: String,
+        winMessage: mongoose.Mixed,
+        embedFooter: mongoose.Mixed,
+        noWinner: String,
+        winners: String,
+        endedAt: String,
+        hostedBy: String
+    },
+    thumbnail: String,
     hostedBy: String,
-    embedColor: String,
-    embedColorEnd: String,
+    winnerIds: { type: [String], default: undefined },
+    reaction: mongoose.Mixed,
     botsCanWin: Boolean,
-    exemptPermissions: Array,
-    exemptMembers: Array,
-    reaction: String,
-    requirements: Object,
-    winnerIDs: Array,
-    extraData: Object,
-});
+    embedColor: mongoose.Mixed,
+    embedColorEnd: mongoose.Mixed,
+    exemptPermissions: { type: [], default: undefined },
+    exemptMembers: String,
+    bonusEntries: String,
+    extraData: mongoose.Mixed,
+    lastChance: {
+        enabled: Boolean,
+        content: String,
+        threshold: Number,
+        embedColor: mongoose.Mixed
+    },
+    pauseOptions: {
+        isPaused: Boolean,
+        content: String,
+        unPauseAfter: Number,
+        embedColor: mongoose.Mixed,
+        durationAfterPause: Number
+    },
+    isDrop: Boolean,
+    allowedMentions: {
+        parse: { type: [String], default: undefined },
+        users: { type: [String], default: undefined },
+        roles: { type: [String], default: undefined }
+    }
+}, { id: false });
 
 module.exports = mongoose.model('Giveaway', GiveawaySchema);

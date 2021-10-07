@@ -1,11 +1,13 @@
 const express = require("express");
 const session = require("express-session");
-const vhost = require('vhost')
 
 const app = express();
 
 const passport = require("passport");
 const { Strategy } = require("passport-discord");
+const MongoStore = require('connect-mongo');
+
+const { Server } = require('vuejs-oauth2-discord');
 
 const bodyparser = require("body-parser");
 const path = require("path");
@@ -34,19 +36,38 @@ module.exports.load = async(client) => {
         });
     }));
 
+    var cors = require('cors');
+
+    var whitelist = ['http://localhost:8000', 'http://localhost:8080'];
+    var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+        } else {
+        callback(null, false);
+        }
+    },
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    optionsSuccessStatus: 200,
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'device-remember-token', 'Access-Control-Allow-Origin', 'Origin', 'Accept']
+    };
+
+    app.use(cors(corsOptions));
+
     app
-        .use(vhost('dash.yurabot.xyz', function handle (req, res, next) {}))
         .use(bodyparser.json())
         .use(bodyparser.urlencoded({ extended: true }))
-        .engine("html", require("ejs").renderFile)
-        .use(express.static(path.join(__dirname, "/public")))
-        .set("view engine", "ejs")
-        .set("views", path.join(__dirname, "views"))
 	    .set('port', config.port)
         .use(session({
             secret: config.secret,
+            cookie: {
+                maxAge: 60000 * 60 * 24
+            },
             resave: false,
-            saveUninitialized: false
+            saveUninitialized: false,
+            name: "discord.oauth2",
+            store: MongoStore.create({ mongoUrl: config.mongoKey })
         }))
         .use(passport.initialize())
         .use(passport.session())
@@ -55,17 +76,22 @@ module.exports.load = async(client) => {
             next();
         })
         .use("/", require("./router/index"))
-        .use("/profile", require("./router/profile"))
+        .use("/user", require("./router/user"))
         .use("/serveurs", require("./router/serveurs"))
         .use("/extensions", require("./router/extensions"))
-        .get("*", function(req, res) {
-            res.status(404).render("404");
-        })
-        .use(function(err, req, res, next) {
-            res.status(500).render("500");
-        });
-        
 
+        .get("*", function(req, res) {
+            res.status(404).send("404");
+        })
+        /*
+        .use(function(err, req, res, next) {
+            res.status(500).send("500");
+        });
+        */
+
+    // CONFIG ROUTES FOR OAUTH 2 DISCORD
+    //new Server(app, `http://localhost:3000`, `http://localhost:8080`, "/discord");
+        
     http.listen(app.get('port'), (err) => {
 
         if (err) throw err;

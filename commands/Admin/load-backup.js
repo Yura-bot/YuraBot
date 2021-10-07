@@ -21,7 +21,7 @@ class LoadBackup extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if(!message.member.hasPermission("ADMINISTRATOR")){
+        if(!message.member.permissions.has("ADMINISTRATOR")){
             return message.channel.send(language("MISSING_PERMISSION_ADMINISTRATOR"));
         }
 
@@ -30,9 +30,9 @@ class LoadBackup extends Command {
             return message.channel.send(language("BACKUP_IDVALIDE"));
         }
 
-        backup.fetch(backupID).then(() => {
+        backup.fetch(backupID).then(async () => {
 
-            message.channel.send(language("BACKUP_LOAD_CONFIRM"));
+            await message.channel.send(language("BACKUP_LOAD_CONFIRM"));
     
             const collector = message.channel.createMessageCollector((m) => m.author.id === message.author.id && ['-confirm', 'cancel'].includes(m.content), {
                 time: 60000,

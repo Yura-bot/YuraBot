@@ -35,13 +35,13 @@ class Ps4 extends Command {
             color: Math.floor(Math.random()*16777215),
             //The bot displays the name of the user
             title: `🖼 Ps4 :`,
-            //Attachment
+            //a
             image: {
                 url: 'attachment://ps4.png',
             },
         };
 
-        message.channel.send(({ files: [attachment], embed: embed })) && msg.delete().catch(e => {
+        message.channel.send(({ files: [attachment], embeds: [embed] })) && msg.delete().catch(e => {
             return client.emit('error',e);
         });
     }

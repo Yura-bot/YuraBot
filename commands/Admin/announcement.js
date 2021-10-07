@@ -20,18 +20,18 @@ class Announcement extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if(!message.member.hasPermission("ADMINISTRATOR")) {
+        if(!message.member.permissions.has("ADMINISTRATOR")) {
             var error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_ADMINISTRATOR"))
                 .setColor("#F43436")
             return message.channel.send(error_permissions)
         }
 
-        if (message.member.hasPermission("ADMINISTRATOR")) {
+        if (message.member.permissions.has("ADMINISTRATOR")) {
 
-            let attachments = message.attachments.array();
+            let attachments = message.attachments.first();
 
-            if (attachments.length === 0) {
+            if (!attachments) {
 
                 let contenu = args.slice(1).join(' ');
                 if (!args[1]) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_ANNONCE"))
@@ -41,7 +41,7 @@ class Announcement extends Command {
                     .setDescription(contenu)
                     .setColor("#BE1931")
     
-                return message.channel.send(annonce).catch(e => {});
+                return message.channel.send({ embeds: [annonce] }).catch(e => {});
 
             }
 
@@ -51,10 +51,10 @@ class Announcement extends Command {
             const annonce = new Discord.MessageEmbed()
                 .setTitle(language("ANNONCE_TITLE"))
                 .setDescription(contenu)
-                .setImage(attachments[0].url)
+                .setImage(attachments.attachment)
                 .setColor("#BE1931")
 
-            return message.channel.send(annonce).catch(e => {});
+            return message.channel.send({ embeds: [annonce] }).catch(e => {});
         }
     }
 }

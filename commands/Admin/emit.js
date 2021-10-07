@@ -20,26 +20,40 @@ class Emit extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if(!message.member.hasPermission("ADMINISTRATOR")) {
+        if(!message.member.permissions.has("ADMINISTRATOR")) {
             var error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_ADMINISTRATOR"))
                 .setColor("#F43436")
             return message.channel.send(error_permissions)
         }
 
-        if (message.member.hasPermission("ADMINISTRATOR")) {
+        if (message.member.permissions.has("ADMINISTRATOR")) {
 
             let event = args[1]
             if (!event) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_EMIT"))
 
             if (event === "welcome") {
                 client.emit("guildMemberAdd", message.member)
-                message.channel.send({embed: {color: '0x00FF46', description: `${language("EMIT_WELCOME_SUCESS")}` }})
+
+                const embed = new Discord.MessageEmbed()
+                    .setDescription(language("EMIT_WELCOME_SUCESS"))
+                    .setColor("0x00FF46");
+                message.channel.send({ embeds: [embed] });
+
             } else if (event === "goodbye") {
                 client.emit("guildMemberRemove", message.member)
-                message.channel.send({embed: {color: '0x00FF46', description: `${language("EMIT_GOODBYE_SUCESS")}` }})
+
+                const embed = new Discord.MessageEmbed()
+                    .setDescription(language("EMIT_GOODBYE_SUCESS"))
+                    .setColor("0x00FF46");
+                message.channel.send({ embeds: [embed] });
+
             } else {
-                return message.channel.send({embed: {color: '0xFF0000', description: language("EMIT_ERROR") }})
+
+                const embed = new Discord.MessageEmbed()
+                    .setDescription(language("EMIT_ERROR"))
+                    .setColor("0xFF0000");
+                return message.channel.send({ embeds: [embed] });
             }
         }
     }

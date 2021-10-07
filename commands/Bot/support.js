@@ -25,7 +25,7 @@ class Support extends Command {
         .addField(language("SUPPORT_FIELD"), "https://discord.gg/etQ3uJN")
         .setColor(client.color)
 
-       return message.channel.send(support);
+       return message.channel.send({ embeds: [support] })
     }
 }
 

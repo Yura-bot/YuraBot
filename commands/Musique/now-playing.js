@@ -21,31 +21,34 @@ class NowPlaying extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         if (!message.member.voice.channel) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }]})
         }
 
-        if (!client.player.getQueue(message)) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
+        const queue = client.player.getQueue(message.guild.id);
+
+        if (!queue || !queue.playing) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
       
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
-        const track = await client.player.nowPlaying(message);
+        const track = await queue.current
+        const progress = queue.createProgressBar();
+        const perc = queue.getPlayerTimestamp();
 
         return message.channel.send({
-            embed: {
+            embeds: [{
                 color: client.color,
                 author: { name: track.title },
                 footer: { text: client.footer },
                 fields: [
-                    { name: language("NOW_PLAYING_CHANNEL"), value: track.author, inline: true },
-                    { name: language("QUEUE_REQUESTBY"), value: track.requestedBy.username, inline: true },
-                    { name: language("NOW_FORMPLAYLIST"), value: track.fromPlaylist ? 'Yes' : 'No', inline: true },
-                    { name: language("NOW_PROGRESSBAR"), value: client.player.createProgressBar(message, { timecodes: true }), inline: true }
+                    { name: language("NOW_PLAYING_CHANNEL"), value: track.author },
+                    { name: language("NOW_FORMPLAYLIST"), value: track.fromPlaylist ? 'Yes' : 'No' },
+                    { name: language("NOW_PROGRESSBAR"), value: progress }
                 ],
                 thumbnail: { url: track.thumbnail },
                 timestamp: new Date(),
-            },
+            }],
         });
     }
 }

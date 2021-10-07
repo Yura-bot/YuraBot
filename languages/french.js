@@ -29,6 +29,7 @@ const languageData = {
     /* Message : */
     EVENTS_MESSAGE_ANTIRAID_WARN: "**<:X_:673212163837526064> {@user}, Arrête de spammer !**",
     EVENTS_MESSAGE_ANTIRAID_KICK: "**<:X_:673212163837526064> {user_tag}, A été expulsé pour spam !**",
+    EVENTS_MESSAGE_ANTIRAID_MUTE: "**<:X_:673212163837526064> {user_tag}, A été rendus muet pour spam !**",
     EVENTS_MESSAGE_ANTIRAID_BAN: "**<:X_:673212163837526064> {user_tag}, A été bannis pour spam !**",
     ANTILINK_TITLE: "⚠️ Il est interdit de poster des liens ici !",
     ANTILINK_USER: "⚡__Utilisateur__ :",
@@ -128,15 +129,16 @@ const languageData = {
     FOX: "Renard",
     /* Giveaway : */
     /* Giveaway Start : */
+    SYNTAXE_GIVEAWAY_START: "start-giveaway [Channel] [Temps] [Nombre de gagnants] (role condition) [Prix]```",
     GIVEAWAY_GO: "Le Giveaway vient de commencer sur le salon ",
     GIVEAWAY_START_TITLE: "🎉🎉 **GIVEAWAY** 🎉🎉",
     GIVEAWAY_START_ENDED: "🎉🎉 **GIVEAWAY FINI** 🎉🎉",
-    GIVEAWAY_START_TIME_REMAINING: "Temps restant : **{duration}**! ",
+    GIVEAWAY_START_TIME_REMAINING: "Temps restant : **{timestamp}**! ",
     GIVEAWAY_START_REACT: "Réagissez avec 🎉 pour participer !",
-    GIVEAWAY_START_WIN_MESSAGE: "Félicitations, {winners} ! Vous avez gagné **{prize}** !",
+    GIVEAWAY_START_WIN_MESSAGE: "Félicitations, {winners} ! Vous avez gagné **{this.prize}** !",
     GIVEAWAY_START_FOOTER: "Giveaways by Yura",
     GIVEAWAY_START_NO_WINER: "Concours annulé, aucune participation valable.",
-    GIVEAWAY_START_BY: "Par : {user}",
+    GIVEAWAY_START_BY: "Par : {this.hostedBy}",
     GIVEAWAY_START_CONDITION_ROLE: "<:errorv1:675367507250380816> Pour participer vous devez avoir le rôle : ",
     GIVEAWAY_START_WINER: "Gagnant(s)",
     GIVEAWAY_START_ENDED_AT: "Terminé à",
@@ -160,6 +162,7 @@ const languageData = {
     GIVEAWAY_END_ID_NO_TERMINER_2: " n'est pas terminée.",
     GIVEAWAY_END_NO_TERMINER: "Ce giveaway n'est pas terminé !",
     GIVEAWAY_END_ERROR_OCCURED: "<:X_:673212163837526064> **Erreur :** Une erreur interne est survenue !",
+    GIVEAWAY_END_ALREADY_END: "<:X_:673212163837526064> **Erreur :** Ce giveaway est déja terminé !",
     /* Giveaway Reroll : */
     SYNTAXE_GIVEAWAY_REROLL: "reroll-giveaway [Message ID du Giveaway]```",
     GIVEAWAY_REROLL_NO_FOUND: "Le giveaway n’a pas été trouvé :( ",
@@ -344,6 +347,10 @@ const languageData = {
     ASCII_LIMIT_MESSAGE: "Seulement 20 caractères sont admis.",
     /* Commande Calc : */
     SYNTAXE_CALC: "calc [opération]```",
+    CLAC_TITLE: "Yura Calculatrice",
+    CLAC_DISABLED: "La calculatrice est désactivée !",
+    CLAC_INVALID: "L'équation fournie n'est pas valide !",
+    CLAC_OTHER: "Seul <@{{author}}> peut utiliser les boutons !",
     CALC_ERROR: "**<:X_:673212163837526064> Erreur :** Vérifiez votre opération !",
     CALC_SUCESS: "```Résultat :\n\n",
     /* Commande Cooldown : */
@@ -377,6 +384,9 @@ const languageData = {
     /* Commande Finduser : */
     SYNTAXE_FINDUSER: "finduser [id]```",
     FINDUSER_ERROR: "**<:X_:673212163837526064> Erreur :** Vérifiez que c'est bien un id !",
+    FINDUSER_USER: ":pushpin: Utilisateur : ",
+    FINDUSER_ID: "🔧 » ID : ",
+    FINDUSER_PSEUDO: "🧐 » Pseudo :  ",
     DISCRIMINATOR: "#️⃣ » Discriminateur : #",
     CREATED_AT: "📆 » Crée le : ",
     LAST_MSG: "#️⃣ » Dernier message : ",
@@ -447,7 +457,7 @@ const languageData = {
     USERINFO_GAME: "**🕹 Jeu ➜**",
     USERINFO_NO_GAME: "Aucun jeu",
     USERINFO_STATUS: "**🔆 Statut ➜**",
-    USERINFO_INFOS: "Informations de l'utilisateur ",
+    USERINFO_INFOS: "Informations sur ",
     /* Commande SUGGEST : */
     SYNTAXE_SUGGEST: "suggest : [Description]```",
     SUGGEST_ERROR_NO_SYSTEM: "<:X_:673212163837526064> | Vous n'avez pas activé le système de suggestion votre serveur !",
@@ -466,6 +476,8 @@ const languageData = {
     SYSTEMINFO_CPU: "💻 • __Processeur__",
     SYSTEMINFO_PING: "MB` | Latence avec l'API : ",
     /* Games : */
+    NOT_CONNECTED: "<:X_:673212163837526064> | Vous devez être dans un canal vocal pour commener l'activité !",
+    LAUNCHED: "<:check:673212026226737153> Lancement de l'activité ! Clique sur le lien pour rejoindre.",
     /* Commande mc-server : */
     SYNTAXE_MC_SERVER: "mc-server [server]```",
     ONLINE: "En ligne",

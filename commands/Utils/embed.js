@@ -34,7 +34,7 @@ class Embed extends Command {
             .setColor(color)
             .setFooter(footer)
         
-        message.channel.send(embed)
+        message.channel.send({ embeds: [embed] })
     }
 }
 

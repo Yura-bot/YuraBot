@@ -4,7 +4,7 @@ class Hastebin extends Command {
     constructor() {
         super({
             name: 'hastebin',
-            aliases: ['haste'],
+            aliases: ['haste', 'hast', 'sourcebin'],
             category: 'utils',
             description: 'Permet de crée un hastebin avec le bot.',
             usage: 'hastebin [Votre texte/code]'

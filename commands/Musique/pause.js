@@ -21,18 +21,20 @@ class Pause extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         if (!message.member.voice.channel) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }]})
         }
 
-        if (!client.player.getQueue(message)) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
+        const queue = client.player.getQueue(message.guild.id);
+
+        if (!queue || !queue.playing) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
       
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
-        client.player.pause(message);
+        queue.setPaused(true);
 
-        return message.channel.send({embed: {color: '0x00FF46', description: language("PAUSE_PAUSE") }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: language("PAUSE_PAUSE") }]})
     }
 }
 

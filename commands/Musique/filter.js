@@ -22,33 +22,37 @@ class Filter extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         if (!message.member.voice.channel) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }]})
         }
 
-        if (!client.player.getQueue(message)) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
+        const queue = client.player.getQueue(message.guild.id);
+
+        if (!queue || !queue.playing) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
       
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
         const filter = args[1];
-        if (!filter) return message.channel.send({embed: {color: '0xFF0000', description: language("FILTER_NO") }})
+        if (!filter) return message.channel.send({embeds: [{color: '0xFF0000', description: language("FILTER_NO") }]})
 
-        const filterToUpdate = Object.values(filters).find((f) => f.toLowerCase() === filter.toLowerCase());
-        if (!filterToUpdate) return message.channel.send({embed: {color: '0xFF0000', description: language("FILTER_NOT_EXIST") }})
-    
-        const filterRealName = Object.keys(filters).find((f) => filters[f] === filterToUpdate);
-    
-        const queueFilters = client.player.getQueue(message).filters
-        const filtersUpdated = {};
-        filtersUpdated[filterRealName] = queueFilters[filterRealName] ? false : true;
+        let disabledFilters = queue.getFiltersDisabled();
+        let enabledFilters = queue.getFiltersEnabled();
 
-        client.player.setFilters(message, filtersUpdated).catch(e => {
-            return client.emit('error',e, "Filtre");
-        });
+        let filters = {}
+
+        enabledFilters.forEach(el => {
+            Object.assign(filters, { [el]: true })
+        })
+
+        let isDisabled = disabledFilters.find(el => el === filter) ? true : false
+
+        Object.assign(filters, { [filter]: isDisabled });
+
+        queue.setFilters(filters)
     
-        if (filtersUpdated[filterRealName]) message.channel.send({embed: {color: '0x00FF46', description: language("FILTER_ADDED") }})
-        else message.channel.send({embed: {color: '0x00FF46', description: language("FILTER_REMOVE") }})
+        if (isDisabled) message.channel.send({embeds: [{color: '0x00FF46', description: language("FILTER_ADDED") }]})
+        else message.channel.send({embeds: [{color: '0x00FF46', description: language("FILTER_REMOVE") }]})
 
         return;
     }

@@ -38,7 +38,7 @@ class Reload extends Command {
             return message.channel.send("Erreur" + e)
         }
       
-        return message.channel.send({embed: {color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }]})
       }
 
       if (caN === "Bot") {
@@ -55,7 +55,7 @@ class Reload extends Command {
             return message.channel.send("Erreur" + e)
         }
       
-        return message.channel.send({embed: {color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }]})
       }
 
       if (caN === "Fun") {
@@ -72,7 +72,7 @@ class Reload extends Command {
             return message.channel.send("Erreur" + e)
         }
       
-        return message.channel.send({embed: {color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }]})
       }
 
       if (caN === "Game") {
@@ -89,7 +89,7 @@ class Reload extends Command {
             return message.channel.send("Erreur" + e)
         }
       
-        return message.channel.send({embed: {color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }]})
       }
 
       if (caN === "Giv") {
@@ -106,7 +106,7 @@ class Reload extends Command {
             return message.channel.send("Erreur" + e)
         }
       
-        return message.channel.send({embed: {color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }]})
       }
 
       if (caN === "Images") {
@@ -123,7 +123,7 @@ class Reload extends Command {
             return message.channel.send("Erreur" + e)
         }
       
-        return message.channel.send({embed: {color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }]})
       }
 
       if (caN === "Mod") {
@@ -140,7 +140,7 @@ class Reload extends Command {
             return message.channel.send("Erreur" + e)
         }
       
-        return message.channel.send({embed: {color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }]})
       }
 
       if (caN === "Music") {
@@ -157,7 +157,7 @@ class Reload extends Command {
             return message.channel.send("Erreur" + e)
         }
       
-        return message.channel.send({embed: {color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }]})
       }
 
       if (caN === "NSFW") {
@@ -174,7 +174,7 @@ class Reload extends Command {
             return message.channel.send("Erreur" + e)
         }
       
-        return message.channel.send({embed: {color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }]})
       }
     
       if (caN === "Utils") {
@@ -191,7 +191,7 @@ class Reload extends Command {
             return message.channel.send("Erreur" + e)
         }
       
-        return message.channel.send({embed: {color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: `<:check:673212026226737153> | La comande ${Ccommand.name} a été reload!` }]})
       }
 
       message.channel.send({embed: { description: ` Pas de catégorie trouvé !` }})

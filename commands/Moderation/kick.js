@@ -20,7 +20,7 @@ class Kick extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("KICK_MEMBERS")) {
+        if (!message.member.permissions.has("KICK_MEMBERS")) {
             var error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_KICK_MEMBERS"))
                 .setColor("#F43436")
@@ -28,44 +28,47 @@ class Kick extends Command {
         }
 
         let reason = args.slice(2).join(' ');
-        let user = message.guild.member(message.mentions.users.first()) || await message.guild.members.fetch(args[1]);
 
-        if (!user) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_KICK"))
-        if (user.id === message.author.id) return message.channel.send(language("AUTOKICK"));
-        if (user.id === client.user.id) return message.channel.send(language("KICKYURA"));
+        let user = message.mentions.users.first();
+        let userID = null
+
+        if(!user) {
+            if(args[1]) {
+                user = await message.guild.members.fetch(args[1])
+                .then(member => { userID = member.id })
+                .catch(e => {return})
+                if(!userID) userID = args[1]
+            } else return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_BAN"))
+        } else userID = user.id
+
+        if (userID === message.author.id) return message.channel.send(language("AUTOKICK"));
+        if (userID === client.user.id) return message.channel.send(language("KICKYURA"));
+
+        user = await client.users.fetch(userID)
 
         if (reason.length < 1) reason = language("BAN_NO_REASON");
-
-        let botRolePossition = message.guild.member(client.user).roles.highest.position;
-        let rolePosition = message.guild.member(user).roles.highest.position;
-        let userRolePossition = message.member.roles.highest.position;
-
-        if (userRolePossition <= rolePosition) return message.channel.send(language("KICK_ERROR_1"))
-        if (botRolePossition <= rolePosition) return message.channel.send(language("KICK_ERROR_2"))
         
-        if (!message.guild.member(user).bannable) {
-            message.channel.send(language("KICK_ERROR_INTERNE"));
-        } else {
-          const embed = new Discord.MessageEmbed()
-          .setColor(0xFF0000)
-          .setTimestamp()
-          .addField(language("MOD_ACTION"), 'Kick')
-          .addField(language("MOD_MEMBER"), `${user} (${user.id})`)
-          .addField(language("MOD_MODERATOR"), `${message.author.username}#${message.author.discriminator}`)
-          .addField(language("MOD_REASON"), reason)
-          .setFooter(client.footer);
-          message.channel.send(embed);
+        const embed = new Discord.MessageEmbed()
+        .setColor(0xFF0000)
+        .setTimestamp()
+        .setThumbnail(user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 }))
+        .addField(language("MOD_ACTION"), 'Kick')
+        .addField(language("MOD_MEMBER"), `${user} (${user.id})`)
+        .addField(language("MOD_MODERATOR"), `${message.author.username}#${message.author.discriminator}`)
+        .addField(language("MOD_REASON"), reason)
+        .setFooter(client.footer);
+        message.channel.send({ embeds: [embed] });
 
-          user.kick(reason).catch(e =>{
+        message.guild.members.kick(user.id, reason).catch(e =>{
             message.channel.send(language("KICK_ERROR"))
             return client.emit('error',e, "kick");
-          });
-      
-          if(user.bot) return;
-          user.send(language("KICK_SUCESS").replace("${server}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e =>{
-           message.channel.send(language("KICK_SUCESS_MPCLOSE"))
-          });
-        }
+        });
+    
+        if(user.bot) return;
+        
+        user.send(language("KICK_SUCESS").replace("${server}", message.guild.name).replace("${mod}", message.author.username).replace("${reason}", reason)).catch(e =>{
+            message.channel.send(language("KICK_SUCESS_MPCLOSE"))
+        });
     }
 }
 

@@ -21,23 +21,25 @@ class Volume extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         if (!message.member.voice.channel) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_CHANNEL_VOCAL") }]})
         }
 
-        if (!client.player.getQueue(message)) return message.channel.send({embed: {color: '0xFF0000', description: language("MUSIC_ERROR_1") }})
+        const queue = client.player.getQueue(message.guild.id);
+
+        if (!queue || !queue.playing) return message.channel.send({embeds: [{color: '0xFF0000', description: language("MUSIC_ERROR_1") }]})
       
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
-         return message.channel.send({embed: {color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }})
+         return message.channel.send({embeds: [{color: '0xFF0000', description: language("PLAY_ALREADYPLAYMUSIC") }]})
         }
 
-        if (!args[1]) return message.channel.send({embed: {color: '0xFF0000', description: language("SET_VOLUME_NUMBER") }})
+        if (!args[1]) return message.channel.send({embeds: [{color: '0xFF0000', description: language("SET_VOLUME_NUMBER") }]})
 
-        if (isNaN(args[1]) || 100 < args[1] || args[1] <= 0) return message.channel.send({embed: {color: '0xFF0000', description: language("SET_VOLUME_NUMBER_VALIDE") }})
-        if (message.content.includes('-') || message.content.includes('+') || message.content.includes(',') || message.content.includes('.')) return message.channel.send({embed: {color: '0xFF0000', description: language("SET_VOLUME_NUMBER_VALIDE") }})
+        if (isNaN(args[1]) || 100 < args[1] || args[1] <= 0) return message.channel.send({embeds: [{color: '0xFF0000', description: language("SET_VOLUME_NUMBER_VALIDE") }]})
+        if (message.content.includes('-') || message.content.includes('+') || message.content.includes(',') || message.content.includes('.')) return message.channel.send({embeds: [{color: '0xFF0000', description: language("SET_VOLUME_NUMBER_VALIDE") }]})
 
-        client.player.setVolume(message, parseInt(args.slice(1).join(' ')));
+        queue.setVolume(parseInt(args.slice(1).join(' ')));
 
-        return message.channel.send({embed: {color: '0x00FF46', description: language("SET_VOLUME_SUCESS").replace("{vol}", args.slice(1).join(' ')) }})
+        return message.channel.send({embeds: [{color: '0x00FF46', description: language("SET_VOLUME_SUCESS").replace("{vol}", args.slice(1).join(' ')) }]})
     }
 }
 

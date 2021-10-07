@@ -24,11 +24,11 @@ class Clear extends Command {
         .setDescription(language("MISSING_PERMISSION_MANAGE_MESSAGES"))
         .setColor("#F43436")
 
-        if (!message.member.hasPermission("MANAGE_MESSAGES")) {
+        if (!message.member.permissions.has("MANAGE_MESSAGES")) {
             return message.channel.send(error_permissions)
         }
 
-        if (message.member.hasPermission("MANAGE_MESSAGES")) {
+        if (message.member.permissions.has("MANAGE_MESSAGES")) {
         
             if (!args[1]) {
                 message.channel.send(language("CLEAR_LIMIT"))

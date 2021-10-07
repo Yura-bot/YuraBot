@@ -27,23 +27,14 @@ class Cat extends Command {
 
             let array = response.data
 
-            message.channel.send({
-                embed: {
-                    title: "Cat :",
-                    image: {
-                        url: array[0].url,
-                    },
-                    url: client.url,
-                    color: client.color,
-                    timestamp: new Date(),
-                    footer: {
-                        text: client.footer,
-                        icon_url: client.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })
-                    }
-                }
-            }).catch(e => {
-                return client.emit('error',e, "cat");
-            });
+            const Embed = new Discord.MessageEmbed()
+            .setURL(client.url)
+            .setImage(array[0].url)
+            .setColor(client.color)
+            .setTimestamp()
+            .setFooter(client.footer,  client.user.displayAvatarURL({format: 'png'}));
+            return message.channel.send({ embeds: [Embed] })
+            
         } else {
             client.emit('error',e, "cat");
         }

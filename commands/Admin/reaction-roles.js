@@ -22,7 +22,7 @@ class ReactionRoles extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if(!message.member.hasPermission("ADMINISTRATOR")) {
+        if(!message.member.permissions.has("ADMINISTRATOR")) {
             const error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_ADMINISTRATOR"))
                 .setColor("#F43436")
@@ -73,7 +73,7 @@ class ReactionRoles extends Command {
             })
             .catch(e => { message.channel.send(language("RR_MSG_NO_CHANNEL")); })
 
-            return message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("RR_UPDATE_SUCESS")}` }})
+            return message.channel.send({embeds: [{color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("RR_UPDATE_SUCESS")}` }]})
 
         } else if (args[1] === "delete") {
 
@@ -87,7 +87,7 @@ class ReactionRoles extends Command {
 
             if (!Emoji) {
                 await client.db.deleteReactionRoles(MessageID, false)
-                return message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("RR_DELETE_SUCESS")}` }})
+                return message.channel.send({embeds: [{color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("RR_DELETE_SUCESS")}` }]})
             } else {
 
                 let emoji = client.emojis.cache.get(message.guild.emojis.resolveIdentifier(Emoji).split('%3A')[1])
@@ -100,7 +100,7 @@ class ReactionRoles extends Command {
                 reactionRolesDB.markModified("data");
                 await reactionRolesDB.save();
 
-                return message.channel.send({embed: {color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("RR_DELETE_SUCESS_EMOJI")}` }})
+                return message.channel.send({embeds: [{color: '0x00FF46', description: `${client.config.emojis.yes} | ${language("RR_DELETE_SUCESS_EMOJI")}` }]})
             }
 
         } 
@@ -123,7 +123,7 @@ class ReactionRoles extends Command {
                 Embed.addField('N°(num)', "")
             });
         
-            message.channel.send(Embed);
+            message.channel.send({ embeds: [embed] });
             //.catch(e => {});
 
         }

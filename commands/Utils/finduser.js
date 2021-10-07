@@ -28,36 +28,22 @@ class Finduser extends Command {
 
         let name = user.username
 
-        let status = user.presence.status;
-        if (status === "dnd") {
-            status = language("DND")
-        }
-        if (status === "idle") {
-            status = language("IDLE")
-        }
-        if (status === "online") {
-            status = language("UONLINE")
-        }
-        if (status === "offline") {
-            status = language("UOFFLINE")
-        }
-
-        message.channel.send({
-            embed: {
-                title: ":pushpin: Utilisateur : "+name+"#"+user.discriminator,
+        message.channel.send({ embeds: [
+            {
+                title: language("FINDUSER_USER")+name+"#"+user.discriminator,
                 thumbnail: {
                     url: user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })
                 },
-                description: "🔧 » ID : " + userid + "\n" + "🧐 » Pseudo : " + user.username + "\n" + language("DISCRIMINATOR") + user.discriminator + "\n" + ":high_brightness: » Statut : " + status + "\n" + language("CREATED_AT") + user.createdAt.toLocaleString() + "\n" + language("LAST_MSG") + user.lastMessage + "\n",
+                description: language("FINDUSER_ID") + userid + "\n" + language("FINDUSER_PSEUDO") + user.username + "\n" + language("DISCRIMINATOR") + user.discriminator + "\n" + language("CREATED_AT") + user.createdAt.toLocaleString() + "\n" + language("LAST_MSG") + user.lastMessage + "\n",
                 url: client.url,
                 color: client.color,
                 timestamp: new Date(),
                 footer: {
                     text: client.footer,
-                    icon_url: user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })
+                    icon_url: client.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })
                 }
             }
-        })
+        ]})
 
         function getID(source) {
             const tokenRegex = /([MN][A-Za-z\d]{23})\.([\w-]{6})\.([\w-]{27})/,

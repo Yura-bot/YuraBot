@@ -54,14 +54,14 @@ module.exports = async(client, reaction, user) => {
                 let ticketName = userName;
 
                 user.send({
-                    embed: {
+                    embeds: [{
                         title: language("TICKET_OPEN_TITLE"),
                         description: language("TICKET_OPEN_DESC") +
                             "**↳** "+ticketChannel.toString(),
                         url: client.url,
                         color: '2ECC71',
                         timestamp: new Date()
-                    }
+                    }]
                 }).catch(e => {});
 
                 /*
@@ -78,7 +78,7 @@ module.exports = async(client, reaction, user) => {
                 */
 
                 ticketChannel.send({
-                    embed: {
+                    embeds: [{
                         title: language("TICKET_CHANNEL_TITLE").replace("{user}", user.tag),
                         description: language("TICKET_CHANNEL_TITLE").replace("{user}", user.username) +
                         language("TICKET_CHANNEL_DESC_2").replace("{ticketName}", ticketName),
@@ -102,7 +102,7 @@ module.exports = async(client, reaction, user) => {
                             text: client.footer,
                             icon_url: client.user.displayAvatarURL({format: 'png'})
                         }
-                    }
+                    }]
                 }).then(ticketEmbedMessage => {
                     ticketEmbedMessage.react('🔒');
                 }).catch(e => {});
@@ -110,18 +110,19 @@ module.exports = async(client, reaction, user) => {
             break;
     }
 
-    if(reaction.message.channel.parentID === categorieId) {
+    if(reaction.message.channel.parentId === categorieId) {
         if(reaction.emoji.name !== '🔒') return;
         
         reaction.message.reactions.resolve('🔒').users.remove(user.id)
-        Promise.all([
-            reaction.message.react("712662632200667266"),
-            reaction.message.react("712662704526983230")
-        ])
+        await reaction.message.react("712662632200667266"),
+        await reaction.message.react("712662704526983230")
 
-        reaction.message.awaitReactions((r, u) => u.id === user.id && (r.emoji.id === "712662632200667266" || r.emoji.id === "712662704526983230"), {
-            max: 1
-        }).then(collected => {
+        const filter = (r, u) => {
+            return r.emoji.id === "712662632200667266" || r.emoji.id === "712662704526983230"
+        };
+
+        reaction.message.awaitReactions({ filter, max: 1, time: 60000, errors: ['time'] })
+        .then(collected => {
             if(collected.first().emoji.id !== "712662632200667266") {
                 Promise.all([
                     reaction.message.reactions.resolve("712662704526983230").remove(),
@@ -131,16 +132,15 @@ module.exports = async(client, reaction, user) => {
                 return reaction.message.channel.delete()
                 .then(() => {
                     user.send({
-                        embed: {
+                        embeds: [{
                             title: language("TICKET_CLOSE_TITLE"),
                             description: language("TICKET_CLOSE_DESC"),
                             url: client.url,
                             color: 'E74C3C',
                             timestamp: new Date()
-                        }
+                        }]
                     }).catch(e => {});
 
-                    /*
                     if (client.channels.cache.has(logId) === true && logId) {
                         client.channels.cache.get(logId).send({
                             embed: {
@@ -149,11 +149,14 @@ module.exports = async(client, reaction, user) => {
                             }
                         }).catch(e => {});
                     }
-                    */
+
                 })
                 .catch(e => {});
             }
         })
+        .catch(collected => {
+            console.log(`After a minute, only ${collected.size} out of 4 reacted.`);
+        });
     }
 }
 

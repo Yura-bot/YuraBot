@@ -69,26 +69,9 @@ class UserInfo extends Command {
         if (!lastmsg) {
             lastmsg = 'Inconnu'
         }
-        let jeu = member.presence.game;
-        if (!jeu) {
-            jeu = 'Pas de jeu'
-        }
-        let status = member.presence.status;
-        if (status === "dnd") {
-            status = '<:dnd:675371548651159573> Ne pas déranger'
-        }
-        if (status === "idle") {
-            status = '<:idle:675371429264359424> Inactif - AFK '
-        }
-        if (status === "online") {
-            status = '<:online:675371850905157653> En ligne'
-        }
-        if (status === "offline") {
-            status = '<:offline:675371685792186409> Déconnecté'
-        }
     
         let embed = new Discord.MessageEmbed()
-            .setAuthor('Informations sur ' + pseudo)
+            .setAuthor(language("USERINFO_INFOS") + pseudo)
             .setThumbnail(avatar)
             .setColor(client.color)
             .addField(language("USERINFO_PSEUDO"), pseudo)
@@ -103,7 +86,7 @@ class UserInfo extends Command {
             .setFooter(client.footer)
             .setTimestamp();
     
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }
 

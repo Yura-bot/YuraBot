@@ -35,9 +35,9 @@ class Joke extends Command {
             .setColor(client.color)
             .setTitle(language("TITLE_JOKE"))
 			.setDescription(`${joke.data.joke} \n ||${joke.data.answer}||`)
-			.setFooter(client.footer);
+			.setFooter(client.footer,  client.user.displayAvatarURL({format: 'png'}));
 
-		message.channel.send(embed).catch(e => {
+		message.channel.send({ embeds: [embed] }).catch(e => {
             return client.emit('error',e, "joke");
         });
     }

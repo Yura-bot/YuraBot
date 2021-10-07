@@ -20,13 +20,13 @@ class Lock extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
+        if (!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply(language("MISSING_PERMISSION_MANAGE_MESSAGES"));
 
         let ifChannelLock = message.channel.permissionsFor(message.guild.roles.everyone).toArray().includes('SEND_MESSAGES')
 
         if (ifChannelLock) {
 
-            message.channel.createOverwrite(message.guild.id, {
+            message.channel.permissionOverwrites.create(message.guild.id, {
                 SEND_MESSAGES: false
             }).catch(error => {});
     

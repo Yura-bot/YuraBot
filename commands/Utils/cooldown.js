@@ -26,9 +26,9 @@ class Cooldown extends Command {
       
         if(!time) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_COOLDOWN"));
       
-        message.channel.send({embed: {color: '0x00FF46', description: language("COOLDOWN_SUCESS").replace("${time}", time) }})
+        message.channel.send({embeds: [{color: '0x00FF46', description: language("COOLDOWN_SUCESS").replace("${time}", time) }] })
       
-        function mafonction() { message.channel.send("**<@" + user + ">**") && message.channel.send({embed: {color: '0xFF0000', description: language("COOLDOWN_STOP").replace("${time}", time) }}) }
+        function mafonction() { message.channel.send("**<@" + user + ">**") && message.channel.send({embeds: [{color: '0xFF0000', description: language("COOLDOWN_STOP").replace("${time}", time) }]}) }
         setTimeout(mafonction, ms(time)); 
     }
 }

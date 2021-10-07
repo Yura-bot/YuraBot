@@ -21,7 +21,7 @@ class CreateBackup extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
-        if(!message.member.hasPermission("ADMINISTRATOR")){
+        if(!message.member.permissions.has("ADMINISTRATOR")){
             return message.channel.send(language("MISSING_PERMISSION_ADMINISTRATOR"));
         }
 
@@ -29,7 +29,7 @@ class CreateBackup extends Command {
 
             backup.create(message.guild, {
                 maxMessagesPerChannel: 0,
-                jsonBeautify: true
+                jsonBeautify: false
             }).then((backupData) => {
                 message.author.send(language("BACKUP_COMMAND")+prefix+"load-backup "+backupData.id+"`!").catch(e => {
                     message.channel.send(language("BACKUP_COMMAND")+prefix+"load-backup "+backupData.id+"`!")
