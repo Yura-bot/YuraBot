@@ -8,9 +8,9 @@
     "jokeToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNDc3NTgyNTkwMzI5NzQ5NTA0IiwibGltaXQiOjEwMCwia2V5IjoibmJJeDI0dUpqWXV3RzRnem1HZWthVGVwWHRuUmE2ZW10TWhUZFRaMWJ0S1RaTzZNUHkiLCJjcmVhdGVkX2F0IjoiMjAyMS0wNC0wNVQxMTowNzozMiswMDowMCIsImlhdCI6MTYxNzYyMDg1Mn0.MQcJYq19I-q85qkzWWMgdJE9vhR_MVuNJJ--YnApqiI",
     "dblApi": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Mjc3NTg5MDE5NDk4OTA2NiIsImJvdCI6dHJ1ZSwiaWF0IjoxNTg4ODY2NDIwfQ.dejA1-dSCKAxsOZWyWEc51c84ho2WjFuJ1GCwpBR70E",
 
-    "panel_url": "http://185.248.33.6:81",
+    "panel_url": "https://api.yurabot.xyz",
     "password": "RV_eafH16_wfQmbRmVpGSsm07_vamjw_",
-    "port": "3000",
+    "port": "81",
 
     "prefix": "?",
     "url": "https://yurabot.xyz",
