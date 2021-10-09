@@ -25,7 +25,7 @@ class Clear extends Command {
         .setColor("#F43436")
 
         if (!message.member.permissions.has("MANAGE_MESSAGES")) {
-            return message.channel.send(error_permissions)
+            return message.channel.send({ embeds: [message.channel.send(error_permissions)] })
         }
 
         if (message.member.permissions.has("MANAGE_MESSAGES")) {

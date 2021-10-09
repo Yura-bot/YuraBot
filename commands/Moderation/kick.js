@@ -21,10 +21,10 @@ class Kick extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         if (!message.member.permissions.has("KICK_MEMBERS")) {
-            var error_permissions = new Discord.MessageEmbed()
+            const error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_KICK_MEMBERS"))
                 .setColor("#F43436")
-            return message.channel.send(error_permissions)
+            return message.channel.send({ embeds: [message.channel.send(error_permissions)] })
         }
 
         let reason = args.slice(2).join(' ');
