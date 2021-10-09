@@ -3,3 +3,4 @@ package-lock.json
 configs/
 node_modules/
 *.sqlite
+.idea

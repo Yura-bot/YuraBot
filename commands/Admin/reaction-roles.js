@@ -26,7 +26,7 @@ class ReactionRoles extends Command {
             const error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_ADMINISTRATOR"))
                 .setColor("#F43436")
-            return message.channel.send(error_permissions)
+            return message.channel.send({ embeds: [message.channel.send(error_permissions)] })
         }
 
         if(!args[1]) return message.channel.send(language("SYNTAXE") + prefix + language("SYNTAXE_RR"));

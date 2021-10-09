@@ -20,6 +20,13 @@ class Config extends Command {
 
         const language = require(`../../languages/${guildLanguage}`);
 
+        if(!message.member.permissions.has("ADMINISTRATOR")) {
+            const error_permissions = new MessageEmbed()
+                .setDescription(language("MISSING_PERMISSION_ADMINISTRATOR"))
+                .setColor("#F43436")
+            return message.channel.send({embeds: [error_permissions]})
+        }
+
         const row = new MessageActionRow()
 			.addComponents(
 				new MessageButton()

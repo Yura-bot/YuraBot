@@ -21,10 +21,10 @@ class Mute extends Command {
         const language = require(`../../languages/${guildLanguage}`);
 
         if (!message.member.permissions.has("MUTE_MEMBERS")) {
-            var error_permissions = new Discord.MessageEmbed()
+            const error_permissions = new Discord.MessageEmbed()
                 .setDescription(language("MISSING_PERMISSION_MUTE_MEMBERS"))
                 .setColor("#F43436")
-            return message.channel.send(error_permissions)
+            return message.channel.send({ embeds: [message.channel.send(error_permissions)] })
         }
 
         if (!message.guild.me.permissions.has("MANAGE_ROLES")) {
